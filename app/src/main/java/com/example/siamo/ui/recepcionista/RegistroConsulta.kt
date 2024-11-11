@@ -5,9 +5,10 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.NavigateNext
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -26,11 +27,11 @@ import com.example.siamo.ui.utils.NavigationBarRecepcionista
 import com.example.siamo.ui.utils.TopBar
 
 @Composable
-fun BusquedaCliente(
+fun RegistroConsulta(
     modifier: Modifier = Modifier,
 ) {
     Scaffold (
-        topBar = { TopBar(tituloPagina = stringResource(R.string.topbar_opcion2), modo = "Retroceder") },
+        topBar = { TopBar(tituloPagina = stringResource(R.string.topbar_opcion7), modo = "Retroceder") },
         bottomBar = { NavigationBarRecepcionista(opcionSeleccionada = 2) }
     ) { paddingValues ->
         Column (
@@ -41,7 +42,7 @@ fun BusquedaCliente(
             verticalArrangement = Arrangement.Center
         ) {
             Text(
-                text = stringResource(id = R.string.busqueda_cliente),
+                text = stringResource(id = R.string.registro_consulta),
                 style = MaterialTheme.typography.bodyLarge,
                 color = MaterialTheme.colorScheme.onSecondaryContainer,
                 modifier = modifier.padding(15.dp)
@@ -53,9 +54,12 @@ fun BusquedaCliente(
                 value =  stringResource(id = R.string.ejemplo),
                 onValueChange = {},
                 label = {
-                    Text(text = stringResource(id = R.string.campo_doc_identidad))
+                    Text(text = stringResource(id = R.string.campo_problema_declarado))
                 },
-                modifier = Modifier.fillMaxWidth().padding(15.dp)
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(15.dp)
+                    .height(180.dp)
             )
 
             Spacer(modifier = Modifier.padding(20.dp))
@@ -67,10 +71,10 @@ fun BusquedaCliente(
                     .padding(end = 15.dp)
             ) {
                 Icon(
-                    imageVector = Icons.Default.Search,
+                    imageVector = Icons.Default.NavigateNext,
                     contentDescription = null
                 )
-                Text(text = stringResource(id = R.string.buscar_boton))
+                Text(text = stringResource(id = R.string.boton_siguiente))
             }
         }
     }
@@ -78,12 +82,12 @@ fun BusquedaCliente(
 
 @Preview(showBackground = true, showSystemUi = false)
 @Composable
-fun BusquedaClienteLightPreview() {
-    SIAMOTheme (darkTheme = false) { BusquedaCliente() }
+fun RegistroConsultaLightPreview() {
+    SIAMOTheme (darkTheme = false) { RegistroConsulta() }
 }
 
 @Preview(showBackground = true, showSystemUi = false)
 @Composable
-fun BusquedaClienteDarkPreview() {
-    SIAMOTheme (darkTheme = true) { BusquedaCliente() }
+fun RegistroConsultaDarkPreview() {
+    SIAMOTheme (darkTheme = true) { RegistroConsulta() }
 }

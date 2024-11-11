@@ -26,11 +26,11 @@ import com.example.siamo.ui.utils.NavigationBarRecepcionista
 import com.example.siamo.ui.utils.TopBar
 
 @Composable
-fun BusquedaCliente(
+fun BusquedaVehiculo(
     modifier: Modifier = Modifier,
 ) {
     Scaffold (
-        topBar = { TopBar(tituloPagina = stringResource(R.string.topbar_opcion2), modo = "Retroceder") },
+        topBar = { TopBar(tituloPagina = stringResource(R.string.topbar_opcion5), modo = "Retroceder") },
         bottomBar = { NavigationBarRecepcionista(opcionSeleccionada = 2) }
     ) { paddingValues ->
         Column (
@@ -41,7 +41,7 @@ fun BusquedaCliente(
             verticalArrangement = Arrangement.Center
         ) {
             Text(
-                text = stringResource(id = R.string.busqueda_cliente),
+                text = stringResource(id = R.string.busqueda_vehiculo),
                 style = MaterialTheme.typography.bodyLarge,
                 color = MaterialTheme.colorScheme.onSecondaryContainer,
                 modifier = modifier.padding(15.dp)
@@ -53,7 +53,7 @@ fun BusquedaCliente(
                 value =  stringResource(id = R.string.ejemplo),
                 onValueChange = {},
                 label = {
-                    Text(text = stringResource(id = R.string.campo_doc_identidad))
+                    Text(text = stringResource(id = R.string.campo_n_placa))
                 },
                 modifier = Modifier.fillMaxWidth().padding(15.dp)
             )
@@ -78,12 +78,12 @@ fun BusquedaCliente(
 
 @Preview(showBackground = true, showSystemUi = false)
 @Composable
-fun BusquedaClienteLightPreview() {
-    SIAMOTheme (darkTheme = false) { BusquedaCliente() }
+fun BusquedaVehiculoLightPreview() {
+    SIAMOTheme (darkTheme = false) { BusquedaVehiculo() }
 }
 
 @Preview(showBackground = true, showSystemUi = false)
 @Composable
-fun BusquedaClienteDarkPreview() {
-    SIAMOTheme (darkTheme = true) { BusquedaCliente() }
+fun BusquedaVehiculoDarkPreview() {
+    SIAMOTheme (darkTheme = true) { BusquedaVehiculo() }
 }

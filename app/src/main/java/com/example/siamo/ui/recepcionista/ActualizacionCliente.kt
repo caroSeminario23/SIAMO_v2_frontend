@@ -3,6 +3,7 @@ package com.example.siamo.ui.recepcionista
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -27,7 +28,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.siamo.R
@@ -36,14 +39,11 @@ import com.example.siamo.ui.utils.NavigationBarRecepcionista
 import com.example.siamo.ui.utils.TopBar
 
 @Composable
-fun RegistroCliente(
+fun ActualizacionCliente(
     modifier: Modifier = Modifier,
 ) {
-    val expandedDocIdentidad = rememberSaveable { mutableStateOf(false) }
-    val expandedSexo = rememberSaveable { mutableStateOf(false) }
-
     Scaffold (
-        topBar = { TopBar(tituloPagina = stringResource(R.string.topbar_opcion4), modo = "Retroceder", modifier = Modifier.padding(bottom = 40.dp)) },
+        topBar = { TopBar(tituloPagina = stringResource(R.string.topbar_opcion3), modo = "Retroceder", modifier = Modifier.padding(bottom = 40.dp)) },
         bottomBar = { NavigationBarRecepcionista(opcionSeleccionada = 2) }
     ) { paddingValues ->
         LazyColumn (
@@ -55,9 +55,10 @@ fun RegistroCliente(
         ) {
             item {
                 Text(
-                    text = stringResource(id = R.string.topbar_opcion4),
+                    text = stringResource(id = R.string.actualizacion_cliente_titulo),
                     style = MaterialTheme.typography.headlineMedium,
                     color = MaterialTheme.colorScheme.primary,
+                    textAlign = TextAlign.Center,
                     modifier = modifier.padding(start = 20.dp, end = 20.dp, bottom = 40.dp)
                 )
             }
@@ -99,54 +100,25 @@ fun RegistroCliente(
                             Text(
                                 text = stringResource(id = R.string.desplegable_tipo_doc_principal),
                                 style = MaterialTheme.typography.bodyLarge,
-                                color = MaterialTheme.colorScheme.onSurface
+                                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.38f)
                             )
                         },
                         leadingContent = {
                             Icon(
                                 imageVector = Icons.Default.Person,
                                 contentDescription = null,
-                                tint = MaterialTheme.colorScheme.onSurfaceVariant
+                                tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.38f)
                             )
                         },
                         trailingContent = {
                             Icon(
                                 imageVector = Icons.Default.ArrowDropDown,
                                 contentDescription = null,
-                                tint = MaterialTheme.colorScheme.onSurfaceVariant
+                                tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.38f)
                             )
                         },
                         modifier = Modifier
-                            .clickable { expandedDocIdentidad.value = true }
                     )
-
-                    DropdownMenu(
-                        expanded = expandedDocIdentidad.value,
-                        onDismissRequest = { expandedDocIdentidad.value = false },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(start = 20.dp, end = 20.dp, bottom = 10.dp)
-                    ) {
-                        DropdownMenuItem(
-                            text = {
-                                Text(
-                                    text = stringResource(R.string.desplegable_tipo_doc_opcion1),
-                                ) },
-                            onClick = {
-                                expandedDocIdentidad.value = false
-                            }
-                        )
-
-                        DropdownMenuItem(
-                            text = {
-                                Text(
-                                    text = stringResource(R.string.desplegable_tipo_doc_opcion2),
-                                ) },
-                            onClick = {
-                                expandedDocIdentidad.value = false
-                            }
-                        )
-                    }
                 }
             }
 
@@ -155,11 +127,15 @@ fun RegistroCliente(
                     value =  stringResource(id = R.string.ejemplo),
                     onValueChange = {},
                     label = {
-                        Text(text = stringResource(id = R.string.campo_doc_identidad))
+                        Text(
+                            text = stringResource(id = R.string.campo_doc_identidad)
+                        )
                     },
+                    readOnly = true,
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(start = 20.dp, end = 20.dp, bottom = 20.dp)
+                        .graphicsLayer(alpha = 0.38f)
                 )
             }
 
@@ -209,56 +185,27 @@ fun RegistroCliente(
                             Text(
                                 text = stringResource(id = R.string.desplegable_sexo_principal),
                                 style = MaterialTheme.typography.bodyLarge,
-                                color = MaterialTheme.colorScheme.onSurface
+                                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.38f)
                             )
                         },
                         leadingContent = {
                             Icon(
                                 imageVector = Icons.Default.Stars,
                                 contentDescription = null,
-                                tint = MaterialTheme.colorScheme.onSurfaceVariant
+                                tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.38f)
                             )
                         },
                         trailingContent = {
                             Icon(
                                 imageVector = Icons.Default.ArrowDropDown,
                                 contentDescription = null,
-                                tint = MaterialTheme.colorScheme.onSurfaceVariant
+                                tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.38f)
                             )
                         },
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(start = 20.dp, end = 20.dp, bottom = 20.dp)
-                            .clickable { expandedSexo.value = true }
                     )
-
-                    DropdownMenu(
-                        expanded = expandedSexo.value,
-                        onDismissRequest = { expandedSexo.value = false },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(start = 20.dp, end = 20.dp, bottom = 10.dp)
-                    ) {
-                        DropdownMenuItem(
-                            text = {
-                                Text(
-                                    text = stringResource(R.string.desplegable_sexo_opcion1),
-                                ) },
-                            onClick = {
-                                expandedSexo.value = false
-                            }
-                        )
-
-                        DropdownMenuItem(
-                            text = {
-                                Text(
-                                    text = stringResource(R.string.desplegable_sexo_opcion2),
-                                ) },
-                            onClick = {
-                                expandedSexo.value = false
-                            }
-                        )
-                    }
                 }
             }
 
@@ -267,21 +214,37 @@ fun RegistroCliente(
             }
 
             item {
-                Button(
-                    onClick = { },
+                Row (
                     modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = 20.dp, end = 20.dp, bottom = 40.dp)
                 ) {
-                    Icon(
-                        imageVector = Icons.Default.Send,
-                        contentDescription = null
-                    )
-                    Spacer(modifier = Modifier.padding(5.dp))
-                    Text(text = stringResource(id = R.string.registrar_boton))
-                }
-            }
+                    Button(
+                        onClick = { },
+                        modifier = Modifier.weight(1f)
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Send,
+                            contentDescription = null
+                        )
+                        Spacer(modifier = Modifier.padding(5.dp))
+                        Text(text = stringResource(id = R.string.correcto_boton))
+                    }
 
-            item {
-                Spacer(modifier = Modifier.padding(15.dp))
+                    Spacer(modifier = Modifier.weight(0.2f))
+
+                    Button(
+                        onClick = { },
+                        modifier = Modifier.weight(1f)
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Send,
+                            contentDescription = null
+                        )
+                        Spacer(modifier = Modifier.padding(5.dp))
+                        Text(text = stringResource(id = R.string.actualizar_boton))
+                    }
+                }
             }
         }
     }
@@ -289,12 +252,12 @@ fun RegistroCliente(
 
 @Preview(showBackground = true, showSystemUi = false)
 @Composable
-fun RegistroClienteLightPreview() {
-    SIAMOTheme (darkTheme = false) { RegistroCliente() }
+fun ActualizacionClienteLightPreview() {
+    SIAMOTheme (darkTheme = false) { ActualizacionCliente() }
 }
 
 @Preview(showBackground = true, showSystemUi = false)
 @Composable
-fun RegistroClienteDarkPreview() {
-    SIAMOTheme (darkTheme = true) { RegistroCliente() }
+fun ActualizacionClienteDarkPreview() {
+    SIAMOTheme (darkTheme = true) { ActualizacionCliente() }
 }

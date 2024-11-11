@@ -35,8 +35,7 @@ fun HomeTecnico(
     Scaffold (
         topBar = { TopBar(tituloPagina = stringResource(R.string.topbar_opcion1), modo = "Normal") },
         bottomBar = { NavigationBarTecnico(opcionSeleccionada = 1) }
-    ) {
-            paddingValues ->
+    ) { paddingValues ->
         Column (
             modifier = Modifier
                 .fillMaxSize()

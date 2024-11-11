@@ -51,7 +51,7 @@ fun TopBar(
             style = MaterialTheme.typography.titleLarge,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             textAlign = TextAlign.Center,
-            modifier = Modifier.weight(1f)
+            modifier = Modifier.weight(1f).padding(start = 2.dp, end = 2.dp)
         )
         // Imagen derecha
         Icon(
