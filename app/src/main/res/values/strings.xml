@@ -1,0 +1,51 @@
+<resources>
+    <string name="app_name">SIAMO</string>
+
+    <string name="nombre_detallado">SISTEMA DE ADMINISTRACIÓN AUTOMOTRIZ</string>
+    <string name="bienvenida">Bienvenid@</string>
+
+    <string name="inicio_titulo">INICIO DE SESIÓN</string>
+    <string name="registro_cliente_titulo">REGISTRO DE CLIENTE</string>
+
+    <string name="inicio_indicacion">Ingrese sus datos para acceder a su perfil</string>
+    <string name="inicio_cod_empleado">Código de empleado</string>
+    <string name="inicio_contrasenia">Contraseña</string>
+
+    <string name="busqueda_cliente">1. Ingrese el N° del documento de identidad del cliente</string>
+
+    <string name="inicio_boton">Iniciar Sesión</string>
+    <string name="mas_detalle_boton">Más detalle</string>
+    <string name="buscar_boton">Buscar</string>
+    <string name="registrar_boton">Registrar</string>
+
+    <string name="campo_doc_identidad">N° documento de identificación</string>
+    <string name="campo_nombres">Nombres</string>
+    <string name="campo_apellidos">Apellidos</string>
+    <string name="campo_direccion">Dirección</string>
+    <string name="campo_email">Correo electrónico</string>
+    <string name="campo_telefono">Teléfono</string>
+
+    <string name="home_saludo1">BUENOS DÍAS</string>
+    <string name="home_saludo2">BUENAS TARDES</string>
+    <string name="home_saludo3">BUENAS NOCHES</string>
+
+    <string name="navbar_opcion1">Principal</string>
+    <string name="navbar_opcion2">Registrar OST</string>
+    <string name="navbar_opcion3">Buscar OST</string>
+    <string name="navbar_opcion4">Ajustes</string>
+    <string name="navbar_opcion5">OST</string>
+    <string name="navbar_opcion6">Bitácora</string>
+
+    <string name="topbar_opcion1">PÁGINA PRINCIPAL</string>
+    <string name="topbar_opcion2">BÚSQUEDA DE CLIENTE</string>
+
+    <string name="desplegable_tipo_doc_principal">Tipo de documento de identidad</string>
+    <string name="desplegable_tipo_doc_opcion1">DNI</string>
+    <string name="desplegable_tipo_doc_opcion2">Carnet de extranjería</string>
+
+    <string name="desplegable_sexo_principal">Sexo</string>
+    <string name="desplegable_sexo_opcion1">Femenino</string>
+    <string name="desplegable_sexo_opcion2">Masculino</string>
+
+    <string name="ejemplo">Ejemplo</string>
+</resources>
