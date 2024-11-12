@@ -6,6 +6,8 @@
 
     <string name="inicio_titulo">INICIO DE SESIÓN</string>
     <string name="actualizacion_cliente_titulo">ACTUALIZACIÓN DE CLIENTE</string>
+    <string name="titulo_resumen_consulta1">RESUMEN</string>
+    <string name="titulo_resumen_consulta2">DE CONSULTA</string>
 
 
     <string name="inicio_indicacion">Ingrese sus datos para acceder a su perfil</string>
@@ -16,6 +18,13 @@
     <string name="busqueda_vehiculo">2. Ingrese el número de placa del vehículo</string>
     <string name="registro_vehiculo">Ingrese los siguientes datos del vehículo</string>
     <string name="registro_consulta">3. Indique el problema que el cliente declara sobre su vehículo</string>
+    <string name="asignacion_tecnico">4. Seleccione uno de los técnicos de la lista para que realice la inspección inicial del vehículo</string>
+
+    <string name="label_cliente">Cliente:</string>
+    <string name="label_vehiculo">Vehículo:</string>
+    <string name="label_tecnico_asignado">Técnico asignado:</string>
+    <string name="label_prob_declarado">Problema declarado:</string>
+
 
     <string name="inicio_boton">Iniciar Sesión</string>
     <string name="mas_detalle_boton">Más detalle</string>
@@ -54,6 +63,8 @@
     <string name="topbar_opcion5">BÚSQUEDA DE VEHÍCULO</string>
     <string name="topbar_opcion6">REGISTRO DE VEHÍCULO</string>
     <string name="topbar_opcion7">REGISTRO DE CONSULTA</string>
+    <string name="topbar_opcion8">ASIGNACIÓN DE TÉCNICO</string>
+    <string name="topbar_opcion9">RESUMEN DE CONSULTA</string>
 
     <string name="desplegable_tipo_doc_principal">Tipo de documento de identidad</string>
     <string name="desplegable_tipo_doc_opcion1">DNI</string>
@@ -62,6 +73,13 @@
     <string name="desplegable_sexo_principal">Sexo</string>
     <string name="desplegable_sexo_opcion1">Femenino</string>
     <string name="desplegable_sexo_opcion2">Masculino</string>
+
+    <string name="desplegable_lista_tecnico_principal">Lista de técnicos</string>
+    <string name="desplegable_lista_tecnico_opcion1">Técnico 1</string>
+    <string name="desplegable_lista_tecnico_opcion2">Técnico 2</string>
+    <string name="desplegable_lista_tecnico_opcion3">Técnico 3</string>
+    <string name="desplegable_lista_tecnico_opcion4">Técnico 4</string>
+    <string name="desplegable_lista_tecnico_opcion5">Técnico 5</string>
 
     <string name="ejemplo">Ejemplo</string>
 </resources>
