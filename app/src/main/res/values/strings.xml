@@ -19,11 +19,15 @@
     <string name="registro_vehiculo">Ingrese los siguientes datos del vehículo</string>
     <string name="registro_consulta">3. Indique el problema que el cliente declara sobre su vehículo</string>
     <string name="asignacion_tecnico">4. Seleccione uno de los técnicos de la lista para que realice la inspección inicial del vehículo</string>
+    <string name="indicacion_presupuesto">3. Indique los siguientes datos para estimar el presupuesto</string>
 
     <string name="label_cliente">Cliente:</string>
     <string name="label_vehiculo">Vehículo:</string>
     <string name="label_tecnico_asignado">Técnico asignado:</string>
     <string name="label_prob_declarado">Problema declarado:</string>
+    <string name="label_presupuesto_estimado">Presupuesto estimado (S/): </string>
+    <string name="label_descuento">Descuento (S/): </string>
+    <string name="label_presupuesto_final">Presupuesto final (S/): </string>
 
 
     <string name="inicio_boton">Iniciar Sesión</string>
@@ -33,6 +37,8 @@
     <string name="actualizar_boton">Actualizar</string>
     <string name="correcto_boton">Correcto</string>
     <string name="boton_siguiente">Siguiente</string>
+    <string name="boton_denegar">Denegar</string>
+    <string name="boton_aprobar">Aprobar</string>
 
     <string name="campo_doc_identidad">N° documento de identificación</string>
     <string name="campo_nombres">Nombres</string>
@@ -44,6 +50,9 @@
     <string name="campo_marca">Marca</string>
     <string name="campo_modelo">Modelo</string>
     <string name="campo_problema_declarado">Problema declarado</string>
+    <string name="campo_n_tecnicos_necesarios">N° de técnicos necesarios</string>
+    <string name="campo_n_repuestos">N° de repuestos de ese tipo</string>
+    <string name="campo_descuento">Descuento (%)</string>
 
     <string name="home_saludo1">BUENOS DÍAS</string>
     <string name="home_saludo2">BUENAS TARDES</string>
@@ -65,6 +74,7 @@
     <string name="topbar_opcion7">REGISTRO DE CONSULTA</string>
     <string name="topbar_opcion8">ASIGNACIÓN DE TÉCNICO</string>
     <string name="topbar_opcion9">RESUMEN DE CONSULTA</string>
+    <string name="topbar_presupuesto">PRESUPUESTO</string>
 
     <string name="desplegable_tipo_doc_principal">Tipo de documento de identidad</string>
     <string name="desplegable_tipo_doc_opcion1">DNI</string>
@@ -81,5 +91,14 @@
     <string name="desplegable_lista_tecnico_opcion4">Técnico 4</string>
     <string name="desplegable_lista_tecnico_opcion5">Técnico 5</string>
 
+    <string name="seccion_mano_obra">MANO DE OBRA</string>
+    <string name="seccion_repuestos">REPUESTOS</string>
+    <string name="seccion_monto_total">MONTO TOTAL</string>
+
+    <string name="busqueda_indicacion_repuesto">Ingrese el nombre del repuesto</string>
+
     <string name="ejemplo">Ejemplo</string>
+
+    <string name="contenido_texto_precio">00.00</string>
+    <string name="estilo_moneda">S/ </string>
 </resources>
