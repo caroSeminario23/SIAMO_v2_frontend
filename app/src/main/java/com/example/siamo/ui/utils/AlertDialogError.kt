@@ -34,7 +34,8 @@ fun AlertDialogError (
             Text(
                 text = stringResource(id = R.string.alerta_cancelar),
                 color = MaterialTheme.colorScheme.error)
-        }
+        },
+        containerColor = MaterialTheme.colorScheme.errorContainer
     )
 }
 
