@@ -8,6 +8,7 @@
     <string name="actualizacion_cliente_titulo">ACTUALIZACIÓN DE CLIENTE</string>
     <string name="titulo_resumen_consulta1">RESUMEN</string>
     <string name="titulo_resumen_consulta2">DE CONSULTA</string>
+    <string name="titulo_resumen_ost">DE ORDEN DE SERVICIO</string>
 
 
     <string name="inicio_indicacion">Ingrese sus datos para acceder a su perfil</string>
@@ -28,6 +29,10 @@
     <string name="label_presupuesto_estimado">Presupuesto estimado (S/): </string>
     <string name="label_descuento">Descuento (S/): </string>
     <string name="label_presupuesto_final">Presupuesto final (S/): </string>
+    <string name="label_lista_problemas">Lista de problemas identificados:</string>
+    <string name="label_lista_soluciones">Lista de soluciones propuestas:</string>
+    <string name="label_presupuesto_final_resumen">Presupuesto final:</string>
+    <string name="label_repuestos_necesarios">Repuestos necesarios: </string>
 
 
     <string name="inicio_boton">Iniciar Sesión</string>
@@ -39,6 +44,9 @@
     <string name="boton_siguiente">Siguiente</string>
     <string name="boton_denegar">Denegar</string>
     <string name="boton_aprobar">Aprobar</string>
+    <string name="boton_cancelar">Cancelar</string>
+    <string name="boton_ingreso_ahora">Vehículo ingresa en este momento</string>
+    <string name="boton_ingreso_luego">Vehículo ingresará posteriormente</string>
 
     <string name="campo_doc_identidad">N° documento de identificación</string>
     <string name="campo_nombres">Nombres</string>
@@ -53,6 +61,7 @@
     <string name="campo_n_tecnicos_necesarios">N° de técnicos necesarios</string>
     <string name="campo_n_repuestos">N° de repuestos de ese tipo</string>
     <string name="campo_descuento">Descuento (%)</string>
+    <string name="campo_fecha_aprox_ingreso">Fecha aproximada de ingreso del vehículo</string>
 
     <string name="home_saludo1">BUENOS DÍAS</string>
     <string name="home_saludo2">BUENAS TARDES</string>
@@ -75,6 +84,7 @@
     <string name="topbar_opcion8">ASIGNACIÓN DE TÉCNICO</string>
     <string name="topbar_opcion9">RESUMEN DE CONSULTA</string>
     <string name="topbar_presupuesto">PRESUPUESTO</string>
+    <string name="topbar_registro_ost">REGISTRO DE OST</string>
 
     <string name="desplegable_tipo_doc_principal">Tipo de documento de identidad</string>
     <string name="desplegable_tipo_doc_opcion1">DNI</string>
@@ -94,6 +104,7 @@
     <string name="seccion_mano_obra">MANO DE OBRA</string>
     <string name="seccion_repuestos">REPUESTOS</string>
     <string name="seccion_monto_total">MONTO TOTAL</string>
+    <string name="seccion_ingreso_vehiculo">SOBRE EL INGRESO DE VEHÍCULO</string>
 
     <string name="busqueda_indicacion_repuesto">Ingrese el nombre del repuesto</string>
 
