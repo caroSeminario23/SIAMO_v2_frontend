@@ -43,7 +43,7 @@ fun RegistroCliente(
     val expandedSexo = rememberSaveable { mutableStateOf(false) }
 
     Scaffold (
-        topBar = { TopBar(tituloPagina = stringResource(R.string.topbar_opcion4), modo = "Retroceder", modifier = Modifier.padding(bottom = 40.dp)) },
+        topBar = { TopBar(tituloPagina = stringResource(R.string.topbar_opcion4), modo = "Retroceder") },
         bottomBar = { NavigationBarRecepcionista(opcionSeleccionada = 2) }
     ) { paddingValues ->
         LazyColumn (
@@ -58,7 +58,7 @@ fun RegistroCliente(
                     text = stringResource(id = R.string.topbar_opcion4),
                     style = MaterialTheme.typography.headlineMedium,
                     color = MaterialTheme.colorScheme.primary,
-                    modifier = modifier.padding(start = 20.dp, end = 20.dp, bottom = 40.dp)
+                    modifier = modifier.padding(start = 20.dp, end = 20.dp, bottom = 40.dp, top = 30.dp)
                 )
             }
 

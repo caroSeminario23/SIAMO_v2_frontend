@@ -10,6 +10,8 @@
     <string name="titulo_resumen_consulta2">DE CONSULTA</string>
     <string name="titulo_resumen_ost">DE ORDEN DE SERVICIO</string>
 
+    <string name="subtitulo_puesto_recepcionista">RECEPCIONISTA</string>
+    <string name="subtitulo_puesto_tecnico">TÉCNICO</string>
 
     <string name="inicio_indicacion">Ingrese sus datos para acceder a su perfil</string>
     <string name="inicio_cod_empleado">Código de empleado</string>
@@ -47,6 +49,7 @@
     <string name="boton_cancelar">Cancelar</string>
     <string name="boton_ingreso_ahora">Vehículo ingresa en este momento</string>
     <string name="boton_ingreso_luego">Vehículo ingresará posteriormente</string>
+    <string name="boton_guardar_cambios">Guardar cambios</string>
 
     <string name="campo_doc_identidad">N° documento de identificación</string>
     <string name="campo_nombres">Nombres</string>
@@ -85,6 +88,7 @@
     <string name="topbar_opcion9">RESUMEN DE CONSULTA</string>
     <string name="topbar_presupuesto">PRESUPUESTO</string>
     <string name="topbar_registro_ost">REGISTRO DE OST</string>
+    <string name="topbar_perfil_usuario">PERFIL DE USUARIO</string>
 
     <string name="desplegable_tipo_doc_principal">Tipo de documento de identidad</string>
     <string name="desplegable_tipo_doc_opcion1">DNI</string>

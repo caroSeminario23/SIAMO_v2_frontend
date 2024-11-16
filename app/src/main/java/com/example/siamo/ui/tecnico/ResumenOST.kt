@@ -51,8 +51,7 @@ fun ResumenOST(
         topBar = {
             TopBar(
                 tituloPagina = stringResource(R.string.topbar_registro_ost),
-                modo = "Retroceder",
-                modifier = Modifier.padding(bottom = 40.dp)
+                modo = "Retroceder"
             )
         },
         bottomBar = { NavigationBarRecepcionista(opcionSeleccionada = 2) }
@@ -72,7 +71,7 @@ fun ResumenOST(
                         style = MaterialTheme.typography.headlineMedium,
                         color = MaterialTheme.colorScheme.primary,
                         textAlign = TextAlign.Center,
-                        modifier = modifier
+                        modifier = modifier.padding(top = 12.dp)
                     )
 
                     Text(

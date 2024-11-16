@@ -43,7 +43,7 @@ fun ActualizacionCliente(
     modifier: Modifier = Modifier,
 ) {
     Scaffold (
-        topBar = { TopBar(tituloPagina = stringResource(R.string.topbar_opcion3), modo = "Retroceder", modifier = Modifier.padding(bottom = 40.dp)) },
+        topBar = { TopBar(tituloPagina = stringResource(R.string.topbar_opcion3), modo = "Retroceder") },
         bottomBar = { NavigationBarRecepcionista(opcionSeleccionada = 2) }
     ) { paddingValues ->
         LazyColumn (
@@ -59,7 +59,7 @@ fun ActualizacionCliente(
                     style = MaterialTheme.typography.headlineMedium,
                     color = MaterialTheme.colorScheme.primary,
                     textAlign = TextAlign.Center,
-                    modifier = modifier.padding(start = 20.dp, end = 20.dp, bottom = 40.dp)
+                    modifier = modifier.padding(start = 20.dp, end = 20.dp, bottom = 40.dp, top = 30.dp)
                 )
             }
 

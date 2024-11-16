@@ -59,7 +59,7 @@ fun ResumenConsulta(
     }
 
     Scaffold (
-        topBar = { TopBar(tituloPagina = stringResource(R.string.topbar_opcion9), modo = "Retroceder", modifier = Modifier.padding(bottom = 40.dp)) },
+        topBar = { TopBar(tituloPagina = stringResource(R.string.topbar_opcion9), modo = "Retroceder") },
         bottomBar = { NavigationBarRecepcionista(opcionSeleccionada = 2) }
     ) { paddingValues ->
         Column (
