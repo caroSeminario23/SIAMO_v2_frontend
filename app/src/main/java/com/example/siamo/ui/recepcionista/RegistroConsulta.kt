@@ -16,20 +16,35 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.siamo.R
+import com.example.siamo.ui.consulta.ConsultaUiState
+import com.example.siamo.ui.navigation.NavigationDestination
 import com.example.siamo.ui.theme.SIAMOTheme
 import com.example.siamo.ui.utils.NavigationBarRecepcionista
 import com.example.siamo.ui.utils.TopBar
 
+object RegistroConsultaDestination : NavigationDestination {
+    override val route = "registro_consulta"
+    override val titleRes = R.string.topbar_opcion7
+}
+
 @Composable
 fun RegistroConsulta(
+    consultaUiState: ConsultaUiState,
+    onNext: (String) -> Unit,
+    onPrevius: () -> Unit = {},
     modifier: Modifier = Modifier,
 ) {
+    var problemaDeclarado by rememberSaveable { mutableStateOf("") }
     Scaffold (
         topBar = { TopBar(tituloPagina = stringResource(R.string.topbar_opcion7), modo = "Retroceder") },
         bottomBar = { NavigationBarRecepcionista(opcionSeleccionada = 2) }
@@ -51,8 +66,8 @@ fun RegistroConsulta(
             Spacer(modifier = Modifier.padding(6.dp))
 
             OutlinedTextField(
-                value =  stringResource(id = R.string.ejemplo),
-                onValueChange = {},
+                value =  problemaDeclarado,
+                onValueChange = { problemaDeclarado = it },
                 label = {
                     Text(text = stringResource(id = R.string.campo_problema_declarado))
                 },
@@ -65,7 +80,7 @@ fun RegistroConsulta(
             Spacer(modifier = Modifier.padding(20.dp))
 
             Button(
-                onClick = { },
+                onClick = { onNext(problemaDeclarado) },
                 modifier = Modifier
                     .align(Alignment.End)
                     .padding(end = 15.dp)
@@ -83,11 +98,19 @@ fun RegistroConsulta(
 @Preview(showBackground = true, showSystemUi = false)
 @Composable
 fun RegistroConsultaLightPreview() {
-    SIAMOTheme (darkTheme = false) { RegistroConsulta() }
+    SIAMOTheme (darkTheme = false) { RegistroConsulta(
+        consultaUiState = ConsultaUiState(),
+        onNext = {},
+        onPrevius = {}
+    ) }
 }
 
 @Preview(showBackground = true, showSystemUi = false)
 @Composable
 fun RegistroConsultaDarkPreview() {
-    SIAMOTheme (darkTheme = true) { RegistroConsulta() }
+    SIAMOTheme (darkTheme = true) { RegistroConsulta(
+        consultaUiState = ConsultaUiState(),
+        onNext = {},
+        onPrevius = {}
+    ) }
 }

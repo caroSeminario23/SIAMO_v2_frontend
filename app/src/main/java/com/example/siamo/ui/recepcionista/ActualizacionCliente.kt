@@ -24,8 +24,10 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
@@ -34,19 +36,53 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.siamo.R
+import com.example.siamo.model.Cliente
+import com.example.siamo.model.Persona
+import com.example.siamo.ui.consulta.ConsultaUiState
+import com.example.siamo.ui.navigation.NavigationDestination
 import com.example.siamo.ui.theme.SIAMOTheme
+import com.example.siamo.ui.utils.AlertDialogError
+import com.example.siamo.ui.utils.AlertDialogOK
 import com.example.siamo.ui.utils.NavigationBarRecepcionista
 import com.example.siamo.ui.utils.TopBar
 
+object ActulizacionClienteDestination : NavigationDestination {
+    override val route = "actualizacion_cliente"
+    override val titleRes = R.string.topbar_opcion3
+}
+
 @Composable
 fun ActualizacionCliente(
+    consultaUiState: ConsultaUiState,
+    onAccept: () -> Unit,
+    onCancel: () -> Unit,
+    onUpdate: (Cliente) -> Unit,
+    onCorrect: () -> Unit,
+    onRetry: () -> Unit,
     modifier: Modifier = Modifier,
+
 ) {
-    Scaffold (
-        topBar = { TopBar(tituloPagina = stringResource(R.string.topbar_opcion3), modo = "Retroceder", modifier = Modifier.padding(bottom = 40.dp)) },
+    var cliente = consultaUiState.cliente
+    var nombres by rememberSaveable { mutableStateOf(cliente?.persona?.nombres ?: "") }
+    var apellidos by rememberSaveable { mutableStateOf(cliente?.persona?.apellidos ?: "") }
+    var tipo_documento by rememberSaveable { mutableStateOf(cliente?.persona?.tipo_doc ?: false) }
+    var documento by rememberSaveable { mutableStateOf(cliente?.persona?.num_doc ?: "") }
+    var direccion by rememberSaveable { mutableStateOf(cliente?.persona?.direccion ?: "") }
+    var email by rememberSaveable { mutableStateOf(cliente?.persona?.correo ?: "") }
+    var telefono by rememberSaveable { mutableStateOf(cliente?.persona?.telefono ?: "") }
+    var sexo by rememberSaveable { mutableStateOf(cliente?.persona?.sexo ?: "") }
+
+    Scaffold(
+        topBar = {
+            TopBar(
+                tituloPagina = stringResource(R.string.topbar_opcion3),
+                modo = "Retroceder",
+                modifier = Modifier.padding(bottom = 40.dp)
+            )
+        },
         bottomBar = { NavigationBarRecepcionista(opcionSeleccionada = 2) }
     ) { paddingValues ->
-        LazyColumn (
+        LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues),
@@ -65,8 +101,8 @@ fun ActualizacionCliente(
 
             item {
                 OutlinedTextField(
-                    value =  stringResource(id = R.string.ejemplo),
-                    onValueChange = {},
+                    value = nombres,
+                    onValueChange = { nombres = it },
                     label = {
                         Text(text = stringResource(id = R.string.campo_nombres))
                     },
@@ -78,8 +114,8 @@ fun ActualizacionCliente(
 
             item {
                 OutlinedTextField(
-                    value =  stringResource(id = R.string.ejemplo),
-                    onValueChange = {},
+                    value = apellidos,
+                    onValueChange = { apellidos = it },
                     label = {
                         Text(text = stringResource(id = R.string.campo_apellidos))
                     },
@@ -90,7 +126,7 @@ fun ActualizacionCliente(
             }
 
             item {
-                Box (
+                Box(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(start = 20.dp, end = 20.dp, bottom = 20.dp)
@@ -98,7 +134,7 @@ fun ActualizacionCliente(
                     ListItem(
                         headlineContent = {
                             Text(
-                                text = stringResource(id = R.string.desplegable_tipo_doc_principal),
+                                text = if(tipo_documento) "DNI" else "Carnet de extranjería",
                                 style = MaterialTheme.typography.bodyLarge,
                                 color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.38f)
                             )
@@ -124,8 +160,8 @@ fun ActualizacionCliente(
 
             item {
                 OutlinedTextField(
-                    value =  stringResource(id = R.string.ejemplo),
-                    onValueChange = {},
+                    value = documento,
+                    onValueChange = { documento = it },
                     label = {
                         Text(
                             text = stringResource(id = R.string.campo_doc_identidad)
@@ -141,8 +177,8 @@ fun ActualizacionCliente(
 
             item {
                 OutlinedTextField(
-                    value =  stringResource(id = R.string.ejemplo),
-                    onValueChange = {},
+                    value = direccion,
+                    onValueChange = { direccion = it },
                     label = {
                         Text(text = stringResource(id = R.string.campo_direccion))
                     },
@@ -154,8 +190,8 @@ fun ActualizacionCliente(
 
             item {
                 OutlinedTextField(
-                    value =  stringResource(id = R.string.ejemplo),
-                    onValueChange = {},
+                    value = email,
+                    onValueChange = { email = it },
                     label = {
                         Text(text = stringResource(id = R.string.campo_email))
                     },
@@ -167,8 +203,8 @@ fun ActualizacionCliente(
 
             item {
                 OutlinedTextField(
-                    value =  stringResource(id = R.string.ejemplo),
-                    onValueChange = {},
+                    value = telefono,
+                    onValueChange = { telefono = it },
                     label = {
                         Text(text = stringResource(id = R.string.campo_telefono))
                     },
@@ -183,7 +219,8 @@ fun ActualizacionCliente(
                     ListItem(
                         headlineContent = {
                             Text(
-                                text = stringResource(id = R.string.desplegable_sexo_principal),
+                                text = if(sexo == "M") {"Masculino" }else {if(sexo == "F") "Femenino" else "Sexo"
+                                },
                                 style = MaterialTheme.typography.bodyLarge,
                                 color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.38f)
                             )
@@ -214,13 +251,13 @@ fun ActualizacionCliente(
             }
 
             item {
-                Row (
+                Row(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(start = 20.dp, end = 20.dp, bottom = 40.dp)
                 ) {
                     Button(
-                        onClick = { },
+                        onClick = onCorrect,
                         modifier = Modifier.weight(1f)
                     ) {
                         Icon(
@@ -234,7 +271,24 @@ fun ActualizacionCliente(
                     Spacer(modifier = Modifier.weight(0.2f))
 
                     Button(
-                        onClick = { },
+                        onClick = {
+                            onUpdate(
+                                Cliente(
+                                    id_cliente = cliente?.id_cliente ?: 0,
+                                    id_persona = cliente?.persona?.id_persona ?: 0,
+                                    persona = Persona(
+                                        nombres = nombres,
+                                        apellidos = apellidos,
+                                        tipo_doc = tipo_documento,
+                                        num_doc = documento,
+                                        direccion = direccion,
+                                        correo = email,
+                                        telefono = telefono,
+                                        sexo = sexo
+                                    )
+                                )
+                            )
+                        },
                         modifier = Modifier.weight(1f)
                     ) {
                         Icon(
@@ -247,17 +301,48 @@ fun ActualizacionCliente(
                 }
             }
         }
+
+        if(consultaUiState.flag_ok_actualizar_cliente) {
+            AlertDialogOK(
+                titulo = stringResource(id = R.string.alerta_actualizacion_clienteok_title),
+                contenido = stringResource(id = R.string.alerta_actualizacion_clienteok_text),
+                onAccept = onAccept
+            )
+        }
+
+        if(consultaUiState.flag_error_actualizar_cliente) {
+            AlertDialogError(
+                titulo = stringResource(id = R.string.alerta_actualizacion_clienteok_title),
+                contenido = stringResource(id = R.string.alerta_actualizacion_clienteerror_text),
+                onConfirm = onRetry,
+                onCancel = onCancel
+            )
+        }
     }
 }
 
 @Preview(showBackground = true, showSystemUi = false)
 @Composable
 fun ActualizacionClienteLightPreview() {
-    SIAMOTheme (darkTheme = false) { ActualizacionCliente() }
+    SIAMOTheme(darkTheme = false) { ActualizacionCliente(
+        consultaUiState = ConsultaUiState( flag_ok_actualizar_cliente = true ),
+        onAccept = {},
+        onCancel = {},
+        onRetry = {},
+        onUpdate = {},
+        onCorrect = {}
+    ) }
 }
 
 @Preview(showBackground = true, showSystemUi = false)
 @Composable
 fun ActualizacionClienteDarkPreview() {
-    SIAMOTheme (darkTheme = true) { ActualizacionCliente() }
+    SIAMOTheme(darkTheme = true) { ActualizacionCliente(
+        consultaUiState = ConsultaUiState( flag_error_actualizar_cliente = true ),
+        onAccept = {},
+        onCancel = {},
+        onRetry = {},
+        onUpdate = {},
+        onCorrect = {}
+    ) }
 }

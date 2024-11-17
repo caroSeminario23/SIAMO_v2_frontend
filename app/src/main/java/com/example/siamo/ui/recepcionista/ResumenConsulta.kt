@@ -1,5 +1,6 @@
 package com.example.siamo.ui.recepcionista
 
+import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -22,47 +23,58 @@ import com.example.siamo.R
 import com.example.siamo.data.consulta_cliente
 import com.example.siamo.data.consulta_tecnico
 import com.example.siamo.data.consulta_vehiculo
+import com.example.siamo.model.Automovil
+import com.example.siamo.model.Cliente
+import com.example.siamo.model.Empleado
+import com.example.siamo.model.Tecnico
+import com.example.siamo.ui.consulta.ConsultaUiState
+import com.example.siamo.ui.navigation.NavigationDestination
 import com.example.siamo.ui.theme.SIAMOTheme
+import com.example.siamo.ui.utils.AlertDialogError
+import com.example.siamo.ui.utils.AlertDialogOK
 import com.example.siamo.ui.utils.NavigationBarRecepcionista
 import com.example.siamo.ui.utils.TopBar
 
+object ResumenConsultaDestination : NavigationDestination {
+    override val route = "resumen_consulta"
+    override val titleRes = R.string.topbar_opcion9
+}
+
 @Composable
 fun ResumenConsulta(
+    consultaUiState: ConsultaUiState,
+    onRegister: () -> Unit,
+    onAccept: () -> Unit = {},
+    onRetry: () -> Unit = {},
+    onCancel: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
-    val cliente = consulta_cliente(
-        nombres = "Juan Álvaro",
-        apellidos = "Perez Bustamante",
-        tipoDocumento = 1,
-        numDocumento = "12345678"
-    )
 
-    val vehiculo = consulta_vehiculo(
-        placa = "ABC123",
-        marca = "Toyota",
-        modelo = "Corolla",
-    )
+    val cliente = consultaUiState.cliente
+    val automovil = consultaUiState.automovil
+    val tecnico = consultaUiState.tecnico_asignado
 
-    val tecnico = consulta_tecnico(
-        nombres = "Pedro",
-        apellidos = "Gonzales",
-        codEmpleado = 123
-    )
+    Log.d(cliente.toString(), "Cliente")
+    Log.d(automovil.toString(), "Automovil")
+    Log.d(tecnico.toString(), "Tecnico")
 
-    val probDeclarado = "No enciende la luz del tablero"
-
-    var nombreDocumento = "DNI"
-
-    when (cliente.tipoDocumento) {
-        1 -> nombreDocumento = "DNI"
-        2 -> nombreDocumento = "Carnet de Extranjeria"
+    var nombreDocumento = if (cliente?.persona?.tipo_doc == true) {
+        "DNI"
+    } else {
+        "CE"
     }
 
-    Scaffold (
-        topBar = { TopBar(tituloPagina = stringResource(R.string.topbar_opcion9), modo = "Retroceder", modifier = Modifier.padding(bottom = 40.dp)) },
+    Scaffold(
+        topBar = {
+            TopBar(
+                tituloPagina = stringResource(R.string.topbar_opcion9),
+                modo = "Retroceder",
+                modifier = Modifier.padding(bottom = 40.dp)
+            )
+        },
         bottomBar = { NavigationBarRecepcionista(opcionSeleccionada = 2) }
     ) { paddingValues ->
-        Column (
+        Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues),
@@ -97,7 +109,8 @@ fun ResumenConsulta(
             )
 
             Text(
-                text = cliente.nombres + " " + cliente.apellidos,
+                text = (cliente?.persona?.nombres ?: "NA") + " " + (cliente?.persona?.apellidos
+                    ?: "NA"),
                 style = MaterialTheme.typography.labelLarge,
                 color = MaterialTheme.colorScheme.onSecondaryContainer,
                 textAlign = TextAlign.Start,
@@ -105,7 +118,7 @@ fun ResumenConsulta(
             )
 
             Text(
-                text = nombreDocumento + ": " + cliente.numDocumento,
+                text = (nombreDocumento ?: "DOC") + ": " + (cliente?.persona?.num_doc ?: "NA"),
                 style = MaterialTheme.typography.labelLarge,
                 color = MaterialTheme.colorScheme.onSecondaryContainer,
                 textAlign = TextAlign.Start,
@@ -121,7 +134,7 @@ fun ResumenConsulta(
             )
 
             Text(
-                text = "Placa: " + vehiculo.placa,
+                text = "Placa: " + (automovil?.placa ?: "NA"),
                 style = MaterialTheme.typography.labelLarge,
                 color = MaterialTheme.colorScheme.onSecondaryContainer,
                 textAlign = TextAlign.Start,
@@ -129,7 +142,7 @@ fun ResumenConsulta(
             )
 
             Text(
-                text = "Placa: " + vehiculo.marca,
+                text = "Marca: " + (automovil?.marca ?: "NA"),
                 style = MaterialTheme.typography.labelLarge,
                 color = MaterialTheme.colorScheme.onSecondaryContainer,
                 textAlign = TextAlign.Start,
@@ -137,7 +150,7 @@ fun ResumenConsulta(
             )
 
             Text(
-                text = "Placa: " + vehiculo.modelo,
+                text = "Modelo: " + (automovil?.modelo ?: "NA"),
                 style = MaterialTheme.typography.labelLarge,
                 color = MaterialTheme.colorScheme.onSecondaryContainer,
                 textAlign = TextAlign.Start,
@@ -153,7 +166,8 @@ fun ResumenConsulta(
             )
 
             Text(
-                text = tecnico.nombres + " " + tecnico.apellidos,
+                text = (tecnico?.empleado?.persona?.nombres
+                    ?: "NA") + " " + (tecnico?.empleado?.persona?.apellidos ?: "NA"),
                 style = MaterialTheme.typography.labelLarge,
                 color = MaterialTheme.colorScheme.onSecondaryContainer,
                 textAlign = TextAlign.Start,
@@ -161,7 +175,7 @@ fun ResumenConsulta(
             )
 
             Text(
-                text = "Codigo de empleado: " + tecnico.codEmpleado,
+                text = "Codigo de empleado: " + (tecnico?.empleado?.id_empleado ?: "NA"),
                 style = MaterialTheme.typography.labelLarge,
                 color = MaterialTheme.colorScheme.onSecondaryContainer,
                 textAlign = TextAlign.Start,
@@ -177,7 +191,7 @@ fun ResumenConsulta(
             )
 
             Text(
-                text = probDeclarado,
+                text = consultaUiState.problema ?: "NA",
                 style = MaterialTheme.typography.labelLarge,
                 color = MaterialTheme.colorScheme.onSecondaryContainer,
                 textAlign = TextAlign.Start,
@@ -187,7 +201,7 @@ fun ResumenConsulta(
             Spacer(modifier = Modifier.padding(12.dp))
 
             Button(
-                onClick = { },
+                onClick = { onRegister() },
                 modifier = Modifier
                     .align(Alignment.End)
                     .padding(end = 20.dp)
@@ -202,17 +216,100 @@ fun ResumenConsulta(
 
             Spacer(modifier = Modifier.padding(15.dp))
         }
+
+        if (consultaUiState.flag_ok_registrar_consulta) {
+            AlertDialogOK(
+                titulo = stringResource(id = R.string.registro_consulta_title),
+                contenido = stringResource(id = R.string.registro_consultaok_content),
+                onAccept = onAccept
+            )
+        }
+
+        if (consultaUiState.flag_error_registrar_consulta) {
+            AlertDialogError(
+                titulo = stringResource(id = R.string.registro_consulta_title),
+                contenido = stringResource(id = R.string.registro_consultaerror_content),
+                onCancel = onCancel,
+                onConfirm = onRetry
+            )
+        }
     }
 }
 
 @Preview(showBackground = true, showSystemUi = false)
 @Composable
 fun ResumenConsultaLightPreview() {
-    SIAMOTheme (darkTheme = false) { ResumenConsulta() }
+    SIAMOTheme(darkTheme = false) {
+        ResumenConsulta(
+            consultaUiState = ConsultaUiState(
+                cliente = Cliente(
+                    id_persona = 1,
+                    persona = com.example.siamo.model.Persona(
+                        nombres = "Juan",
+                        apellidos = "Perez",
+                        tipo_doc = true,
+                        num_doc = "12345678"
+                    )
+                ),
+                automovil = Automovil(
+                    placa = "ABC-123",
+                    marca = "Toyota",
+                    modelo = "Corolla"
+                ),
+                tecnico_asignado = Tecnico(
+                    id_tecnico = 1,
+                    empleado = Empleado(
+                        id_empleado = 1,
+                        persona = com.example.siamo.model.Persona(
+                            nombres = "Juan",
+                            apellidos = "Perez"
+                        )
+                    )
+                )
+            ),
+            onRegister = {},
+            onAccept = {},
+            onRetry = {},
+            onCancel = {}
+        )
+    }
 }
 
 @Preview(showBackground = true, showSystemUi = false)
 @Composable
 fun ResumenConsultaDarkPreview() {
-    SIAMOTheme (darkTheme = true) { ResumenConsulta() }
+    SIAMOTheme(darkTheme = true) {
+        ResumenConsulta(
+            consultaUiState = ConsultaUiState(
+                cliente = Cliente(
+                    id_persona = 1,
+                    persona = com.example.siamo.model.Persona(
+                        nombres = "Juan",
+                        apellidos = "Perez",
+                        tipo_doc = true,
+                        num_doc = "12345678"
+                    )
+                ),
+                automovil = Automovil(
+                    placa = "ABC-123",
+                    marca = "Toyota",
+                    modelo = "Corolla"
+                ),
+                tecnico_asignado = Tecnico(
+                    id_tecnico = 1,
+                    empleado = Empleado(
+                        id_empleado = 1,
+                        persona = com.example.siamo.model.Persona(
+                            nombres = "Juan",
+                            apellidos = "Perez"
+                        )
+                    )
+                )
+            ),
+            onRegister = {},
+            onAccept = {},
+            onRetry = {},
+            onCancel = {}
+        )
+    }
 }

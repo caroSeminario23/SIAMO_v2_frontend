@@ -15,6 +15,10 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -22,14 +26,32 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.siamo.R
+import com.example.siamo.model.Automovil
+import com.example.siamo.ui.consulta.ConsultaUiState
+import com.example.siamo.ui.navigation.NavigationDestination
 import com.example.siamo.ui.theme.SIAMOTheme
+import com.example.siamo.ui.utils.AlertDialogError
+import com.example.siamo.ui.utils.AlertDialogOK
 import com.example.siamo.ui.utils.NavigationBarRecepcionista
 import com.example.siamo.ui.utils.TopBar
 
+object RegistroVehiculoDestination : NavigationDestination {
+    override val route = "registro_vehiculo"
+    override val titleRes = R.string.topbar_opcion6
+}
+
 @Composable
 fun RegistroVehiculo(
+    consultaUiState: ConsultaUiState,
+    onAccept: () -> Unit,
+    onCancel: () -> Unit = {},
+    onRegister: (Automovil) -> Unit = {},
+    onRetry: () -> Unit = {},
     modifier: Modifier = Modifier,
 ) {
+    var nro_placa by rememberSaveable { mutableStateOf("") }
+    var marca by rememberSaveable { mutableStateOf("") }
+    var modelo by rememberSaveable { mutableStateOf("") }
     Scaffold (
         topBar = { TopBar(tituloPagina = stringResource(R.string.topbar_opcion6), modo = "Retroceder", modifier = Modifier.padding(bottom = 40.dp)) },
         bottomBar = { NavigationBarRecepcionista(opcionSeleccionada = 2) }
@@ -59,8 +81,8 @@ fun RegistroVehiculo(
             )
 
             OutlinedTextField(
-                value =  stringResource(id = R.string.ejemplo),
-                onValueChange = {},
+                value =  nro_placa,
+                onValueChange = {nro_placa = it},
                 label = {
                     Text(text = stringResource(id = R.string.campo_n_placa))
                 },
@@ -70,8 +92,8 @@ fun RegistroVehiculo(
             )
 
             OutlinedTextField(
-                value =  stringResource(id = R.string.ejemplo),
-                onValueChange = {},
+                value =  marca,
+                onValueChange = { marca = it },
                 label = {
                     Text(text = stringResource(id = R.string.campo_marca))
                 },
@@ -81,8 +103,8 @@ fun RegistroVehiculo(
             )
 
             OutlinedTextField(
-                value =  stringResource(id = R.string.ejemplo),
-                onValueChange = {},
+                value =  modelo,
+                onValueChange = { modelo = it },
                 label = {
                     Text(text = stringResource(id = R.string.campo_modelo))
                 },
@@ -94,7 +116,7 @@ fun RegistroVehiculo(
             Spacer(modifier = Modifier.padding(12.dp))
 
             Button(
-                onClick = { },
+                onClick = {onRegister(Automovil(id_cliente = consultaUiState.cliente?.id_cliente, placa = nro_placa, marca = marca, modelo = modelo))},
                 modifier = Modifier
                     .align(Alignment.End)
                     .padding(end = 20.dp)
@@ -109,17 +131,40 @@ fun RegistroVehiculo(
 
             Spacer(modifier = Modifier.padding(15.dp))
         }
+
+        if (consultaUiState.flag_error_registrar_automovil) {
+            AlertDialogError(
+                titulo = stringResource(id = R.string.alerta_registro_vehiculo_titulo),
+                contenido = stringResource(id = R.string.alerta_registro_vehiculoerror_mensaje),
+                onConfirm = onRetry,
+                onCancel = onCancel
+            )
+        }
+
+        if (consultaUiState.flag_ok_registrar_automovil) {
+            AlertDialogOK(
+                titulo = stringResource(id = R.string.alerta_registro_vehiculo_titulo),
+                contenido = stringResource(id = R.string.alerta_registro_vehiculook_mensaje),
+                onAccept = onAccept
+            )
+        }
     }
 }
 
 @Preview(showBackground = true, showSystemUi = false)
 @Composable
 fun RegistroVehiculoLightPreview() {
-    SIAMOTheme (darkTheme = false) { RegistroVehiculo() }
+    SIAMOTheme (darkTheme = false) { RegistroVehiculo(
+        consultaUiState = ConsultaUiState(),
+        onAccept = {}
+    ) }
 }
 
 @Preview(showBackground = true, showSystemUi = false)
 @Composable
 fun RegistroVehiculoDarkPreview() {
-    SIAMOTheme (darkTheme = true) { RegistroVehiculo() }
+    SIAMOTheme (darkTheme = true) { RegistroVehiculo(
+        consultaUiState = ConsultaUiState(),
+        onAccept = {}
+    ) }
 }

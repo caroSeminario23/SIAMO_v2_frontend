@@ -82,4 +82,29 @@
     <string name="desplegable_lista_tecnico_opcion5">Técnico 5</string>
 
     <string name="ejemplo">Ejemplo</string>
+
+    <string name="alerta_aceptar">Aceptar</string>
+    <string name="alerta_cancelar">Cancelar</string>
+    <string name="alerta_volver_a_intentar">Volver a intentar</string>
+
+    <string name="alerta_busqueda_cliente_title">Búsqueda de cliente</string>
+    <string name="alerta_busqueda_clienteok_text">El cliente se encuentra registrado</string>
+    <string name="alerta_busqueda_clienteerror_text">El cliente no se encuentra registrado</string>
+    <string name="alerta_actualizacion_clienteok_title">Actualización de cliente</string>
+    <string name="alerta_actualizacion_clienteok_text">Los datos del cliente han sido actualizados exitosamente</string>
+    <string name="alerta_actualizacion_clienteerror_text">Los datos del cliente no ha podido ser actualizados</string>
+    <string name="alerta_registro_cliente_title">Registro de cliente</string>
+    <string name="alerta_registro_clienteerror_text">El cliente no ha podido ser registrado exitosamente</string>
+    <string name="alerta_registro_clienteok_text">El cliente ha sido registrado exitosamente</string>
+    <string name="alerta_busqueda_vehiculo_titulo">Búsqueda de vehículo</string>
+    <string name="alerta_busqueda_vehiculoerror_mensaje">El vehículo no se encuentra registrado</string>
+    <string name="alerta_busqueda_vehiculook_mensaje">El vehículo se encuentra registrado</string>
+    <string name="alerta_registro_vehiculo_titulo">Registro de vehículo</string>
+    <string name="alerta_registro_vehiculoerror_mensaje">El vehículo no ha podido ser registrado exitosamente</string>
+    <string name="alerta_registro_vehiculook_mensaje">El vehículo ha sido registrado exitosamente</string>
+    <string name="registro_consulta_title">Registro de consulta</string>
+    <string name="registro_consultaok_content">La consulta ha sido registrada con éxito y el técnico ha sido notificado.</string>
+    <string name="registro_consultaerror_content">La consulta no ha podido ser registrada.\n</string>
+
+
 </resources>

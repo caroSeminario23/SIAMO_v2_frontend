@@ -31,16 +31,40 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.siamo.R
+import com.example.siamo.model.Persona
+import com.example.siamo.ui.consulta.ConsultaUiState
+import com.example.siamo.ui.navigation.NavigationDestination
 import com.example.siamo.ui.theme.SIAMOTheme
+import com.example.siamo.ui.utils.AlertDialogError
+import com.example.siamo.ui.utils.AlertDialogOK
 import com.example.siamo.ui.utils.NavigationBarRecepcionista
 import com.example.siamo.ui.utils.TopBar
 
+object RegistroClienteDestination : NavigationDestination {
+    override val route = "registro_cliente"
+    override val titleRes = R.string.topbar_opcion4
+}
+
 @Composable
 fun RegistroCliente(
+    consultaUiState: ConsultaUiState,
     modifier: Modifier = Modifier,
+    onAccept : () -> Unit = {},
+    onCancel : () -> Unit = {},
+    onRetry : () -> Unit = {},
+    onRegister : (Persona) -> Unit = {},
 ) {
     val expandedDocIdentidad = rememberSaveable { mutableStateOf(false) }
     val expandedSexo = rememberSaveable { mutableStateOf(false) }
+
+    val nombres = rememberSaveable { mutableStateOf("") }
+    val apellidos = rememberSaveable { mutableStateOf("") }
+    val tipoDoc = rememberSaveable { mutableStateOf("Tipo de documento de identidad") }
+    val docIdentidad = rememberSaveable { mutableStateOf("") }
+    val direccion = rememberSaveable { mutableStateOf("") }
+    val email = rememberSaveable { mutableStateOf("") }
+    val telefono = rememberSaveable { mutableStateOf("") }
+    val sexo = rememberSaveable { mutableStateOf("Sexo") }
 
     Scaffold (
         topBar = { TopBar(tituloPagina = stringResource(R.string.topbar_opcion4), modo = "Retroceder", modifier = Modifier.padding(bottom = 40.dp)) },
@@ -64,8 +88,8 @@ fun RegistroCliente(
 
             item {
                 OutlinedTextField(
-                    value =  stringResource(id = R.string.ejemplo),
-                    onValueChange = {},
+                    value =  nombres.value,
+                    onValueChange = { nombres.value = it },
                     label = {
                         Text(text = stringResource(id = R.string.campo_nombres))
                     },
@@ -77,8 +101,8 @@ fun RegistroCliente(
 
             item {
                 OutlinedTextField(
-                    value =  stringResource(id = R.string.ejemplo),
-                    onValueChange = {},
+                    value =  apellidos.value,
+                    onValueChange = {apellidos.value = it},
                     label = {
                         Text(text = stringResource(id = R.string.campo_apellidos))
                     },
@@ -97,7 +121,7 @@ fun RegistroCliente(
                     ListItem(
                         headlineContent = {
                             Text(
-                                text = stringResource(id = R.string.desplegable_tipo_doc_principal),
+                                text = tipoDoc.value,
                                 style = MaterialTheme.typography.bodyLarge,
                                 color = MaterialTheme.colorScheme.onSurface
                             )
@@ -134,6 +158,7 @@ fun RegistroCliente(
                                 ) },
                             onClick = {
                                 expandedDocIdentidad.value = false
+                                tipoDoc.value = "DNI"
                             }
                         )
 
@@ -144,6 +169,7 @@ fun RegistroCliente(
                                 ) },
                             onClick = {
                                 expandedDocIdentidad.value = false
+                                tipoDoc.value = "Carnet de extranjería"
                             }
                         )
                     }
@@ -152,8 +178,8 @@ fun RegistroCliente(
 
             item {
                 OutlinedTextField(
-                    value =  stringResource(id = R.string.ejemplo),
-                    onValueChange = {},
+                    value =  docIdentidad.value,
+                    onValueChange = {docIdentidad.value = it},
                     label = {
                         Text(text = stringResource(id = R.string.campo_doc_identidad))
                     },
@@ -165,8 +191,8 @@ fun RegistroCliente(
 
             item {
                 OutlinedTextField(
-                    value =  stringResource(id = R.string.ejemplo),
-                    onValueChange = {},
+                    value =  direccion.value,
+                    onValueChange = {direccion.value = it},
                     label = {
                         Text(text = stringResource(id = R.string.campo_direccion))
                     },
@@ -178,8 +204,8 @@ fun RegistroCliente(
 
             item {
                 OutlinedTextField(
-                    value =  stringResource(id = R.string.ejemplo),
-                    onValueChange = {},
+                    value =  email.value,
+                    onValueChange = {email.value = it},
                     label = {
                         Text(text = stringResource(id = R.string.campo_email))
                     },
@@ -191,8 +217,8 @@ fun RegistroCliente(
 
             item {
                 OutlinedTextField(
-                    value =  stringResource(id = R.string.ejemplo),
-                    onValueChange = {},
+                    value =  telefono.value,
+                    onValueChange = {telefono.value = it},
                     label = {
                         Text(text = stringResource(id = R.string.campo_telefono))
                     },
@@ -207,7 +233,7 @@ fun RegistroCliente(
                     ListItem(
                         headlineContent = {
                             Text(
-                                text = stringResource(id = R.string.desplegable_sexo_principal),
+                                text = sexo.value,
                                 style = MaterialTheme.typography.bodyLarge,
                                 color = MaterialTheme.colorScheme.onSurface
                             )
@@ -246,6 +272,7 @@ fun RegistroCliente(
                                 ) },
                             onClick = {
                                 expandedSexo.value = false
+                                sexo.value = "Femenino"
                             }
                         )
 
@@ -256,6 +283,7 @@ fun RegistroCliente(
                                 ) },
                             onClick = {
                                 expandedSexo.value = false
+                                sexo.value = "Masculino"
                             }
                         )
                     }
@@ -268,7 +296,16 @@ fun RegistroCliente(
 
             item {
                 Button(
-                    onClick = { },
+                    onClick = {onRegister(Persona(
+                        nombres = nombres.value,
+                        apellidos = apellidos.value,
+                        tipo_doc = if (tipoDoc.value == "DNI") true else false,
+                        num_doc = docIdentidad.value,
+                        direccion = direccion.value,
+                        correo = email.value,
+                        telefono = telefono.value,
+                        sexo = sexo.value.substring(0, 1)
+                    ))},
                     modifier = Modifier
                 ) {
                     Icon(
@@ -284,17 +321,39 @@ fun RegistroCliente(
                 Spacer(modifier = Modifier.padding(15.dp))
             }
         }
+
+        if(consultaUiState.flag_error_registrar_cliente) {
+            AlertDialogError(
+                titulo = stringResource(id = R.string.alerta_registro_cliente_title),
+                contenido = stringResource(id = R.string.alerta_registro_clienteerror_text),
+                onConfirm = onRetry,
+                onCancel = onCancel
+            )
+
+        }
+
+        if (consultaUiState.flag_ok_registrar_cliente) {
+            AlertDialogOK(
+                titulo = stringResource(id = R.string.alerta_registro_cliente_title),
+                contenido = stringResource(id = R.string.alerta_registro_clienteok_text),
+                onAccept = onAccept
+            )
+        }
     }
 }
 
 @Preview(showBackground = true, showSystemUi = false)
 @Composable
 fun RegistroClienteLightPreview() {
-    SIAMOTheme (darkTheme = false) { RegistroCliente() }
+    SIAMOTheme (darkTheme = false) { RegistroCliente(
+        consultaUiState = ConsultaUiState()
+    ) }
 }
 
 @Preview(showBackground = true, showSystemUi = false)
 @Composable
 fun RegistroClienteDarkPreview() {
-    SIAMOTheme (darkTheme = true) { RegistroCliente() }
+    SIAMOTheme (darkTheme = true) { RegistroCliente(
+        consultaUiState = ConsultaUiState()
+    ) }
 }

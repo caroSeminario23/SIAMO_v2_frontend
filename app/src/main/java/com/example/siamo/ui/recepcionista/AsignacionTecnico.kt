@@ -21,36 +21,50 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.siamo.R
-import com.example.siamo.data.tecnico_disponible
+import com.example.siamo.model.Tecnico
+import com.example.siamo.ui.consulta.ConsultaUiState
+import com.example.siamo.ui.navigation.NavigationDestination
 import com.example.siamo.ui.theme.SIAMOTheme
 import com.example.siamo.ui.utils.NavigationBarRecepcionista
 import com.example.siamo.ui.utils.TopBar
 
+object AsignacionTecnicoDestination : NavigationDestination {
+    override val route = "asignacion_tecnico"
+    override val titleRes = R.string.topbar_opcion8
+}
+
 @Composable
 fun AsignacionTenico(
+    consultaUiState: ConsultaUiState,
+    onNext: (Tecnico) -> Unit,
+    onPrevius: () -> Unit = {},
     modifier: Modifier = Modifier,
 ) {
-    val expandedListaTecnicos = rememberSaveable { mutableStateOf(false) }
-    val listaTecnicos = listOf(
-        tecnico_disponible("Juan Pérez", 3),
-        tecnico_disponible("María Rodríguez", 2),
-        tecnico_disponible("Pedro Gómez", 1),
-        tecnico_disponible("Ana López", 0)
-    )
 
-    Scaffold (
-        topBar = { TopBar(tituloPagina = stringResource(R.string.topbar_opcion8), modo = "Retroceder") },
+    var expandedListaTecnicos = rememberSaveable { mutableStateOf(false) }
+
+    var tecnicoSeleccionado = Tecnico(id_tecnico = 0)
+
+    Scaffold(
+        topBar = {
+            TopBar(
+                tituloPagina = stringResource(R.string.topbar_opcion8),
+                modo = "Retroceder"
+            )
+        },
         bottomBar = { NavigationBarRecepcionista(opcionSeleccionada = 2) }
     ) { paddingValues ->
-        Column (
+        Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues),
@@ -66,7 +80,7 @@ fun AsignacionTenico(
 
             Spacer(modifier = Modifier.padding(6.dp))
 
-            Box (
+            Box(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(start = 20.dp, end = 20.dp, bottom = 20.dp)
@@ -74,7 +88,11 @@ fun AsignacionTenico(
                 ListItem(
                     headlineContent = {
                         Text(
-                            text = stringResource(id = R.string.desplegable_lista_tecnico_principal),
+                            text = if (tecnicoSeleccionado.id_tecnico == 0)
+                                stringResource(id = R.string.desplegable_lista_tecnico_principal)
+                            else
+                                (tecnicoSeleccionado.empleado?.persona?.nombres
+                                    ?: "Nombre") + " " + (tecnicoSeleccionado.empleado?.persona?.apellidos),
                             style = MaterialTheme.typography.bodyLarge,
                             color = MaterialTheme.colorScheme.onSurface
                         )
@@ -104,11 +122,17 @@ fun AsignacionTenico(
                         .fillMaxWidth()
                         .padding(start = 20.dp, end = 20.dp, bottom = 10.dp)
                 ) {
-                    listaTecnicos.forEach { tecnico ->
+                    consultaUiState.tecnicos?.forEach { tecnico ->
                         DropdownMenuItem(
-                            text = { Text( text = tecnico.nombre + " | OSTs pendientes: " + tecnico.numOstPendientes) },
+                            text = {
+                                Text(
+                                    text = (tecnico.empleado?.persona?.nombres
+                                        ?: "NA")
+                                )
+                            },
                             onClick = {
                                 expandedListaTecnicos.value = false
+                                tecnicoSeleccionado = tecnico
                             }
                         )
                     }
@@ -118,7 +142,9 @@ fun AsignacionTenico(
             Spacer(modifier = Modifier.padding(20.dp))
 
             Button(
-                onClick = { },
+                onClick = {
+                    if(tecnicoSeleccionado.id_tecnico != 0) onNext(tecnicoSeleccionado)
+                },
                 modifier = Modifier
                     .align(Alignment.End)
                     .padding(end = 20.dp)
@@ -136,11 +162,21 @@ fun AsignacionTenico(
 @Preview(showBackground = true, showSystemUi = false)
 @Composable
 fun AsignacionTecnicoLightPreview() {
-    SIAMOTheme (darkTheme = false) { AsignacionTenico() }
+    SIAMOTheme(darkTheme = false) {
+        AsignacionTenico(
+            consultaUiState = ConsultaUiState(),
+            onNext = {}
+        )
+    }
 }
 
 @Preview(showBackground = true, showSystemUi = false)
 @Composable
 fun AsignacionTecnicoDarkPreview() {
-    SIAMOTheme (darkTheme = true) { AsignacionTenico() }
+    SIAMOTheme(darkTheme = true) {
+        AsignacionTenico(
+            consultaUiState = ConsultaUiState(),
+            onNext = {}
+        )
+    }
 }
