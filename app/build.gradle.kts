@@ -30,11 +30,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
     }
     buildFeatures {
         compose = true
@@ -53,6 +53,7 @@ dependencies {
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
+
     implementation(libs.androidx.activity.compose)
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.ui)
@@ -61,7 +62,7 @@ dependencies {
     implementation(libs.androidx.material3)
     // Material icons extended de Google
     implementation("androidx.compose.material:material-icons-extended")
-
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1")
     testImplementation(libs.junit)
 
     androidTestImplementation(libs.androidx.junit)
