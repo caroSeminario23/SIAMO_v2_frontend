@@ -1,13 +1,17 @@
-package com.example.siamo.ui.tecnico
+package com.example.siamo.ui.tecnico.presupuesto
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Send
@@ -17,6 +21,7 @@ import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
@@ -24,6 +29,7 @@ import androidx.compose.material3.SearchBar
 import androidx.compose.material3.SearchBarDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -31,6 +37,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -45,31 +52,12 @@ import com.example.siamo.ui.utils.TopBar
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Presupuesto(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    viewModel: PresupuestoViewModel,
+    onNavigateToAprobado: () -> Unit = {},
+    onNavigateToDenegado: () -> Unit = {}
 ) {
-    val listaRepuestos = listOf(
-        consulta_repuesto("Repuesto 1", 100.00),
-        consulta_repuesto("Repuesto 2", 200.00),
-        consulta_repuesto("Repuesto 3", 300.00),
-        consulta_repuesto("Repuesto 4", 400.00),
-        consulta_repuesto("Repuesto 5", 500.00),
-        consulta_repuesto("Repuesto 6", 600.00),
-        consulta_repuesto("Repuesto 7", 700.00),
-        consulta_repuesto("Repuesto 8", 800.00),
-        consulta_repuesto("Repuesto 9", 900.00),
-        consulta_repuesto("Repuesto 10", 1000.00)
-    )
-    val listaRepuestosSeleccionados = listOf(
-        consulta_repuesto("Repuesto 1", 100.00),
-        consulta_repuesto("Repuesto 2", 200.00),
-        consulta_repuesto("Repuesto 3", 300.00),
-        consulta_repuesto("Repuesto 4", 400.00),
-        consulta_repuesto("Repuesto 5", 500.00)
-    )
-
-    var query by rememberSaveable { mutableStateOf("") }
-    var resultadosBusqueda by rememberSaveable { mutableStateOf(listaRepuestos) }
-    var desplegableRepuestos by rememberSaveable { mutableStateOf(false) }
+    val uiState by viewModel.uiState.collectAsState()
 
     Scaffold (
         topBar = { TopBar(tituloPagina = stringResource(id = R.string.topbar_presupuesto), modo = "Retroceder" ) },
@@ -98,11 +86,14 @@ fun Presupuesto(
 
             item {
                 OutlinedTextField(
-                    value = stringResource(id = R.string.ejemplo),
-                    onValueChange = {},
+                    value = uiState.numeroTecnicos,
+                    onValueChange = {
+                        viewModel.actualizarNumeroTecnicos(it)
+                    },
                     label = {
                         Text(stringResource(id = R.string.campo_n_tecnicos_necesarios))
                     },
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(start = 16.dp, end = 16.dp, bottom = 16.dp, top = 4.dp)
@@ -118,20 +109,15 @@ fun Presupuesto(
             item {
                 Box {
                     SearchBar(
-                        query = query,
-                        onQueryChange = {
-                            query = it
-                            resultadosBusqueda = listaRepuestos.filter { repuesto ->
-                                repuesto.nombre.contains(query, ignoreCase = true)
-                            }
-                            desplegableRepuestos = resultadosBusqueda.isNotEmpty()
-                        },
-                        onSearch = {
-                            desplegableRepuestos = false
-                        },
-                        active = false,
-                        onActiveChange = {},
-                        placeholder = { Text(text = stringResource(id = R.string.busqueda_indicacion_repuesto)) },
+                        query = uiState.query,
+                        onQueryChange = { viewModel.actualizarQuery(it) },
+                        onSearch = { viewModel.onSearch() },
+                        active = uiState.searchBarActiva,
+                        onActiveChange = {  },
+                        placeholder = {
+                            Text(
+                                text = stringResource(id = R.string.busqueda_indicacion_repuesto),
+                                modifier = Modifier.wrapContentWidth()) },
                         colors = SearchBarDefaults.colors(
                             containerColor = MaterialTheme.colorScheme.surfaceContainerHigh
                         ),
@@ -143,34 +129,37 @@ fun Presupuesto(
                                 tint = MaterialTheme.colorScheme.onSurfaceVariant
                             )
                         },
-                        content = { }
+                        content = {}
                     )
 
                     DropdownMenu(
-                        expanded = desplegableRepuestos,
-                        onDismissRequest = { desplegableRepuestos = false },
+                        expanded = uiState.mostrarResultadosBusqueda,
+                        onDismissRequest = {
+                            viewModel.onSearch() },
                         modifier = Modifier.fillMaxWidth()
                     ) {
-                        resultadosBusqueda.forEach { repuesto ->
+                        //resultadosBusqueda
+                        uiState.resultadosBusqueda.forEach { repuesto ->
                             DropdownMenuItem(
-                                text = { Text(text = repuesto.nombre) },
+                                text = { Text(text = repuesto.descripcion) },
                                 onClick = {
-                                    query = repuesto.nombre
-                                    desplegableRepuestos = false
+                                    viewModel.seleccionarRepuesto(repuesto)
                                 }
                             )
                         }
                     }
+
                 }
             }
 
             item {
                 OutlinedTextField(
-                    value = stringResource(id = R.string.ejemplo),
-                    onValueChange = {},
+                    value = uiState.cantidadRepuesto,
+                    onValueChange = { viewModel.actualizarCantidadRepuesto(it)},
                     label = {
                         Text(stringResource(id = R.string.campo_n_repuestos))
                     },
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(start = 16.dp, end = 16.dp, top = 10.dp, bottom = 10.dp)
@@ -183,7 +172,9 @@ fun Presupuesto(
                     horizontalArrangement = Arrangement.End
                 ) {
                     Button(
-                        onClick = { },
+                        onClick = { viewModel.registrarRepuesto() },
+                        enabled = uiState.repuestoSeleccionadoTemp != null &&
+                                uiState.cantidadRepuesto.isNotEmpty(),
                         modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 8.dp)
                     ) {
                         Icon(
@@ -196,11 +187,13 @@ fun Presupuesto(
                 }
             }
 
-            items(listaRepuestosSeleccionados.size) { index ->
-                val repuesto = listaRepuestosSeleccionados[index]
+            items(uiState.listaRepuestosSeleccionados.size) { index ->
+                val repuestoSeleccionado = uiState.listaRepuestosSeleccionados[index]
                 ListItemCustome(
-                    textoPrincipal = repuesto.nombre,
-                    textoSecundario = stringResource(id = R.string.estilo_moneda) + String.format("%.2f", repuesto.monto)
+                    textoPrincipal = "${repuestoSeleccionado.repuesto.descripcion} (${repuestoSeleccionado.cantidad})",
+                    textoSecundario = stringResource(id = R.string.estilo_moneda) + String.format("%.2f", repuestoSeleccionado.subtotal),
+                    seleccionado = repuestoSeleccionado.marcado,
+                    onCheckedChange = { viewModel.toggleMarcadoRepuesto(index) }
                 )
             }
 
@@ -225,7 +218,7 @@ fun Presupuesto(
                             Text(
                                 text = stringResource(
                                     id = R.string.label_presupuesto_estimado)
-                                        + "00.00",
+                                        + String.format("%.2f", uiState.presupuestoEstimado),
                                 textAlign = TextAlign.Center,
                                 color = MaterialTheme.colorScheme.onSurface
                             )
@@ -239,11 +232,12 @@ fun Presupuesto(
 
 
                 OutlinedTextField(
-                    value = stringResource(id = R.string.contenido_texto_precio),
-                    onValueChange = {},
+                    value = uiState.porcentajeDescuento,
+                    onValueChange = { viewModel.actualizarPorcentajeDescuento(it) },
                     label = {
                         Text(stringResource(id = R.string.campo_descuento))
                     },
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(start = 16.dp, end = 16.dp, bottom = 8.dp, top = 3.dp)
@@ -259,12 +253,13 @@ fun Presupuesto(
                             Text(
                                 text = stringResource(
                                     id = R.string.label_descuento)
-                                        + "00.00",
+                                        + String.format("%.2f", uiState.descuentoEnSoles),
                                 textAlign = TextAlign.Center,
                                 color = MaterialTheme.colorScheme.onSurface
                             ) } },
                     leadingIcon = {},
-                    modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 0.dp)
+                    modifier = Modifier
+                        .padding(start = 16.dp, end = 16.dp, top = 0.dp)
                         .fillMaxWidth()
                 )
 
@@ -278,7 +273,7 @@ fun Presupuesto(
                             Text(
                                 text = stringResource(
                                     id = R.string.label_presupuesto_final)
-                                        + "00.00",
+                                        + String.format("%.2f", uiState.presupuestoFinal),
                                 textAlign = TextAlign.Center,
                                 color = MaterialTheme.colorScheme.onSurface
                             )
@@ -332,11 +327,13 @@ fun Presupuesto(
 @Preview(showBackground = true, showSystemUi = false)
 @Composable
 fun PresupuestoLightPreview() {
-    SIAMOTheme (darkTheme = false) { Presupuesto() }
+    val viewModel = PresupuestoViewModel()
+    SIAMOTheme (darkTheme = false) { Presupuesto(viewModel = viewModel) }
 }
 
 @Preview(showBackground = true, showSystemUi = false)
 @Composable
 fun PresupuestoDarkPreview() {
-    SIAMOTheme (darkTheme = true) { Presupuesto() }
+    val viewModel = PresupuestoViewModel()
+    SIAMOTheme (darkTheme = true) { Presupuesto(viewModel = viewModel) }
 }

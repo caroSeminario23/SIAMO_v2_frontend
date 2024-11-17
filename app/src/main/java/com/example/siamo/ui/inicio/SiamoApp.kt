@@ -17,11 +17,18 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.siamo.R
 import com.example.siamo.ui.theme.SIAMOTheme
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.example.siamo.NavRoutes
 
 @Composable
 fun SiamoApp(
+    navController: NavHostController,
     modifier: Modifier = Modifier
 ) {
     Scaffold { paddingValues ->
@@ -81,7 +88,9 @@ fun SiamoApp(
 
                 // Botón en la parte inferior
                 Button(
-                    onClick = { },
+                    onClick = {
+                        navController.navigate(NavRoutes.Login.route)
+                    },
                     colors = ButtonDefaults.buttonColors(
                         containerColor = MaterialTheme.colorScheme.tertiary
                     ),
@@ -105,11 +114,13 @@ fun SiamoApp(
 @Preview(showBackground = true, showSystemUi = false)
 @Composable
 fun SiamoAppLightPreview() {
-    SIAMOTheme (darkTheme = false) { SiamoApp() }
+    val navController = rememberNavController()
+    SIAMOTheme (darkTheme = false) { SiamoApp(navController = navController) }
 }
 
 @Preview(showBackground = true, showSystemUi = false)
 @Composable
 fun SiamoAppDarkPreview() {
-    SIAMOTheme (darkTheme = true) { SiamoApp() }
+    val navController = rememberNavController()
+    SIAMOTheme (darkTheme = true) { SiamoApp(navController = navController) }
 }

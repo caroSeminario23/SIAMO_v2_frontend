@@ -6,6 +6,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.CheckBox
+import androidx.compose.material.icons.filled.CheckBoxOutlineBlank
+import androidx.compose.material3.Checkbox
+import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -20,7 +23,9 @@ import com.example.siamo.ui.theme.SIAMOTheme
 fun ListItemCustome(
     modifier: Modifier = Modifier,
     textoPrincipal: String = "Texto Principal",
-    textoSecundario: String = "TextoSec"
+    textoSecundario: String = "TextoSec",
+    seleccionado: Boolean = true,
+    onCheckedChange: (Boolean) -> Unit
 ) {
     Row (
         modifier = Modifier
@@ -42,10 +47,21 @@ fun ListItemCustome(
             modifier = Modifier.weight(2f)
         )
 
+        /*
         Icon(
-            imageVector = Icons.Default.CheckBox,
+            imageVector = if (seleccionado) Icons.Default.CheckBox else Icons.Default.CheckBoxOutlineBlank,
             contentDescription = null,
             tint = MaterialTheme.colorScheme.primary,
+            modifier = Modifier.weight(1f)
+        )
+         */
+
+        Checkbox(
+            checked = seleccionado,
+            onCheckedChange = { onCheckedChange(it) },
+            colors = CheckboxDefaults.colors(
+                checkmarkColor = MaterialTheme.colorScheme.primary
+            ),
             modifier = Modifier.weight(1f)
         )
     }
@@ -54,11 +70,11 @@ fun ListItemCustome(
 @Preview(showBackground = true, showSystemUi = false)
 @Composable
 fun ListItemCustomeLightPreview() {
-    SIAMOTheme (darkTheme = false) { ListItemCustome() }
+    SIAMOTheme (darkTheme = false) { ListItemCustome(onCheckedChange = {}) }
 }
 
 @Preview(showBackground = true, showSystemUi = false)
 @Composable
 fun ListItemCustomeDarkPreview() {
-    SIAMOTheme (darkTheme = true) { ListItemCustome() }
+    SIAMOTheme (darkTheme = true) { ListItemCustome(onCheckedChange = {}) }
 }

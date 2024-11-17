@@ -16,11 +16,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.example.siamo.R
 import com.example.siamo.ui.theme.SIAMOTheme
 
 @Composable
 fun Login(
+    navController: NavHostController,
     modifier: Modifier = Modifier
 ) {
     Scaffold { paddingValues ->
@@ -78,11 +81,13 @@ fun Login(
 @Preview(showBackground = true, showSystemUi = false)
 @Composable
 fun LoginLightPreview() {
-    SIAMOTheme (darkTheme = false) { Login() }
+    val navController = rememberNavController()
+    SIAMOTheme (darkTheme = false) { Login(navController) }
 }
 
 @Preview(showBackground = true, showSystemUi = false)
 @Composable
 fun LoginDarkPreview() {
-    SIAMOTheme (darkTheme = true) { Login() }
+    val navController = rememberNavController()
+    SIAMOTheme (darkTheme = true) { Login(navController) }
 }

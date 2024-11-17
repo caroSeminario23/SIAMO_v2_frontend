@@ -10,6 +10,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.rememberNavController
 import com.example.siamo.ui.inicio.SiamoApp
 import com.example.siamo.ui.theme.SIAMOTheme
 
@@ -19,8 +20,13 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             SIAMOTheme {
+                val navController = rememberNavController()
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    SiamoApp(modifier = Modifier.padding(innerPadding))
+                    NavGraph(
+                        navController = navController,
+                        modifier = Modifier.padding(innerPadding)
+                    )
+                    //SiamoApp(modifier = Modifier.padding(innerPadding))
                 }
             }
         }
@@ -29,8 +35,10 @@ class MainActivity : ComponentActivity() {
 
 @Preview(showBackground = true)
 @Composable
-fun GreetingPreview() {
+fun MainActivityPreview() {
     SIAMOTheme {
-        SiamoApp()
+        //SiamoApp()
+        val navController = rememberNavController()
+        NavGraph(navController = navController)
     }
 }
