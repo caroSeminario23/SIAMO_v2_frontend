@@ -1,8 +1,8 @@
 package com.example.siamo.ui.tecnico.presupuesto
 
 import androidx.lifecycle.ViewModel
-import com.example.siamo.data.repuesto_seleccionado
-import com.example.siamo.data.consulta_repuesto
+import com.example.siamo.data.repuesto.RepuestoSeleccionado
+import com.example.siamo.data.repuesto.Repuesto
 import com.example.siamo.ui.tecnico.resumenost.ResumenOstUiState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -22,16 +22,16 @@ class PresupuestoViewModel : ViewModel() {
 
     fun cargarRepuestos() {
         val repuestos = listOf(
-            consulta_repuesto(1, "Repuesto 1", 100.00),
-            consulta_repuesto(2, "Repuesto 2", 200.00),
-            consulta_repuesto(3, "Repuesto 3", 300.00),
-            consulta_repuesto(4, "Repuesto 4", 400.00),
-            consulta_repuesto(5, "Repuesto 5", 500.00),
-            consulta_repuesto(6, "Repuesto 6", 600.00),
-            consulta_repuesto(7, "Repuesto 7", 700.00),
-            consulta_repuesto(8, "Repuesto 8", 800.00),
-            consulta_repuesto(9, "Repuesto 9", 900.00),
-            consulta_repuesto(10 ,"Repuesto 10", 1000.00)
+            Repuesto(1, "Repuesto 1", 100.00),
+            Repuesto(2, "Repuesto 2", 200.00),
+            Repuesto(3, "Repuesto 3", 300.00),
+            Repuesto(4, "Repuesto 4", 400.00),
+            Repuesto(5, "Repuesto 5", 500.00),
+            Repuesto(6, "Repuesto 6", 600.00),
+            Repuesto(7, "Repuesto 7", 700.00),
+            Repuesto(8, "Repuesto 8", 800.00),
+            Repuesto(9, "Repuesto 9", 900.00),
+            Repuesto(10 ,"Repuesto 10", 1000.00)
         )
         _uiState.update { it.copy(
             presupuestoUiState = it.presupuestoUiState.copy(
@@ -124,7 +124,7 @@ class PresupuestoViewModel : ViewModel() {
         val repuestoTemp = state.repuestoSeleccionadoTemp
 
         if (cantidad > 0 && repuestoTemp != null) {
-            val repuestoSeleccionado = repuesto_seleccionado(
+            val repuestoSeleccionado = RepuestoSeleccionado(
                 repuesto = repuestoTemp,
                 cantidad = cantidad
             )
@@ -150,7 +150,7 @@ class PresupuestoViewModel : ViewModel() {
         }
     }
 
-    fun seleccionarRepuesto(repuesto: consulta_repuesto) {
+    fun seleccionarRepuesto(repuesto: Repuesto) {
         /*val cantidad = _uiState.value.cantidadRepuesto.toIntOrNull() ?: 0
         _uiState.update {
             it.copy(

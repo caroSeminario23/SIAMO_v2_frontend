@@ -19,9 +19,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.siamo.R
-import com.example.siamo.data.consulta_cliente
-import com.example.siamo.data.consulta_tecnico
-import com.example.siamo.data.consulta_vehiculo
+import com.example.siamo.data.otros.consulta_cliente
+import com.example.siamo.data.otros.consulta_tecnico
+import com.example.siamo.data.otros.consulta_vehiculo
 import com.example.siamo.ui.theme.SIAMOTheme
 import com.example.siamo.ui.utils.NavigationBarRecepcionista
 import com.example.siamo.ui.utils.TopBar

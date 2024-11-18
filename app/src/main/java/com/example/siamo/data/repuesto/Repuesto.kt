@@ -1,6 +1,6 @@
-package com.example.siamo.data
+package com.example.siamo.data.repuesto
 
-data class consulta_repuesto(
+data class Repuesto(
     val idRepuesto: Int,
     val descripcion: String,
     val precio: Double

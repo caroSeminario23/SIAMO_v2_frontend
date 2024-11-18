@@ -22,10 +22,9 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.siamo.R
-import com.example.siamo.data.home_notification
+import com.example.siamo.data.otros.home_notification
 import com.example.siamo.ui.theme.SIAMOTheme
 import com.example.siamo.ui.utils.HomeNotification
-import com.example.siamo.ui.utils.NavigationBarRecepcionista
 import com.example.siamo.ui.utils.NavigationBarTecnico
 import com.example.siamo.ui.utils.TopBar
 

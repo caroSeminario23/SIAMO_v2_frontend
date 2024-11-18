@@ -1,11 +1,11 @@
 package com.example.siamo.ui.tecnico.presupuesto
 
-import com.example.siamo.data.repuesto_seleccionado
-import com.example.siamo.data.consulta_repuesto
+import com.example.siamo.data.repuesto.RepuestoSeleccionado
+import com.example.siamo.data.repuesto.Repuesto
 
 data class PresupuestoUiState(
-    val listaRepuestos: List<consulta_repuesto> = emptyList(),
-    val listaRepuestosSeleccionados: List<repuesto_seleccionado> = emptyList(),
+    val listaRepuestos: List<Repuesto> = emptyList(),
+    val listaRepuestosSeleccionados: List<RepuestoSeleccionado> = emptyList(),
     val query: String = "",
     val cantidadRepuesto: String = "",
     val numeroTecnicos: String = "",
@@ -14,7 +14,7 @@ data class PresupuestoUiState(
     val descuentoEnSoles: Double = 0.0,
     val presupuestoFinal: Double = 0.0,
     val mostrarResultadosBusqueda: Boolean = false,
-    val resultadosBusqueda: List<consulta_repuesto> = emptyList(),
+    val resultadosBusqueda: List<Repuesto> = emptyList(),
     val searchBarActiva: Boolean = false,
-    val repuestoSeleccionadoTemp: consulta_repuesto? = null
+    val repuestoSeleccionadoTemp: Repuesto? = null
 )

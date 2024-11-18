@@ -1,4 +1,4 @@
-package com.example.siamo.data
+package com.example.siamo.data.otros
 
 data class consulta_vehiculo(
     val placa: String,
