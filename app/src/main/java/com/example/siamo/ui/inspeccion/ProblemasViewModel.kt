@@ -1,4 +1,4 @@
-package com.example.siamo.ui.tecnico
+package com.example.siamo.ui.inspeccion
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel

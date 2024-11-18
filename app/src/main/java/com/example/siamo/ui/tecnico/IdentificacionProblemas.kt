@@ -49,7 +49,7 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.ui.text.input.ImeAction
-
+import com.example.siamo.ui.inspeccion.ProblemasViewModel
 
 
 @Composable
