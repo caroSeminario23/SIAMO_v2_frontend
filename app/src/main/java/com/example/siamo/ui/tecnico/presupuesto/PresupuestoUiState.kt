@@ -16,7 +16,5 @@ data class PresupuestoUiState(
     val mostrarResultadosBusqueda: Boolean = false,
     val resultadosBusqueda: List<consulta_repuesto> = emptyList(),
     val searchBarActiva: Boolean = false,
-    val repuestoSeleccionadoTemp: consulta_repuesto? = null,
-    val isLoading: Boolean = false,
-    val error: String? = null
+    val repuestoSeleccionadoTemp: consulta_repuesto? = null
 )

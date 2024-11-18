@@ -1,5 +1,6 @@
 package com.example.siamo.ui.utils
 
+import androidx.compose.foundation.clickable
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -17,7 +18,10 @@ fun AlertDialogError (
     modifier: Modifier = Modifier,
     titulo: String = "<Título de la alerta>",
     contenido : String = "<Contenido de la alerta>",
-    onDismiss: () -> Unit = {}
+    boton_error: String = stringResource(id = R.string.alerta_cancelar),
+    onDismiss: () -> Unit = {},
+    onConfirmClick: () -> Unit = {},
+    onDismissClick: () -> Unit = {}
 ) {
     AlertDialog(
         onDismissRequest = onDismiss,
@@ -28,12 +32,16 @@ fun AlertDialogError (
         confirmButton = {
             Text(
                 text = stringResource(id = R.string.alerta_volver_a_intentar),
-                color = MaterialTheme.colorScheme.error)
+                color = MaterialTheme.colorScheme.error,
+                modifier = Modifier.clickable { onConfirmClick() }
+            )
         },
         dismissButton = {
             Text(
-                text = stringResource(id = R.string.alerta_cancelar),
-                color = MaterialTheme.colorScheme.error)
+                text = boton_error,
+                color = MaterialTheme.colorScheme.error,
+                modifier = Modifier.clickable { onDismissClick() }
+            )
         },
         containerColor = MaterialTheme.colorScheme.errorContainer
     )

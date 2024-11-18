@@ -19,6 +19,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.example.siamo.R
 import com.example.siamo.data.home_notification
 import com.example.siamo.ui.theme.SIAMOTheme
@@ -28,6 +30,7 @@ import com.example.siamo.ui.utils.TopBar
 
 @Composable
 fun HomeRecepcionista(
+    navController: NavHostController,
     modifier: Modifier = Modifier,
     empleado: String = "<Nombres y apellidos del empleado>"
 ) {
@@ -98,11 +101,13 @@ fun HomeRecepcionista(
 @Preview(showBackground = true, showSystemUi = false)
 @Composable
 fun HomeRecepcionistaLightPreview() {
-    SIAMOTheme (darkTheme = false) { HomeRecepcionista() }
+    val navController = rememberNavController()
+    SIAMOTheme (darkTheme = false) { HomeRecepcionista(navController) }
 }
 
 @Preview(showBackground = true, showSystemUi = false)
 @Composable
 fun HomeRecepcionistaDarkPreview() {
-    SIAMOTheme (darkTheme = true) { HomeRecepcionista() }
+    val navController = rememberNavController()
+    SIAMOTheme (darkTheme = true) { HomeRecepcionista(navController) }
 }

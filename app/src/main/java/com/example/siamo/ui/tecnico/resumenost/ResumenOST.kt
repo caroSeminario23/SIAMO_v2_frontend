@@ -1,4 +1,4 @@
-package com.example.siamo.ui.tecnico
+package com.example.siamo.ui.tecnico.resumenost
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -7,45 +7,66 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Cancel
 import androidx.compose.material.icons.filled.Send
 import androidx.compose.material3.Button
+import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.key.Key.Companion.Calendar
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
+import com.example.siamo.NavRoutes
 import com.example.siamo.R
 import com.example.siamo.data.bitacora_concreta
+import com.example.siamo.ui.tecnico.presupuesto.PresupuestoViewModel
 import com.example.siamo.ui.theme.SIAMOTheme
+import com.example.siamo.ui.utils.AlertDialogError
+import com.example.siamo.ui.utils.AlertDialogOK
 import com.example.siamo.ui.utils.DividerSection
 import com.example.siamo.ui.utils.NavigationBarRecepcionista
 import com.example.siamo.ui.utils.TopBar
 
 @Composable
 fun ResumenOST(
-    modifier: Modifier = Modifier
+    navController: NavHostController,
+    modifier: Modifier = Modifier,
+    viewModel: ResumenOstViewModel
 ) {
-    val problemas = listOf(
-        bitacora_concreta("Problema 1", "Solución 1"),
-        bitacora_concreta("Problema 2", "Solución 2")
-    )
+    val uiState by viewModel.uiState.collectAsState()
 
-    val presupuesto_monto = 100.00
-    val descuento = 10.00
-
-    val repuestos = listOf(
-        "Repuesto 1",
-        "Repuesto 2"
-    )
+    when {
+        uiState.errorRegistro == 1 -> {
+            AlertDialogError(
+                titulo = stringResource(id = R.string.dialog_registro_ost),
+                contenido = stringResource(id = R.string.dialog_registro_ost_error),
+                onConfirmClick = { viewModel.guardarOst() },
+                onDismissClick = { viewModel.cerrarAlertar() }
+            )
+        }
+        uiState.errorRegistro == 2 -> {
+            AlertDialogOK(
+                titulo = stringResource(id = R.string.dialog_registro_ost),
+                contenido = stringResource(id = R.string.dialog_registro_ost_exitoso),
+                onConfirmClick = { navController.navigate(NavRoutes.HomeTecnico.route) }
+            )
+        }
+    }
 
     Scaffold(
         topBar = {
@@ -97,10 +118,10 @@ fun ResumenOST(
                 )
             }
 
-            items(problemas.size) { index ->
-                val problema = problemas[index]
+            items(uiState.problemas.size) { index ->
+                val problema = uiState.problemas[index]
                 Text(
-                    text = problema.problema,
+                    text = problema,
                     style = MaterialTheme.typography.labelLarge,
                     color = MaterialTheme.colorScheme.onSecondaryContainer,
                     textAlign = TextAlign.Start,
@@ -118,10 +139,10 @@ fun ResumenOST(
                 )
             }
 
-            items(problemas.size) { index ->
-                val problema = problemas[index]
+            items(uiState.soluciones.size) { index ->
+                val problema = uiState.soluciones[index]
                 Text(
-                    text = problema.solucion,
+                    text = problema,
                     style = MaterialTheme.typography.labelLarge,
                     color = MaterialTheme.colorScheme.onSecondaryContainer,
                     textAlign = TextAlign.Start,
@@ -141,7 +162,7 @@ fun ResumenOST(
                 Text(
                     text = stringResource(id = R.string.estilo_moneda) + String.format(
                         "%.2f",
-                        presupuesto_monto
+                        uiState.presupuestoUiState.presupuestoFinal
                     ),
                     style = MaterialTheme.typography.labelLarge,
                     color = MaterialTheme.colorScheme.onSecondaryContainer,
@@ -152,7 +173,7 @@ fun ResumenOST(
                 Text(
                     text = stringResource(id = R.string.label_descuento) + String.format(
                         "%.2f",
-                        descuento
+                        uiState.presupuestoUiState.descuentoEnSoles
                     ),
                     style = MaterialTheme.typography.labelLarge,
                     color = MaterialTheme.colorScheme.onSecondaryContainer,
@@ -171,10 +192,10 @@ fun ResumenOST(
                 )
             }
 
-            items(repuestos.size) { index ->
-                val repuesto = repuestos[index]
+            items(uiState.presupuestoUiState.listaRepuestosSeleccionados.size) { index ->
+                val repuesto = uiState.presupuestoUiState.listaRepuestosSeleccionados[index]
                 Text(
-                    text = repuesto,
+                    text = repuesto.repuesto.descripcion + " (" + repuesto.cantidad + ")",
                     style = MaterialTheme.typography.labelLarge,
                     color = MaterialTheme.colorScheme.onSecondaryContainer,
                     textAlign = TextAlign.Start,
@@ -188,7 +209,7 @@ fun ResumenOST(
                 DividerSection(nombreSeccion = stringResource(id = R.string.seccion_ingreso_vehiculo))
 
                 Button(
-                    onClick = { },
+                    onClick = { viewModel.registrarFechaActual() },
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(start = 30.dp, end = 30.dp, top = 5.dp)
@@ -197,7 +218,7 @@ fun ResumenOST(
                 }
 
                 Button(
-                    onClick = { },
+                    onClick = { viewModel.activarRegistroManual() },
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(start = 30.dp, end = 30.dp, top = 5.dp)
@@ -206,11 +227,17 @@ fun ResumenOST(
                 }
 
                 OutlinedTextField(
-                    value = stringResource(id = R.string.ejemplo),
-                    onValueChange = {},
+                    value = uiState.fechaAproxIngreso,
+                    onValueChange = {
+                        viewModel.actualizarFechaIngreso(it)
+                    },
                     label = {
                         Text(stringResource(id = R.string.campo_fecha_aprox_ingreso))
                     },
+                    keyboardOptions = KeyboardOptions(
+                        imeAction = ImeAction.Done
+                    ),
+                    enabled = uiState.ingresoFechaActivo,
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(start = 30.dp, end = 30.dp, bottom = 15.dp, top = 10.dp)
@@ -227,7 +254,10 @@ fun ResumenOST(
                         .padding(start = 20.dp, end = 20.dp, bottom = 25.dp)
                 ) {
                     Button(
-                        onClick = { },
+                        onClick = {
+                            navController.navigate(NavRoutes.HomeTecnico.route)
+                        },
+                        enabled = uiState.registroCancelacionActivo,
                         modifier = Modifier.weight(1f)
                     ) {
                         Icon(
@@ -241,7 +271,10 @@ fun ResumenOST(
                     Spacer(modifier = Modifier.weight(0.2f))
 
                     Button(
-                        onClick = { },
+                        onClick = {
+                            viewModel.guardarOst()
+                        },
+                        enabled = uiState.registroCancelacionActivo,
                         modifier = Modifier.weight(1f)
                     ) {
                         Icon(
@@ -260,11 +293,19 @@ fun ResumenOST(
 @Preview(showBackground = true, showSystemUi = false)
 @Composable
 fun ResumenOSTLightPreview() {
-    SIAMOTheme (darkTheme = false) { ResumenOST() }
+    val navController = rememberNavController()
+    val viewModel = ResumenOstViewModel()
+    SIAMOTheme (darkTheme = false) { ResumenOST(
+        viewModel = viewModel,
+        navController = navController) }
 }
 
 @Preview(showBackground = true, showSystemUi = false)
 @Composable
 fun ResumenOSTDarkPreview() {
-    SIAMOTheme (darkTheme = true) { ResumenOST() }
+    val navController = rememberNavController()
+    val viewModel = ResumenOstViewModel()
+    SIAMOTheme (darkTheme = true) { ResumenOST(
+        viewModel = viewModel,
+        navController = navController) }
 }

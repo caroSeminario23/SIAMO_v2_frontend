@@ -26,7 +26,6 @@ class MainActivity : ComponentActivity() {
                         navController = navController,
                         modifier = Modifier.padding(innerPadding)
                     )
-                    //SiamoApp(modifier = Modifier.padding(innerPadding))
                 }
             }
         }
@@ -37,7 +36,6 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun MainActivityPreview() {
     SIAMOTheme {
-        //SiamoApp()
         val navController = rememberNavController()
         NavGraph(navController = navController)
     }

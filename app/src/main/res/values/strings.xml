@@ -120,4 +120,8 @@
     <string name="alerta_aceptar">Aceptar</string>
     <string name="alerta_cancelar">Cancelar</string>
     <string name="alerta_volver_a_intentar">Volver a intentar</string>
+
+    <string name="dialog_registro_ost">Registro de OST</string>
+    <string name="dialog_registro_ost_exitoso">La orden de servicio técnico ha sido registrada exitosamente.</string>
+    <string name="dialog_registro_ost_error">La orden de servicio técnico no ha podido ser registrada.</string>
 </resources>
