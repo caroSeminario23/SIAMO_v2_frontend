@@ -12,5 +12,5 @@ data class Persona(
     val num_doc: String? = null,
     val sexo: String? = null,
     val telefono: String? = null,
-    val tipo_doc: Boolean? = null
+    val tipo_doc: Int? = null
 )

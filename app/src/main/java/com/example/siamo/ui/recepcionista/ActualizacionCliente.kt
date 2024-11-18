@@ -65,7 +65,7 @@ fun ActualizacionCliente(
     var cliente = consultaUiState.cliente
     var nombres by rememberSaveable { mutableStateOf(cliente?.persona?.nombres ?: "") }
     var apellidos by rememberSaveable { mutableStateOf(cliente?.persona?.apellidos ?: "") }
-    var tipo_documento by rememberSaveable { mutableStateOf(cliente?.persona?.tipo_doc ?: false) }
+    var tipo_documento by rememberSaveable { mutableStateOf(cliente?.persona?.tipo_doc ?: 0) }
     var documento by rememberSaveable { mutableStateOf(cliente?.persona?.num_doc ?: "") }
     var direccion by rememberSaveable { mutableStateOf(cliente?.persona?.direccion ?: "") }
     var email by rememberSaveable { mutableStateOf(cliente?.persona?.correo ?: "") }
@@ -134,7 +134,7 @@ fun ActualizacionCliente(
                     ListItem(
                         headlineContent = {
                             Text(
-                                text = if(tipo_documento) "DNI" else "Carnet de extranjería",
+                                text = if(tipo_documento == 1) "DNI" else "Carnet de extranjería",
                                 style = MaterialTheme.typography.bodyLarge,
                                 color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.38f)
                             )

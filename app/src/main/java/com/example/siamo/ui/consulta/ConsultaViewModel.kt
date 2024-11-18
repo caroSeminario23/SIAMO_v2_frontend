@@ -1,6 +1,5 @@
 package com.example.siamo.ui.consulta
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
@@ -15,7 +14,6 @@ import com.example.siamo.data.TecnicoRepository
 import com.example.siamo.model.Automovil
 import com.example.siamo.model.Cliente
 import com.example.siamo.model.Consulta
-import com.example.siamo.model.ConsultaRequest
 import com.example.siamo.model.Persona
 import com.example.siamo.model.Tecnico
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -64,11 +62,9 @@ class ConsultaViewModel(
                 val cliente = clienteRepository.getCliente(dni)
                 _uiState.value = _uiState.value.copy(cliente = cliente, flag_ok_buscar_cliente = true)
             } catch (e: IOException) {
-                Log.d("ConsultaViewModel", e.message.toString())
                 _uiState.value = _uiState.value.copy(flag_error_buscar_cliente = true)
 
             } catch (e: HttpException) {
-                Log.d("ConsultaViewModel", e.message.toString())
                 _uiState.value = _uiState.value.copy(flag_error_buscar_cliente = true)
 
             }
@@ -118,7 +114,7 @@ class ConsultaViewModel(
     fun buscarAutomovilPorPlaca(placa: String) {
         viewModelScope.launch {
             try {
-                val automovil = automovilRepository.getAutomovil(placa)
+                val automovil = automovilRepository.getAutomovil(_uiState.value.cliente?.id_cliente!!, placa)
                 _uiState.value = _uiState.value.copy(automovil = automovil, flag_ok_buscar_automovil = true)
             } catch (e: IOException) {
                 _uiState.value = _uiState.value.copy(flag_error_buscar_automovil = true)
@@ -177,14 +173,11 @@ class ConsultaViewModel(
                     prob_declarado = _uiState.value.problema!!.toString(),
                     estado = 1
                 )
-                Log.d("ConsultaViewModel", "Request data: $consulta")
                 consultaRepository.postConsulta(consulta)
                 _uiState.value = _uiState.value.copy(flag_ok_registrar_consulta = true)
             } catch (e: IOException) {
-                Log.d("ConsultaViewModel", e.message.toString())
                 _uiState.value = _uiState.value.copy(flag_error_registrar_consulta = true)
             } catch (e: HttpException) {
-                Log.d("ConsultaViewModel", e.message.toString())
                 _uiState.value = _uiState.value.copy(flag_error_registrar_consulta = true)
             }
         }

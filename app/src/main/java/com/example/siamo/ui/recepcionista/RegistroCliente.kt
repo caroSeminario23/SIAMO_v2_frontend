@@ -49,10 +49,10 @@ object RegistroClienteDestination : NavigationDestination {
 fun RegistroCliente(
     consultaUiState: ConsultaUiState,
     modifier: Modifier = Modifier,
-    onAccept : () -> Unit = {},
-    onCancel : () -> Unit = {},
-    onRetry : () -> Unit = {},
-    onRegister : (Persona) -> Unit = {},
+    onAccept: () -> Unit = {},
+    onCancel: () -> Unit = {},
+    onRetry: () -> Unit = {},
+    onRegister: (Persona) -> Unit = {},
 ) {
     val expandedDocIdentidad = rememberSaveable { mutableStateOf(false) }
     val expandedSexo = rememberSaveable { mutableStateOf(false) }
@@ -66,11 +66,17 @@ fun RegistroCliente(
     val telefono = rememberSaveable { mutableStateOf("") }
     val sexo = rememberSaveable { mutableStateOf("Sexo") }
 
-    Scaffold (
-        topBar = { TopBar(tituloPagina = stringResource(R.string.topbar_opcion4), modo = "Retroceder", modifier = Modifier.padding(bottom = 40.dp)) },
+    Scaffold(
+        topBar = {
+            TopBar(
+                tituloPagina = stringResource(R.string.topbar_opcion4),
+                modo = "Retroceder",
+                modifier = Modifier.padding(bottom = 40.dp)
+            )
+        },
         bottomBar = { NavigationBarRecepcionista(opcionSeleccionada = 2) }
     ) { paddingValues ->
-        LazyColumn (
+        LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues),
@@ -88,7 +94,7 @@ fun RegistroCliente(
 
             item {
                 OutlinedTextField(
-                    value =  nombres.value,
+                    value = nombres.value,
                     onValueChange = { nombres.value = it },
                     label = {
                         Text(text = stringResource(id = R.string.campo_nombres))
@@ -101,8 +107,8 @@ fun RegistroCliente(
 
             item {
                 OutlinedTextField(
-                    value =  apellidos.value,
-                    onValueChange = {apellidos.value = it},
+                    value = apellidos.value,
+                    onValueChange = { apellidos.value = it },
                     label = {
                         Text(text = stringResource(id = R.string.campo_apellidos))
                     },
@@ -113,7 +119,7 @@ fun RegistroCliente(
             }
 
             item {
-                Box (
+                Box(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(start = 20.dp, end = 20.dp, bottom = 20.dp)
@@ -155,7 +161,8 @@ fun RegistroCliente(
                             text = {
                                 Text(
                                     text = stringResource(R.string.desplegable_tipo_doc_opcion1),
-                                ) },
+                                )
+                            },
                             onClick = {
                                 expandedDocIdentidad.value = false
                                 tipoDoc.value = "DNI"
@@ -166,7 +173,8 @@ fun RegistroCliente(
                             text = {
                                 Text(
                                     text = stringResource(R.string.desplegable_tipo_doc_opcion2),
-                                ) },
+                                )
+                            },
                             onClick = {
                                 expandedDocIdentidad.value = false
                                 tipoDoc.value = "Carnet de extranjería"
@@ -178,8 +186,8 @@ fun RegistroCliente(
 
             item {
                 OutlinedTextField(
-                    value =  docIdentidad.value,
-                    onValueChange = {docIdentidad.value = it},
+                    value = docIdentidad.value,
+                    onValueChange = { docIdentidad.value = it },
                     label = {
                         Text(text = stringResource(id = R.string.campo_doc_identidad))
                     },
@@ -191,8 +199,8 @@ fun RegistroCliente(
 
             item {
                 OutlinedTextField(
-                    value =  direccion.value,
-                    onValueChange = {direccion.value = it},
+                    value = direccion.value,
+                    onValueChange = { direccion.value = it },
                     label = {
                         Text(text = stringResource(id = R.string.campo_direccion))
                     },
@@ -204,8 +212,8 @@ fun RegistroCliente(
 
             item {
                 OutlinedTextField(
-                    value =  email.value,
-                    onValueChange = {email.value = it},
+                    value = email.value,
+                    onValueChange = { email.value = it },
                     label = {
                         Text(text = stringResource(id = R.string.campo_email))
                     },
@@ -217,8 +225,8 @@ fun RegistroCliente(
 
             item {
                 OutlinedTextField(
-                    value =  telefono.value,
-                    onValueChange = {telefono.value = it},
+                    value = telefono.value,
+                    onValueChange = { telefono.value = it },
                     label = {
                         Text(text = stringResource(id = R.string.campo_telefono))
                     },
@@ -269,7 +277,8 @@ fun RegistroCliente(
                             text = {
                                 Text(
                                     text = stringResource(R.string.desplegable_sexo_opcion1),
-                                ) },
+                                )
+                            },
                             onClick = {
                                 expandedSexo.value = false
                                 sexo.value = "Femenino"
@@ -280,7 +289,8 @@ fun RegistroCliente(
                             text = {
                                 Text(
                                     text = stringResource(R.string.desplegable_sexo_opcion2),
-                                ) },
+                                )
+                            },
                             onClick = {
                                 expandedSexo.value = false
                                 sexo.value = "Masculino"
@@ -296,16 +306,26 @@ fun RegistroCliente(
 
             item {
                 Button(
-                    onClick = {onRegister(Persona(
-                        nombres = nombres.value,
-                        apellidos = apellidos.value,
-                        tipo_doc = if (tipoDoc.value == "DNI") true else false,
-                        num_doc = docIdentidad.value,
-                        direccion = direccion.value,
-                        correo = email.value,
-                        telefono = telefono.value,
-                        sexo = sexo.value.substring(0, 1)
-                    ))},
+                    onClick = {
+                        onRegister(
+                            Persona(
+                                nombres = nombres.value,
+                                apellidos = apellidos.value,
+                                tipo_doc = if (tipoDoc.value == "DNI") {
+                                    1
+                                } else if (tipoDoc.value == "Carnet de extranjería") {
+                                    2
+                                } else {
+                                    null
+                                },
+                                num_doc = docIdentidad.value,
+                                direccion = direccion.value,
+                                correo = email.value,
+                                telefono = telefono.value,
+                                sexo = sexo.value.substring(0, 1)
+                            )
+                        )
+                    },
                     modifier = Modifier
                 ) {
                     Icon(
@@ -322,7 +342,7 @@ fun RegistroCliente(
             }
         }
 
-        if(consultaUiState.flag_error_registrar_cliente) {
+        if (consultaUiState.flag_error_registrar_cliente) {
             AlertDialogError(
                 titulo = stringResource(id = R.string.alerta_registro_cliente_title),
                 contenido = stringResource(id = R.string.alerta_registro_clienteerror_text),
@@ -345,15 +365,19 @@ fun RegistroCliente(
 @Preview(showBackground = true, showSystemUi = false)
 @Composable
 fun RegistroClienteLightPreview() {
-    SIAMOTheme (darkTheme = false) { RegistroCliente(
-        consultaUiState = ConsultaUiState()
-    ) }
+    SIAMOTheme(darkTheme = false) {
+        RegistroCliente(
+            consultaUiState = ConsultaUiState()
+        )
+    }
 }
 
 @Preview(showBackground = true, showSystemUi = false)
 @Composable
 fun RegistroClienteDarkPreview() {
-    SIAMOTheme (darkTheme = true) { RegistroCliente(
-        consultaUiState = ConsultaUiState()
-    ) }
+    SIAMOTheme(darkTheme = true) {
+        RegistroCliente(
+            consultaUiState = ConsultaUiState()
+        )
+    }
 }

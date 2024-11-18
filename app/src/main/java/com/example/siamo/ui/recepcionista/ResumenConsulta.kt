@@ -1,6 +1,5 @@
 package com.example.siamo.ui.recepcionista
 
-import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -20,9 +19,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.siamo.R
-import com.example.siamo.data.consulta_cliente
-import com.example.siamo.data.consulta_tecnico
-import com.example.siamo.data.consulta_vehiculo
 import com.example.siamo.model.Automovil
 import com.example.siamo.model.Cliente
 import com.example.siamo.model.Empleado
@@ -54,11 +50,8 @@ fun ResumenConsulta(
     val automovil = consultaUiState.automovil
     val tecnico = consultaUiState.tecnico_asignado
 
-    Log.d(cliente.toString(), "Cliente")
-    Log.d(automovil.toString(), "Automovil")
-    Log.d(tecnico.toString(), "Tecnico")
 
-    var nombreDocumento = if (cliente?.persona?.tipo_doc == true) {
+    var nombreDocumento = if (cliente?.persona?.tipo_doc == 1) {
         "DNI"
     } else {
         "CE"
@@ -247,7 +240,7 @@ fun ResumenConsultaLightPreview() {
                     persona = com.example.siamo.model.Persona(
                         nombres = "Juan",
                         apellidos = "Perez",
-                        tipo_doc = true,
+                        tipo_doc = 1,
                         num_doc = "12345678"
                     )
                 ),
@@ -286,7 +279,7 @@ fun ResumenConsultaDarkPreview() {
                     persona = com.example.siamo.model.Persona(
                         nombres = "Juan",
                         apellidos = "Perez",
-                        tipo_doc = true,
+                        tipo_doc = 1,
                         num_doc = "12345678"
                     )
                 ),

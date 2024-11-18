@@ -114,6 +114,7 @@ fun BusquedaCliente(
             AlertDialogError(
                 titulo = stringResource(id = R.string.alerta_busqueda_cliente_title),
                 contenido = stringResource(id = R.string.alerta_busqueda_clienteerror_text),
+                buttomMessage = stringResource(id = R.string.registrar_boton),
                 onConfirm = onRegistrar,
                 onCancel = onCancel
             )

@@ -100,6 +100,7 @@ fun BusquedaVehiculo(
                 onDismiss = { onCancel() },
                 titulo = stringResource(id = R.string.alerta_busqueda_vehiculo_titulo),
                 contenido = stringResource(id = R.string.alerta_busqueda_vehiculoerror_mensaje),
+                buttomMessage = stringResource(id = R.string.registrar_boton),
                 onConfirm = { onRegister() },
                 onCancel = { onCancel() }
             )

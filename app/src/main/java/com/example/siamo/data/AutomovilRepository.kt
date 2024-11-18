@@ -6,7 +6,7 @@ import com.example.siamo.network_consulta.AutomovilApiService
 
 interface AutomovilRepository {
     suspend fun postAutomovil(automovil: Automovil): Response
-    suspend fun getAutomovil(placa: String): Automovil
+    suspend fun getAutomovil(id_cliente: Int, placa: String): Automovil
 }
 
 class DefaultAutomovilRepository(private val automovilApiService: AutomovilApiService) :
@@ -15,7 +15,7 @@ class DefaultAutomovilRepository(private val automovilApiService: AutomovilApiSe
         return automovilApiService.postAutomovil(automovil)
     }
 
-    override suspend fun getAutomovil(placa: String): Automovil {
-        return automovilApiService.getAutomovil(placa)
+    override suspend fun getAutomovil(id_cliente: Int, placa: String): Automovil {
+        return automovilApiService.getAutomovil(id_cliente, placa)
     }
 }

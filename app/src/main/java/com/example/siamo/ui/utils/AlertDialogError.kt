@@ -19,6 +19,7 @@ fun AlertDialogError (
     modifier: Modifier = Modifier,
     titulo: String = "<Título de la alerta>",
     contenido : String = "<Contenido de la alerta>",
+    buttomMessage: String = stringResource(id = R.string.alerta_volver_a_intentar),
     onConfirm: () -> Unit = {},
     onCancel: () -> Unit = {},
     onDismiss: () -> Unit = {}
@@ -33,7 +34,7 @@ fun AlertDialogError (
         confirmButton = {
             TextButton(onClick = onConfirm) {
                 Text(
-                    text = stringResource(id = R.string.alerta_volver_a_intentar),
+                    text = buttomMessage,
                     color = MaterialTheme.colorScheme.error
                 )
             }

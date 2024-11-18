@@ -10,8 +10,8 @@ import retrofit2.http.Path
 
 interface AutomovilApiService {
     //    El doc se para como parametro de la url
-    @GET("api/automovil/get/{placa}")
-    suspend fun getAutomovil(@Path("placa") placa: String): Automovil
+    @GET("api/automovil/get/{id}/{placa}")
+    suspend fun getAutomovil(@Path("id") id: Int, @Path("placa") placa: String): Automovil
 
     @POST("api/automovil/insert")
     suspend fun postAutomovil(@Body  request: Automovil): Response
