@@ -84,7 +84,8 @@ fun Presupuesto(
 
             item {
                 OutlinedTextField(
-                    value = uiState.numeroTecnicos,
+                    value = uiState.presupuestoUiState.numeroTecnicos,
+                    //uiState.numeroTecnicos,
                     onValueChange = {
                         viewModel.actualizarNumeroTecnicos(it)
                     },
@@ -109,10 +110,12 @@ fun Presupuesto(
             item {
                 Box {
                     SearchBar(
-                        query = uiState.query,
+                        query = uiState.presupuestoUiState.query,
+                        //uiState.query,
                         onQueryChange = { viewModel.actualizarQuery(it) },
                         onSearch = { viewModel.onSearch() },
-                        active = uiState.searchBarActiva,
+                        active = uiState.presupuestoUiState.searchBarActiva,
+                        //uiState.searchBarActiva,
                         onActiveChange = {  },
                         placeholder = {
                             Text(
@@ -133,13 +136,14 @@ fun Presupuesto(
                     )
 
                     DropdownMenu(
-                        expanded = uiState.mostrarResultadosBusqueda,
+                        expanded = uiState.presupuestoUiState.mostrarResultadosBusqueda,
+                        //uiState.mostrarResultadosBusqueda,
                         onDismissRequest = {
                             viewModel.onSearch() },
                         modifier = Modifier.fillMaxWidth()
                     ) {
                         //resultadosBusqueda
-                        uiState.resultadosBusqueda.forEach { repuesto ->
+                        uiState.presupuestoUiState.resultadosBusqueda.forEach { repuesto ->
                             DropdownMenuItem(
                                 text = { Text(text = repuesto.descripcion) },
                                 onClick = {
@@ -154,7 +158,8 @@ fun Presupuesto(
 
             item {
                 OutlinedTextField(
-                    value = uiState.cantidadRepuesto,
+                    value = uiState.presupuestoUiState.cantidadRepuesto,
+                    //uiState.cantidadRepuesto,
                     onValueChange = { viewModel.actualizarCantidadRepuesto(it)},
                     label = {
                         Text(stringResource(id = R.string.campo_n_repuestos))
@@ -175,8 +180,8 @@ fun Presupuesto(
                 ) {
                     Button(
                         onClick = { viewModel.registrarRepuesto() },
-                        enabled = uiState.repuestoSeleccionadoTemp != null &&
-                                uiState.cantidadRepuesto.isNotEmpty(),
+                        enabled = uiState.presupuestoUiState.repuestoSeleccionadoTemp != null &&
+                                uiState.presupuestoUiState.cantidadRepuesto.isNotEmpty(),
                         modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 8.dp)
                     ) {
                         Icon(
@@ -189,8 +194,8 @@ fun Presupuesto(
                 }
             }
 
-            items(uiState.listaRepuestosSeleccionados.size) { index ->
-                val repuestoSeleccionado = uiState.listaRepuestosSeleccionados[index]
+            items(uiState.presupuestoUiState.listaRepuestosSeleccionados.size) { index ->
+                val repuestoSeleccionado = uiState.presupuestoUiState.listaRepuestosSeleccionados[index]
                 ListItemCustome(
                     textoPrincipal = "${repuestoSeleccionado.repuesto.descripcion} (${repuestoSeleccionado.cantidad})",
                     textoSecundario = stringResource(id = R.string.estilo_moneda) + String.format("%.2f", repuestoSeleccionado.subtotal),
@@ -220,7 +225,7 @@ fun Presupuesto(
                             Text(
                                 text = stringResource(
                                     id = R.string.label_presupuesto_estimado)
-                                        + String.format("%.2f", uiState.presupuestoEstimado),
+                                        + String.format("%.2f", uiState.presupuestoUiState.presupuestoEstimado),
                                 textAlign = TextAlign.Center,
                                 color = MaterialTheme.colorScheme.onSurface
                             )
@@ -234,7 +239,8 @@ fun Presupuesto(
 
 
                 OutlinedTextField(
-                    value = uiState.porcentajeDescuento,
+                    value = uiState.presupuestoUiState.porcentajeDescuento,
+                    //uiState.porcentajeDescuento,
                     onValueChange = { viewModel.actualizarPorcentajeDescuento(it) },
                     label = {
                         Text(stringResource(id = R.string.campo_descuento))
@@ -258,7 +264,7 @@ fun Presupuesto(
                             Text(
                                 text = stringResource(
                                     id = R.string.label_descuento)
-                                        + String.format("%.2f", uiState.descuentoEnSoles),
+                                        + String.format("%.2f", uiState.presupuestoUiState.descuentoEnSoles),
                                 textAlign = TextAlign.Center,
                                 color = MaterialTheme.colorScheme.onSurface
                             ) } },
@@ -278,7 +284,7 @@ fun Presupuesto(
                             Text(
                                 text = stringResource(
                                     id = R.string.label_presupuesto_final)
-                                        + String.format("%.2f", uiState.presupuestoFinal),
+                                        + String.format("%.2f", uiState.presupuestoUiState.presupuestoFinal),
                                 textAlign = TextAlign.Center,
                                 color = MaterialTheme.colorScheme.onSurface
                             )
