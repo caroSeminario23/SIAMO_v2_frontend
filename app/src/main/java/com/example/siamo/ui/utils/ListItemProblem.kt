@@ -3,6 +3,7 @@ package com.example.siamo.ui.utils
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -28,7 +29,9 @@ import androidx.compose.ui.graphics.Color
 fun ListItemProblem(
     modifier: Modifier = Modifier,
     textoPrincipal: String = "Texto Principal",
-    solucion: String? = null
+    solucion: String? = null,
+    idProblema: Int,
+    onAddClick: (Int) -> Unit
 ) {
     Column(
         modifier = modifier
@@ -59,7 +62,8 @@ fun ListItemProblem(
                         .size(20.dp)
                         .padding(2.dp)
                         .border(2.dp, MaterialTheme.colorScheme.primary, CircleShape)
-                        .background(Color.Transparent),
+                        .background(Color.Transparent)
+                        .clickable { onAddClick(idProblema) },
                     tint = MaterialTheme.colorScheme.primary
 
                 )
@@ -80,14 +84,3 @@ fun ListItemProblem(
 
 
 
-@Preview(showBackground = true, showSystemUi = false)
-@Composable
-fun ListItemCustomeLightPreview() {
-    SIAMOTheme (darkTheme = false) { ListItemProblem() }
-}
-
-@Preview(showBackground = true, showSystemUi = false)
-@Composable
-fun ListItemCustomeDarkPreview() {
-    SIAMOTheme (darkTheme = true) { ListItemProblem() }
-}

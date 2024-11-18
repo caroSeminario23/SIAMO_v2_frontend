@@ -29,7 +29,7 @@ fun TabBarTecnico(
     ) {
         Tab(
             selected = selectedIndex == 0,
-            onClick = { /* TODO: Acción para la opción 1 */ },
+            onClick = {  },
             text = {
                 Text(text = stringResource(R.string.tabbar_opcion1), style = MaterialTheme.typography.titleSmall.copy(fontSize = 12.sp))
             }
@@ -54,14 +54,3 @@ fun TabBarTecnico(
     }
 }
 
-@Preview(showBackground = true, showSystemUi = false)
-@Composable
-fun TabBarTecnicoLightPreview() {
-    SIAMOTheme(darkTheme = false) { TabBarTecnico() }
-}
-
-@Preview(showBackground = true, showSystemUi = false)
-@Composable
-fun TabBarTecnicoDarkPreview() {
-    SIAMOTheme(darkTheme = true) { TabBarTecnico() }
-}

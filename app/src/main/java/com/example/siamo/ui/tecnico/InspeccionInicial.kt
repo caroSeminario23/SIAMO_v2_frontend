@@ -21,25 +21,23 @@ import com.example.siamo.ui.theme.SIAMOTheme
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import com.example.siamo.data.bitacora
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
+import androidx.compose.material3.CircularProgressIndicator
+import com.example.siamo.ui.inspeccion.InspeccionInicialViewModel
 import com.example.siamo.ui.utils.ListItemProblem
+import androidx.compose.ui.text.style.LineHeightStyle.Alignment
 
 @Composable
 fun InspeccionInicial(
-    modifier: Modifier = Modifier
+    navController: NavHostController,
+    modifier: Modifier = Modifier,
+    inspeccionInicialViewModel: InspeccionInicialViewModel = viewModel()
 ) {
-    val listaBitacora = listOf(
-        bitacora("Problema 1", "Solucion 1"),
-        bitacora("Problema 2", "Solucion 2"),
-        bitacora("Problema  3", "Solucion 3"),
-        bitacora("Problema  4", "Solucion 4"),
-        bitacora("Problema 5", "Solucion 5"),
-        bitacora("Problema 6", "Solucion 6"),
-        bitacora("Problema 7", "Solucion 7"),
-        bitacora("Problema 8", null),
-        bitacora("Problema  9", "Solucion 9"),
-        bitacora("Problema 10", "Solucion 10")
-    )
+    // Observamos el estado del ViewModel
+    val uiState by inspeccionInicialViewModel.uiState.collectAsState()
 
     Scaffold(
         topBar = {
@@ -49,7 +47,6 @@ fun InspeccionInicial(
             )
         },
         bottomBar = { NavigationBarTecnico(opcionSeleccionada = 2) }
-
     ) { paddingValues ->
         Column(
             modifier = Modifier
@@ -57,6 +54,7 @@ fun InspeccionInicial(
                 .padding(paddingValues)
         ) {
             Spacer(modifier = Modifier.height(30.dp))
+
             Text(
                 text = stringResource(R.string.ispeccion_problema_solocion),
                 style = MaterialTheme.typography.bodyLarge,
@@ -68,22 +66,41 @@ fun InspeccionInicial(
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            LazyColumn(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(horizontal = 16.dp)
-            ) {
-                items(listaBitacora) { repuesto ->
-                    ListItemProblem(
-                        textoPrincipal = repuesto.problema,
-                        solucion = repuesto.solucion
-                    )
-                    
+            // Verificar si estamos cargando o si hay un error
+            if (uiState.isLoading) {
+
+                CircularProgressIndicator(modifier = Modifier.padding(16.dp))
+            } else if (uiState.errorMessage != null) {
+                // Mostrar mensaje de error si no se pudo obtener los datos
+                Text(
+                    text = uiState.errorMessage!!,
+                    color = MaterialTheme.colorScheme.error,
+                    modifier = Modifier.padding(16.dp)
+                )
+            } else {
+                // Mostrar los problemas y soluciones
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(horizontal = 16.dp)
+                ) {
+                    items(uiState.problemasConSoluciones ?: emptyList()) { problemaConSolucion ->
+                        ListItemProblem(
+                            textoPrincipal = problemaConSolucion.descripcionProblema,
+                            solucion = problemaConSolucion.descripcionSolucion,
+                            idProblema = problemaConSolucion.idProblema, // Pasar el idProblema
+                            onAddClick = { id ->
+
+                                navController.navigate("registroSolucion/$id")
+                            }
+                        )
+                    }
                 }
             }
         }
     }
 }
+
 
     @Preview(showBackground = true, showSystemUi = false)
     @Composable

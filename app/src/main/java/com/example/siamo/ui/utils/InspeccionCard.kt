@@ -27,6 +27,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.example.siamo.ui.theme.SIAMOTheme
 
 
@@ -36,7 +37,8 @@ fun InspectionCard(
     vehiculo: String = "<Marca> <Modelo>",
     placa: String = "<Número de placa>",
     problema: String = "<Descripción del problema>",
-    consulta: String = "<Código de consulta>"
+    consulta: String = "<Código de consulta>",
+    navController: NavHostController
 ) {
     val colorSinClick = MaterialTheme.colorScheme.surface
     val colorConClick = MaterialTheme.colorScheme.outlineVariant
@@ -146,7 +148,7 @@ fun InspectionCard(
                 horizontalArrangement = Arrangement.End
             ) {
                 Button(
-                    onClick = { /* Lógica para resolver la consulta */ },
+                    onClick = { navController.navigate("elistar_problemas/$consulta") },
                     modifier = Modifier.padding(end = 16.dp)
                 ) {
                     Text(text = "Resolver")
@@ -162,18 +164,4 @@ fun InspectionCard(
 
 
 
-@Preview(showBackground = true, showSystemUi = false)
-@Composable
-fun InspectionCardLightPreview() {
-    SIAMOTheme(darkTheme = false) {
-        InspectionCard( )
-    }
-}
 
-@Preview(showBackground = true, showSystemUi = false)
-@Composable
-fun InspectionCardDarkPreview() {
-    SIAMOTheme(darkTheme = true) {
-        InspectionCard()
-    }
-}

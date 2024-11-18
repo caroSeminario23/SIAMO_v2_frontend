@@ -48,17 +48,21 @@ import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.text.input.ImeAction
+import androidx.navigation.NavHostController
 import com.example.siamo.ui.inspeccion.ProblemasViewModel
+import kotlinx.coroutines.launch
 
 
 @Composable
 fun IdentificacionProblemas(
+    idConsulta: Int,
+    navController: NavHostController,
     viewModel: ProblemasViewModel = viewModel()
 ) {
-    val listaSeleccionada = viewModel.listaSeleccionada
-    val filteredProblemas = viewModel.filteredProblemas
-    val searchQuery = viewModel.searchQuery
+    // Obtenemos el estado actual del ViewModel
+    val uiState = viewModel.uiState
 
     Scaffold(
         topBar = {
@@ -96,20 +100,20 @@ fun IdentificacionProblemas(
                     }
                 )
 
-                if (filteredProblemas.isNotEmpty()) {
+                if (uiState.problemasFiltrados.isNotEmpty()) {
                     DropdownMenu(
-                        expanded = searchQuery.isNotEmpty(),
+                        expanded = uiState.searchQuery.isNotEmpty(),
                         onDismissRequest = { /* No cerrar para mantener la experiencia */ },
                         modifier = Modifier
                             .fillMaxWidth()
                             .background(MaterialTheme.colorScheme.surface)
                     ) {
-                        filteredProblemas.forEach { problema ->
+                        uiState.problemasFiltrados.forEach { problemaUI ->
                             DropdownMenuItem(
                                 onClick = {
-                                    viewModel.seleccionarProblema(problema)
+                                    viewModel.seleccionarProblemaExistente(problemaUI.problema)
                                 },
-                                text = { Text(problema.descripcion) }
+                                text = { Text(problemaUI.problema.descripcion) }
                             )
                         }
                     }
@@ -124,14 +128,12 @@ fun IdentificacionProblemas(
                     .weight(1f)
                     .padding(horizontal = 16.dp)
             ) {
-                items(listaSeleccionada) { problema ->
+                items(uiState.problemasSeleccionados) { problemaUI ->
                     ListItemWithCheckbox(
-                        text = problema.descripcion,
-                        isChecked = true,
+                        text = problemaUI.problema.descripcion,
+                        isChecked = problemaUI.isChecked,
                         onCheckedChange = { checked ->
-                            if (!checked) {
-                                viewModel.deseleccionarProblema(problema)
-                            }
+                            viewModel.toggleCheckbox(problemaUI)
                         }
                     )
                 }
@@ -144,8 +146,13 @@ fun IdentificacionProblemas(
                     .padding(16.dp),
                 horizontalArrangement = Arrangement.End // Alinea el botón a la derecha
             ) {
+                val coroutineScope = rememberCoroutineScope()
                 Button(
-                    onClick = { /* Acción al presionar el botón */ },
+                    onClick = {
+                        coroutineScope.launch {
+                            viewModel.guardarProblemasSeleccionados(idConsulta) }
+                        navController.navigate("inspeccion_inical/${idConsulta}")
+                    },
                     modifier = Modifier.wrapContentWidth(Alignment.End),
                     colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary)
                 ) {
@@ -237,7 +244,7 @@ fun SearchBar(
 }
 
 
-@Preview(showBackground = true, showSystemUi = false)
+/*@Preview(showBackground = true, showSystemUi = false)
 @Composable
 fun IdentificacionProblemasLightPreview() {
     SIAMOTheme (darkTheme = false) { IdentificacionProblemas() }
@@ -247,4 +254,4 @@ fun IdentificacionProblemasLightPreview() {
 @Composable
 fun IdentificacionProblemasPreview() {
     SIAMOTheme (darkTheme = true) { IdentificacionProblemas() }
-}
+}*/

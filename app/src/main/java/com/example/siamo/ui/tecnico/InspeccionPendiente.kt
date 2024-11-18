@@ -24,15 +24,21 @@ import com.example.siamo.ui.utils.TabBarTecnico
 import androidx.compose.material3.Text
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.LaunchedEffect
-import com.example.siamo.ui.inspeccion.InspeccionUiState
+import androidx.compose.runtime.collectAsState
+import androidx.navigation.NavHostController
+import com.example.siamo.ui.inspeccion.InspeccionPendienteViewModel
+import androidx.compose.runtime.getValue
+
 
 @Composable
 fun InspeccionPendiente(
     idTecnico: Int,
-    consultaUiState: InspeccionUiState,
     cargarInspecciones: (Int) -> Unit,
+    inspeccionViewModel: InspeccionPendienteViewModel,
+    navController: NavHostController,
     modifier: Modifier = Modifier
 ) {
+    val consultaUiState by inspeccionViewModel.uiState.collectAsState()
 
     LaunchedEffect(idTecnico) {
         cargarInspecciones(idTecnico)
@@ -49,7 +55,9 @@ fun InspeccionPendiente(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Spacer(modifier = Modifier.padding(12.dp))
-            TabBarTecnico(opcionSeleccionada = 0)
+            TabBarTecnico(
+                opcionSeleccionada = 0
+            )
 
             Spacer(modifier = Modifier.padding(12.dp))
 
@@ -74,7 +82,7 @@ fun InspeccionPendiente(
                 }
                 else -> {
                     LazyColumn {
-                        items(consultaUiState.inspeccionPendientes) { consulta ->
+                        items(consultaUiState.inspeccionPendientes!!) { consulta ->
                             Box(
                                 modifier = Modifier.padding(start = 18.dp, end = 18.dp, bottom = 12.dp)
                             ) {
@@ -83,7 +91,8 @@ fun InspeccionPendiente(
                                     vehiculo = "${consulta.automovil?.marca ?: "Marca desconocida"} (${consulta.automovil?.modelo ?: "Modelo desconocido"})",
                                     placa = consulta.automovil?.placa ?: "Placa desconocida",
                                     problema = consulta.prob_declarado ?: "Problema no especificado",
-                                    consulta = consulta.id_consulta?.toString() ?: "Sin ID"
+                                    consulta = consulta.id_consulta?.toString() ?: "Sin ID",
+                                    navController = navController
                                 )
                             }
                         }

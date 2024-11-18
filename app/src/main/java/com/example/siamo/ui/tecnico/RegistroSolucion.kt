@@ -27,11 +27,13 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.ui.text.style.TextAlign
+import androidx.navigation.NavHostController
 
 
 @Composable
 fun registroSolucion(
-    problemaActual: String,
+    navController: NavHostController,
+    problemaID: Int,
     modifier: Modifier = Modifier,
     ) {
 
@@ -56,7 +58,7 @@ fun registroSolucion(
             )
 
             Text(
-                text = stringResource(id = R.string.inspeccion_registro,problemaActual),
+                text = stringResource(id = R.string.inspeccion_registro,problemaID),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSecondaryContainer,
                 textAlign = TextAlign.Center,
@@ -108,10 +110,11 @@ fun registroSolucion(
                 }
             }
     }
+/*
 @Preview(showBackground = true, showSystemUi = false)
 @Composable
 fun RegistroSolucionLightPreview() {
-    SIAMOTheme (darkTheme = false) { registroSolucion("problema 1") }
+    SIAMOTheme (darkTheme = false) { registroSolucion() }
 }
 
 @Preview(showBackground = true, showSystemUi = false)
@@ -119,3 +122,4 @@ fun RegistroSolucionLightPreview() {
 fun RegistroSolucionDarkPreview() {
     SIAMOTheme (darkTheme = true) { registroSolucion("problema 1") }
 }
+*/
