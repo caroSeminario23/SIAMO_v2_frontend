@@ -1,4 +1,4 @@
-package com.example.siamo.ui.tecnico.resumenost
+package com.example.siamo.ui.tecnico.resumen_ost
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -31,6 +31,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.siamo.NavRoutes
 import com.example.siamo.R
+import com.example.siamo.ui.tecnico.registro_ost.RegistroOstViewModel
 import com.example.siamo.ui.theme.SIAMOTheme
 import com.example.siamo.ui.utils.AlertDialogError
 import com.example.siamo.ui.utils.AlertDialogOK
@@ -47,7 +48,7 @@ fun ResumenOST(
     val uiState by viewModel.uiState.collectAsState()
 
     when {
-        uiState.errorRegistro == 1 -> {
+        uiState.errorRegistroPresupuesto == 1 -> {
             AlertDialogError(
                 titulo = stringResource(id = R.string.dialog_registro_ost),
                 contenido = stringResource(id = R.string.dialog_registro_ost_error),
@@ -55,7 +56,7 @@ fun ResumenOST(
                 onDismissClick = { viewModel.cerrarAlertar() }
             )
         }
-        uiState.errorRegistro == 2 -> {
+        uiState.errorRegistroPresupuesto == 2 -> {
             AlertDialogOK(
                 titulo = stringResource(id = R.string.dialog_registro_ost),
                 contenido = stringResource(id = R.string.dialog_registro_ost_exitoso),
@@ -114,10 +115,10 @@ fun ResumenOST(
                 )
             }
 
-            items(uiState.problemas.size) { index ->
-                val problema = uiState.problemas[index]
+            items(uiState.listaProblemasSeleccionados.size) { index ->
+                val problema = uiState.listaProblemasSeleccionados[index]
                 Text(
-                    text = problema,
+                    text = problema.problema.descripcion,
                     style = MaterialTheme.typography.labelLarge,
                     color = MaterialTheme.colorScheme.onSecondaryContainer,
                     textAlign = TextAlign.Start,
@@ -135,10 +136,10 @@ fun ResumenOST(
                 )
             }
 
-            items(uiState.soluciones.size) { index ->
-                val problema = uiState.soluciones[index]
+            items(uiState.listaSolucionesRegistradas.size) { index ->
+                val solucion = uiState.listaSolucionesRegistradas[index]
                 Text(
-                    text = problema,
+                    text = solucion.descripcion,
                     style = MaterialTheme.typography.labelLarge,
                     color = MaterialTheme.colorScheme.onSecondaryContainer,
                     textAlign = TextAlign.Start,
@@ -158,7 +159,7 @@ fun ResumenOST(
                 Text(
                     text = stringResource(id = R.string.estilo_moneda) + String.format(
                         "%.2f",
-                        uiState.presupuestoUiState.presupuestoFinal
+                        uiState.presupuestoFinal
                     ),
                     style = MaterialTheme.typography.labelLarge,
                     color = MaterialTheme.colorScheme.onSecondaryContainer,
@@ -169,7 +170,7 @@ fun ResumenOST(
                 Text(
                     text = stringResource(id = R.string.label_descuento) + String.format(
                         "%.2f",
-                        uiState.presupuestoUiState.descuentoEnSoles
+                        uiState.descuentoEnSoles
                     ),
                     style = MaterialTheme.typography.labelLarge,
                     color = MaterialTheme.colorScheme.onSecondaryContainer,
@@ -188,8 +189,8 @@ fun ResumenOST(
                 )
             }
 
-            items(uiState.presupuestoUiState.listaRepuestosSeleccionados.size) { index ->
-                val repuesto = uiState.presupuestoUiState.listaRepuestosSeleccionados[index]
+            items(uiState.listaRepuestosSeleccionados.size) { index ->
+                val repuesto = uiState.listaRepuestosSeleccionados[index]
                 Text(
                     text = repuesto.repuesto.descripcion + " (" + repuesto.cantidad + ")",
                     style = MaterialTheme.typography.labelLarge,
@@ -290,18 +291,24 @@ fun ResumenOST(
 @Composable
 fun ResumenOSTLightPreview() {
     val navController = rememberNavController()
-    val viewModel = ResumenOstViewModel()
-    SIAMOTheme (darkTheme = false) { ResumenOST(
-        viewModel = viewModel,
-        navController = navController) }
+    val registroOstViewModel = RegistroOstViewModel()
+    val viewModel = ResumenOstViewModel(registroOstViewModel)
+    SIAMOTheme (darkTheme = false) {
+        ResumenOST(
+            viewModel = viewModel,
+            navController = navController)
+    }
 }
 
 @Preview(showBackground = true, showSystemUi = false)
 @Composable
 fun ResumenOSTDarkPreview() {
     val navController = rememberNavController()
-    val viewModel = ResumenOstViewModel()
-    SIAMOTheme (darkTheme = true) { ResumenOST(
-        viewModel = viewModel,
-        navController = navController) }
+    val registroOstViewModel = RegistroOstViewModel()
+    val viewModel = ResumenOstViewModel(registroOstViewModel)
+    SIAMOTheme (darkTheme = true) {
+        ResumenOST(
+            viewModel = viewModel,
+            navController = navController)
+    }
 }

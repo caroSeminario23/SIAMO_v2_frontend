@@ -3,24 +3,26 @@ package com.example.siamo.ui.tecnico.presupuesto
 import androidx.lifecycle.ViewModel
 import com.example.siamo.data.repuesto.RepuestoSeleccionado
 import com.example.siamo.data.repuesto.Repuesto
-import com.example.siamo.ui.tecnico.resumenost.ResumenOstUiState
+import com.example.siamo.ui.tecnico.registro_ost.RegistroOstUiState
+import com.example.siamo.ui.tecnico.registro_ost.RegistroOstViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 
-class PresupuestoViewModel : ViewModel() {
+class PresupuestoViewModel (
+    private val registroOstViewModel: RegistroOstViewModel
+) : ViewModel() {
     companion object {
         const val TARIFA_POR_TECNICO = 100.0
     }
 
-    private val _uiState = MutableStateFlow(ResumenOstUiState())
-    val uiState: StateFlow<ResumenOstUiState> = _uiState
+    val uiState: StateFlow<RegistroOstUiState> = registroOstViewModel.uiState
 
     init {
         cargarRepuestos()
     }
 
-    fun cargarRepuestos() {
+    private fun cargarRepuestos() {
         val repuestos = listOf(
             Repuesto(1, "Repuesto 1", 100.00),
             Repuesto(2, "Repuesto 2", 200.00),
@@ -33,93 +35,54 @@ class PresupuestoViewModel : ViewModel() {
             Repuesto(9, "Repuesto 9", 900.00),
             Repuesto(10 ,"Repuesto 10", 1000.00)
         )
-        _uiState.update { it.copy(
-            presupuestoUiState = it.presupuestoUiState.copy(
-                listaRepuestos = repuestos)) }
+        registroOstViewModel.actualizarUiState(
+            uiState.value.copy(listaRepuestos = repuestos)
+        )
     }
 
-    fun buscarRepuesto(query: String) {
-        _uiState.update {
-            it.copy(
-                presupuestoUiState = it.presupuestoUiState.copy(
-                    resultadosBusqueda = it.presupuestoUiState.listaRepuestos.filter {
+    private fun buscarRepuesto(query: String) {
+        registroOstViewModel.actualizarUiState(
+            uiState.value.copy(
+                resultadosBusquedaRepuesto = uiState.value.listaRepuestos.filter {
                         repuesto -> repuesto.descripcion.contains(query, ignoreCase = true)
-
-                    },
-                ),
-                /*
-                resultadosBusqueda = it.listaRepuestos.filter { repuesto ->
-                    repuesto.descripcion.contains(query, ignoreCase = true)
                 },
-
-                 */
             )
-        }
+        )
     }
 
     fun actualizarNumeroTecnicos(numero: String) {
         if (numero.isEmpty() || numero.toIntOrNull() != null) {
-            _uiState.update { it.copy(
-                presupuestoUiState = it.presupuestoUiState.copy(
-                    numeroTecnicos = numero
-                )
-            ) }
-
-            //_uiState.update { it.copy(numeroTecnicos = numero)
-
+            registroOstViewModel.actualizarUiState(uiState.value.copy(numeroTecnicos = numero))
             calcularPresupuesto()
         }
     }
 
     fun actualizarCantidadRepuesto(cantidad: String) {
         if (cantidad.isEmpty() || cantidad.toIntOrNull() != null) {
-            _uiState.update { it.copy(
-                presupuestoUiState = it.presupuestoUiState.copy(
-                    cantidadRepuesto = cantidad
-                )
-            )
-            //_uiState.update { it.copy(cantidadRepuesto = cantidad)
-            }
+            registroOstViewModel.actualizarUiState(uiState.value.copy(cantidadRepuesto = cantidad))
         }
     }
 
     fun actualizarPorcentajeDescuento(porcentaje: String) {
         if (porcentaje.isEmpty() || porcentaje.toDoubleOrNull() != null) {
-            _uiState.update { it.copy(
-                presupuestoUiState = it.presupuestoUiState.copy(
-                    porcentajeDescuento = porcentaje
-                )
-            )
-            //_uiState.update { it.copy(porcentajeDescuento = porcentaje)
-            }
+            registroOstViewModel.actualizarUiState(uiState.value.copy(porcentajeDescuento = porcentaje))
             calcularPresupuesto()
         }
     }
 
     fun actualizarQuery(newQuery: String) {
-        _uiState.update { it.copy(
-            presupuestoUiState = it.presupuestoUiState.copy(
-                query = newQuery,
+        registroOstViewModel.actualizarUiState(
+            uiState.value.copy(
+                repuestoBuscado = newQuery,
                 repuestoSeleccionadoTemp = null,
-                mostrarResultadosBusqueda = true
+                mostrarResultadosBusquedaRepuestos = true
             )
-        )}
-        /*
-        _uiState.update {
-            it.copy(
-                query = newQuery,
-                repuestoSeleccionadoTemp = null,
-                mostrarResultadosBusqueda = true
-            )
-        }
-
-         */
+        )
         buscarRepuesto(newQuery)
     }
 
     fun registrarRepuesto() {
-        //val state = _uiState.value
-        val state = _uiState.value.presupuestoUiState
+        val state = uiState.value
         val cantidad = state.cantidadRepuesto.toIntOrNull() ?: 0
         val repuestoTemp = state.repuestoSeleccionadoTemp
 
@@ -128,119 +91,60 @@ class PresupuestoViewModel : ViewModel() {
                 repuesto = repuestoTemp,
                 cantidad = cantidad
             )
-            /*_uiState.update {
-                it.copy(
-                    listaRepuestosSeleccionados = it.listaRepuestosSeleccionados + repuestoSeleccionado,
+            registroOstViewModel.actualizarUiState(
+                state.copy(
+                    listaRepuestosSeleccionados = state.listaRepuestosSeleccionados + repuestoSeleccionado,
                     cantidadRepuesto = "",
-                    query = "",
+                    repuestoBuscado = "",
                     repuestoSeleccionadoTemp = null
                 )
-            }*/
-            _uiState.update { currentState ->
-                currentState.copy(
-                    presupuestoUiState = currentState.presupuestoUiState.copy(
-                        listaRepuestosSeleccionados = currentState.presupuestoUiState.listaRepuestosSeleccionados + repuestoSeleccionado,
-                        cantidadRepuesto = "",
-                        query = "",
-                        repuestoSeleccionadoTemp = null
-                    )
-                )
-            }
+            )
             calcularPresupuesto()
         }
     }
 
     fun seleccionarRepuesto(repuesto: Repuesto) {
-        /*val cantidad = _uiState.value.cantidadRepuesto.toIntOrNull() ?: 0
-        _uiState.update {
-            it.copy(
+        val cantidad = uiState.value.cantidadRepuesto.toIntOrNull() ?: 0
+        registroOstViewModel.actualizarUiState(
+            uiState.value.copy(
                 repuestoSeleccionadoTemp = repuesto,
                 cantidadRepuesto = cantidad.toString(),
-                mostrarResultadosBusqueda = false,
-                query = repuesto.descripcion
+                mostrarResultadosBusquedaRepuestos = false,
+                repuestoBuscado = repuesto.descripcion
             )
-        }*/
-        val cantidad = _uiState.value.presupuestoUiState.cantidadRepuesto.toIntOrNull() ?: 0
-        _uiState.update { currentState ->
-            currentState.copy(
-                presupuestoUiState = currentState.presupuestoUiState.copy(
-                    repuestoSeleccionadoTemp = repuesto,
-                    cantidadRepuesto = cantidad.toString(),
-                    mostrarResultadosBusqueda = false,
-                    query = repuesto.descripcion
-                )
-            )
-        }
+        )
     }
 
     fun toggleMarcadoRepuesto(index: Int) {
-        /*_uiState.update { state ->
-            val nuevaLista = state.listaRepuestosSeleccionados.toMutableList()
-            val repuesto = nuevaLista[index]
-            nuevaLista[index] = repuesto.copy(marcado = !repuesto.marcado)
-            state.copy(listaRepuestosSeleccionados = nuevaLista)
-        }*/
-        _uiState.update { currentState ->
-            val nuevaLista = currentState.presupuestoUiState.listaRepuestosSeleccionados.toMutableList()
-            val repuesto = nuevaLista[index]
-            nuevaLista[index] = repuesto.copy(marcado = !repuesto.marcado)
-            currentState.copy(
-                presupuestoUiState = currentState.presupuestoUiState.copy(
-                    listaRepuestosSeleccionados = nuevaLista
-                )
-            )
-        }
+        val state = uiState.value
+        val nuevaLista = state.listaRepuestosSeleccionados.toMutableList()
+        val repuesto = nuevaLista[index]
+        nuevaLista[index] = repuesto.copy(marcado = !repuesto.marcado)
+        registroOstViewModel.actualizarUiState(state.copy(listaRepuestosSeleccionados = nuevaLista))
         calcularPresupuesto()
     }
 
     private fun calcularPresupuesto() {
-        //val state = _uiState.value
-        val state = _uiState.value.presupuestoUiState
-
-        // Costo de mano de obra
+        val state = uiState.value
         val costoManoObra = (state.numeroTecnicos.toIntOrNull() ?: 0) * TARIFA_POR_TECNICO
-
-        // Costo de repuestos marcados
         val costoRepuestos = state.listaRepuestosSeleccionados
             .filter { it.marcado }
             .sumOf { it.subtotal }
-
-        // Presupuesto estimado
         val presupuestoEstimado = costoManoObra + costoRepuestos
-
-        // Descuento
         val porcentajeDescuento = state.porcentajeDescuento.toDoubleOrNull() ?: 0.0
         val descuentoEnSoles = (presupuestoEstimado * porcentajeDescuento) / 100
-
-        // Presupuesto final
         val presupuestoFinal = presupuestoEstimado - descuentoEnSoles
 
-        /*_uiState.update {
-            it.copy(
+        registroOstViewModel.actualizarUiState(
+            state.copy(
                 presupuestoEstimado = presupuestoEstimado,
                 descuentoEnSoles = descuentoEnSoles,
                 presupuestoFinal = presupuestoFinal
             )
-        }*/
-        _uiState.update { currentState ->
-            currentState.copy(
-                presupuestoUiState = currentState.presupuestoUiState.copy(
-                    presupuestoEstimado = presupuestoEstimado,
-                    descuentoEnSoles = descuentoEnSoles,
-                    presupuestoFinal = presupuestoFinal
-                )
-            )
-        }
+        )
     }
 
     fun onSearch() {
-        _uiState.update {
-            it.copy(
-                presupuestoUiState = it.presupuestoUiState.copy(
-                    mostrarResultadosBusqueda = false
-                )
-            )
-        }
-        //_uiState.update { it.copy(mostrarResultadosBusqueda = false) }
+        registroOstViewModel.actualizarUiState(uiState.value.copy(mostrarResultadosBusquedaRepuestos = false))
     }
 }

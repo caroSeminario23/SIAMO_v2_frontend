@@ -1,4 +1,4 @@
-package com.example.siamo.ui.tecnico.resumenost
+package com.example.siamo.ui.tecnico.resumen_ost
 
 interface ResumenOstRepository {
     //suspend fun insertOst(request: Ost): Int

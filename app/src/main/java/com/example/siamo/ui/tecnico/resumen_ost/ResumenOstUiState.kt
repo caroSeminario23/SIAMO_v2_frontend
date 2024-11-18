@@ -1,4 +1,4 @@
-package com.example.siamo.ui.tecnico.resumenost
+package com.example.siamo.ui.tecnico.resumen_ost
 
 import com.example.siamo.ui.tecnico.presupuesto.PresupuestoUiState
 

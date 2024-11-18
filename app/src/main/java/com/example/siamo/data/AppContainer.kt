@@ -3,15 +3,13 @@ package com.example.siamo.data
 import com.example.siamo.ui.tecnico.presupuesto.DefaultPresupuestoRepository
 import com.example.siamo.ui.tecnico.presupuesto.PresupuestoApiService
 import com.example.siamo.ui.tecnico.presupuesto.PresupuestoRepository
-import com.example.siamo.ui.tecnico.resumenost.DefaultResumenOstRepository
-import com.example.siamo.ui.tecnico.resumenost.ResumenOstApiService
-import com.example.siamo.ui.tecnico.resumenost.ResumenOstRepository
+import com.example.siamo.ui.tecnico.resumen_ost.DefaultResumenOstRepository
+import com.example.siamo.ui.tecnico.resumen_ost.ResumenOstApiService
+import com.example.siamo.ui.tecnico.resumen_ost.ResumenOstRepository
 import retrofit2.Retrofit
-import kotlinx.serialization.json.JsonConfiguration
 import kotlinx.serialization.json.Json
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import okhttp3.MediaType.Companion.toMediaType
-import retrofit2.create
 
 interface AppContainer {
     val presupuestoRepository: PresupuestoRepository

@@ -1,7 +1,4 @@
-package com.example.siamo.ui.tecnico.resumenost
-
-import retrofit2.http.Body
-import retrofit2.http.POST
+package com.example.siamo.ui.tecnico.resumen_ost
 
 interface ResumenOstApiService {
     // enviar ost a la base de datos

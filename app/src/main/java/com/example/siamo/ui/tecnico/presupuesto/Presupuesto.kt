@@ -12,7 +12,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Cancel
-import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Send
 import androidx.compose.material3.AssistChip
@@ -42,6 +41,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.siamo.NavRoutes
 import com.example.siamo.R
+import com.example.siamo.ui.tecnico.registro_ost.RegistroOstViewModel
 import com.example.siamo.ui.theme.SIAMOTheme
 import com.example.siamo.ui.utils.DividerSection
 import com.example.siamo.ui.utils.ListItemCustome
@@ -84,8 +84,7 @@ fun Presupuesto(
 
             item {
                 OutlinedTextField(
-                    value = uiState.presupuestoUiState.numeroTecnicos,
-                    //uiState.numeroTecnicos,
+                    value = uiState.numeroTecnicos,
                     onValueChange = {
                         viewModel.actualizarNumeroTecnicos(it)
                     },
@@ -110,12 +109,10 @@ fun Presupuesto(
             item {
                 Box {
                     SearchBar(
-                        query = uiState.presupuestoUiState.query,
-                        //uiState.query,
+                        query = uiState.repuestoBuscado,
                         onQueryChange = { viewModel.actualizarQuery(it) },
                         onSearch = { viewModel.onSearch() },
-                        active = uiState.presupuestoUiState.searchBarActiva,
-                        //uiState.searchBarActiva,
+                        active = uiState.searchBarActivaRepuesto,
                         onActiveChange = {  },
                         placeholder = {
                             Text(
@@ -136,14 +133,12 @@ fun Presupuesto(
                     )
 
                     DropdownMenu(
-                        expanded = uiState.presupuestoUiState.mostrarResultadosBusqueda,
-                        //uiState.mostrarResultadosBusqueda,
+                        expanded = uiState.mostrarResultadosBusquedaRepuestos,
                         onDismissRequest = {
                             viewModel.onSearch() },
                         modifier = Modifier.fillMaxWidth()
                     ) {
-                        //resultadosBusqueda
-                        uiState.presupuestoUiState.resultadosBusqueda.forEach { repuesto ->
+                        uiState.resultadosBusquedaRepuesto.forEach { repuesto ->
                             DropdownMenuItem(
                                 text = { Text(text = repuesto.descripcion) },
                                 onClick = {
@@ -158,8 +153,7 @@ fun Presupuesto(
 
             item {
                 OutlinedTextField(
-                    value = uiState.presupuestoUiState.cantidadRepuesto,
-                    //uiState.cantidadRepuesto,
+                    value = uiState.cantidadRepuesto,
                     onValueChange = { viewModel.actualizarCantidadRepuesto(it)},
                     label = {
                         Text(stringResource(id = R.string.campo_n_repuestos))
@@ -180,8 +174,8 @@ fun Presupuesto(
                 ) {
                     Button(
                         onClick = { viewModel.registrarRepuesto() },
-                        enabled = uiState.presupuestoUiState.repuestoSeleccionadoTemp != null &&
-                                uiState.presupuestoUiState.cantidadRepuesto.isNotEmpty(),
+                        enabled = uiState.repuestoSeleccionadoTemp != null &&
+                                uiState.cantidadRepuesto.isNotEmpty(),
                         modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 8.dp)
                     ) {
                         Icon(
@@ -194,8 +188,8 @@ fun Presupuesto(
                 }
             }
 
-            items(uiState.presupuestoUiState.listaRepuestosSeleccionados.size) { index ->
-                val repuestoSeleccionado = uiState.presupuestoUiState.listaRepuestosSeleccionados[index]
+            items(uiState.listaRepuestosSeleccionados.size) { index ->
+                val repuestoSeleccionado = uiState.listaRepuestosSeleccionados[index]
                 ListItemCustome(
                     textoPrincipal = "${repuestoSeleccionado.repuesto.descripcion} (${repuestoSeleccionado.cantidad})",
                     textoSecundario = stringResource(id = R.string.estilo_moneda) + String.format("%.2f", repuestoSeleccionado.subtotal),
@@ -225,7 +219,7 @@ fun Presupuesto(
                             Text(
                                 text = stringResource(
                                     id = R.string.label_presupuesto_estimado)
-                                        + String.format("%.2f", uiState.presupuestoUiState.presupuestoEstimado),
+                                        + String.format("%.2f", uiState.presupuestoEstimado),
                                 textAlign = TextAlign.Center,
                                 color = MaterialTheme.colorScheme.onSurface
                             )
@@ -239,8 +233,7 @@ fun Presupuesto(
 
 
                 OutlinedTextField(
-                    value = uiState.presupuestoUiState.porcentajeDescuento,
-                    //uiState.porcentajeDescuento,
+                    value = uiState.porcentajeDescuento,
                     onValueChange = { viewModel.actualizarPorcentajeDescuento(it) },
                     label = {
                         Text(stringResource(id = R.string.campo_descuento))
@@ -264,7 +257,7 @@ fun Presupuesto(
                             Text(
                                 text = stringResource(
                                     id = R.string.label_descuento)
-                                        + String.format("%.2f", uiState.presupuestoUiState.descuentoEnSoles),
+                                        + String.format("%.2f", uiState.descuentoEnSoles),
                                 textAlign = TextAlign.Center,
                                 color = MaterialTheme.colorScheme.onSurface
                             ) } },
@@ -284,7 +277,7 @@ fun Presupuesto(
                             Text(
                                 text = stringResource(
                                     id = R.string.label_presupuesto_final)
-                                        + String.format("%.2f", uiState.presupuestoUiState.presupuestoFinal),
+                                        + String.format("%.2f", uiState.presupuestoFinal),
                                 textAlign = TextAlign.Center,
                                 color = MaterialTheme.colorScheme.onSurface
                             )
@@ -343,7 +336,8 @@ fun Presupuesto(
 @Composable
 fun PresupuestoLightPreview() {
     val navController = rememberNavController()
-    val viewModel = PresupuestoViewModel()
+    val registroOstViewModel = RegistroOstViewModel()
+    val viewModel = PresupuestoViewModel(registroOstViewModel)
     SIAMOTheme (darkTheme = false) {
         Presupuesto(
             viewModel = viewModel,
@@ -355,7 +349,8 @@ fun PresupuestoLightPreview() {
 @Composable
 fun PresupuestoDarkPreview() {
     val navController = rememberNavController()
-    val viewModel = PresupuestoViewModel()
+    val registroOstViewModel = RegistroOstViewModel()
+    val viewModel = PresupuestoViewModel(registroOstViewModel)
     SIAMOTheme (darkTheme = true) {
         Presupuesto(
             viewModel = viewModel,

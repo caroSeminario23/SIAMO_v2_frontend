@@ -80,6 +80,6 @@ data class RegistroOstUiState(
     val registroCancelacionActivo: Boolean = false,
 
     // Manejo de diálogos de éxito y error
-    val errorRegistroPresupuestoOst: Int = 0, // 0 es el código de no haber intentado registrar
-    val errorRegistroSolucion: Int = 0 // 0 es el código de no haber intentado registrar
+    val errorRegistroPresupuesto: Int = 0, // 0 es el código de no haber intentado registrar
+    val errorRegistroDiagnostico: Int = 0 // 0 es el código de no haber intentado registrar
 )
