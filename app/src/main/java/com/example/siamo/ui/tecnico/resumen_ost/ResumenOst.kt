@@ -29,7 +29,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.example.siamo.NavRoutes
+import com.example.siamo.navigation.NavRoutes
 import com.example.siamo.R
 import com.example.siamo.ui.tecnico.registro_ost.RegistroOstViewModel
 import com.example.siamo.ui.theme.SIAMOTheme

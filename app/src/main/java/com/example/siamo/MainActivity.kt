@@ -11,7 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
-import com.example.siamo.ui.inicio.SiamoApp
+import com.example.siamo.navigation.NavGraph
 import com.example.siamo.ui.theme.SIAMOTheme
 
 class MainActivity : ComponentActivity() {

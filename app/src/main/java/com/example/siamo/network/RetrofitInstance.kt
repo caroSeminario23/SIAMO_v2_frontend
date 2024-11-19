@@ -1,4 +1,4 @@
-package com.example.siamo
+package com.example.siamo.network
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

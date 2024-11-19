@@ -1,4 +1,4 @@
-package com.example.siamo
+package com.example.siamo.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
