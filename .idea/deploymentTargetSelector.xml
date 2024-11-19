@@ -30,9 +30,6 @@
       <SelectionState runConfigName="ResumenOSTLightPreview">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="InspeccionPendienteLightPreview">
-        <option name="selectionMode" value="DROPDOWN" />
-      </SelectionState>
     </selectionStates>
   </component>
 </project>

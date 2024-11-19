@@ -22,9 +22,6 @@ import com.example.siamo.network.ListaProblemasApiService
 import com.example.siamo.network.ProblemaApiService
 import com.example.siamo.network.SolucionApiService
 import okhttp3.MediaType.Companion.toMediaType
-import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
-import kotlinx.serialization.json.Json
-import retrofit2.Retrofit
 
 interface AppContainer {
     val presupuestoRepository: PresupuestoRepository
@@ -46,6 +43,8 @@ class DefaultAppContainer : AppContainer {
 
     private val presupuestoApiService: PresupuestoApiService by lazy {
         retrofit.create(PresupuestoApiService::class.java)
+    }
+
     // API Services
     private val consultaApiService: ConsultaApiService by lazy {
         retrofit.create(ConsultaApiService::class.java)
@@ -64,6 +63,7 @@ class DefaultAppContainer : AppContainer {
 
     private val resumenOstApiService: ResumenOstApiService by lazy {
         retrofit.create(ResumenOstApiService::class.java)
+    }
     // Repositories
     override val consultaRepository: ConsultaRepository by lazy {
         DefaultConsultaRepository(consultaApiService)
@@ -71,12 +71,15 @@ class DefaultAppContainer : AppContainer {
 
     override val presupuestoRepository: PresupuestoRepository by lazy {
         DefaultPresupuestoRepository(presupuestoApiService)
+    }
+
     override val problemaRepository: ProblemaRepository by lazy {
         DefaultProblemaRepository(problemaApiService)
     }
 
     override val resumenOstRepository: ResumenOstRepository by lazy {
-        DefaultResumenOstRepository(resumenOstApiService)
+        DefaultResumenOstRepository(resumenOstApiService)}
+
     override val listaProblemasRepository: ListaProblemasRepository by lazy {
         DefaultListaProblemasRepository(listaProblemasApiService)
     }
