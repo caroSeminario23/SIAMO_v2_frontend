@@ -1,4 +1,4 @@
-package com.example.siamo.ui.tecnico
+package com.example.siamo.ui.tecnico.inspeccion_inicial_soluciones
 
 
 import androidx.compose.foundation.layout.Column
@@ -26,9 +26,7 @@ import androidx.compose.runtime.getValue
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.compose.material3.CircularProgressIndicator
-import com.example.siamo.ui.inspeccion.InspeccionInicialViewModel
 import com.example.siamo.ui.utils.ListItemProblem
-import androidx.compose.ui.text.style.LineHeightStyle.Alignment
 
 @Composable
 fun InspeccionInicial(

@@ -1,14 +1,13 @@
-package com.example.siamo.ui.inspeccion
+package com.example.siamo.ui.tecnico.inspeccion_inicial_soluciones
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.siamo.data.ListaProblemasRepository
-import com.example.siamo.data.ProblemaRepository
-import com.example.siamo.data.SolucionRepository
+import com.example.siamo.data.otros_ara.ListaProblemasRepository
+import com.example.siamo.data.otros_ara.ProblemaRepository
+import com.example.siamo.data.otros_ara.SolucionRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 data class InspeccionInicialUiState(
     val problemasConSoluciones: List<ProblemaConSolucion>? = null,

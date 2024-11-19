@@ -6,11 +6,11 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
-import com.example.siamo.ui.inspeccion.InspeccionPendienteViewModel
-import com.example.siamo.ui.tecnico.InspeccionPendiente
-import com.example.siamo.ui.tecnico.IdentificacionProblemas
-import com.example.siamo.ui.tecnico.InspeccionInicial
-import com.example.siamo.ui.tecnico.registroSolucion
+import com.example.siamo.ui.tecnico.inspeccion_pendiente.InspeccionPendienteViewModel
+import com.example.siamo.ui.tecnico.inspeccion_pendiente.InspeccionPendiente
+import com.example.siamo.ui.tecnico.inspeccion_inicial_problemas.IdentificacionProblemas
+import com.example.siamo.ui.tecnico.inspeccion_inicial_soluciones.InspeccionInicial
+import com.example.siamo.ui.tecnico.registro_solucion.registroSolucion
 
 enum class NavRoutes(val route: String) {
     InspeccionPendiente("Inspeccion"),

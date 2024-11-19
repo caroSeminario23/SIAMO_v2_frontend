@@ -1,4 +1,4 @@
-package com.example.siamo.ui.tecnico
+package com.example.siamo.ui.tecnico.inspeccion_pendiente
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -13,10 +13,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.siamo.R
-import com.example.siamo.ui.theme.SIAMOTheme
 import com.example.siamo.ui.utils.InspectionCard
 import com.example.siamo.ui.utils.NavigationBarTecnico
 import com.example.siamo.ui.utils.TopBar
@@ -26,7 +24,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.navigation.NavHostController
-import com.example.siamo.ui.inspeccion.InspeccionPendienteViewModel
 import androidx.compose.runtime.getValue
 
 

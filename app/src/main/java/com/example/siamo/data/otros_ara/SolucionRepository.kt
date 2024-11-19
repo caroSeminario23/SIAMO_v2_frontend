@@ -1,7 +1,7 @@
-package com.example.siamo.data
+package com.example.siamo.data.otros_ara
 
 import com.example.siamo.model.Solucion
-import com.example.siamo.network_inspeccion.SolucionApiService
+import com.example.siamo.network.SolucionApiService
 
 interface SolucionRepository {
     suspend fun getSolucionPorId(id: Int): Solucion

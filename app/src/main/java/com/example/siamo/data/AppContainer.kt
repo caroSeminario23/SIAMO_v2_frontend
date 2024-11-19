@@ -1,9 +1,17 @@
 package com.example.siamo.data
 
-import com.example.siamo.network_inspeccion.ConsultaApiService
-import com.example.siamo.network_inspeccion.ListaProblemasApiService
-import com.example.siamo.network_inspeccion.ProblemaApiService
-import com.example.siamo.network_inspeccion.SolucionApiService
+import com.example.siamo.data.otros_ara.ConsultaRepository
+import com.example.siamo.data.otros_ara.DefaultConsultaRepository
+import com.example.siamo.data.otros_ara.DefaultListaProblemasRepository
+import com.example.siamo.data.otros_ara.DefaultProblemaRepository
+import com.example.siamo.data.otros_ara.DefaultSolucionRepository
+import com.example.siamo.data.otros_ara.ListaProblemasRepository
+import com.example.siamo.data.otros_ara.ProblemaRepository
+import com.example.siamo.data.otros_ara.SolucionRepository
+import com.example.siamo.network.ConsultaApiService
+import com.example.siamo.network.ListaProblemasApiService
+import com.example.siamo.network.ProblemaApiService
+import com.example.siamo.network.SolucionApiService
 import okhttp3.MediaType.Companion.toMediaType
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.serialization.json.Json

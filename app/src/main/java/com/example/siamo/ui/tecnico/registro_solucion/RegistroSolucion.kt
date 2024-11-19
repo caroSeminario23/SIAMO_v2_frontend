@@ -1,4 +1,4 @@
-package com.example.siamo.ui.tecnico
+package com.example.siamo.ui.tecnico.registro_solucion
 
 
 import androidx.compose.foundation.layout.Column
@@ -17,10 +17,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.siamo.R
-import com.example.siamo.ui.theme.SIAMOTheme
 import com.example.siamo.ui.utils.NavigationBarTecnico
 import com.example.siamo.ui.utils.TopBar
 import androidx.compose.material3.Text

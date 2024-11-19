@@ -1,9 +1,9 @@
-package com.example.siamo.ui.inspeccion
+package com.example.siamo.ui.tecnico.inspeccion_inicial_problemas
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
-import com.example.siamo.data.ListaProblemasRepository
-import com.example.siamo.data.ProblemaRepository
+import com.example.siamo.data.otros_ara.ListaProblemasRepository
+import com.example.siamo.data.otros_ara.ProblemaRepository
 import com.example.siamo.model.ListaProblemas
 import com.example.siamo.model.Problema
 import kotlinx.coroutines.Dispatchers

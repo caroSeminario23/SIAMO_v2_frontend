@@ -1,7 +1,7 @@
-package com.example.siamo.data
+package com.example.siamo.data.otros_ara
 
 import com.example.siamo.model.Consulta
-import com.example.siamo.network_inspeccion.ConsultaApiService
+import com.example.siamo.network.ConsultaApiService
 
 interface ConsultaRepository {
     suspend fun getConsulta(id_tecnico: Int): List<Consulta>

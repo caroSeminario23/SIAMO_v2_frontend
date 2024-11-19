@@ -1,4 +1,4 @@
-package com.example.siamo.network_inspeccion
+package com.example.siamo.network
 
 import com.example.siamo.model.Problema
 import retrofit2.http.Body

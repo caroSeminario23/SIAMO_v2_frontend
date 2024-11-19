@@ -1,7 +1,7 @@
-package com.example.siamo.ui.inspeccion
+package com.example.siamo.ui.tecnico.inspeccion_pendiente
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.siamo.data.ConsultaRepository
+import com.example.siamo.data.otros_ara.ConsultaRepository
 import com.example.siamo.model.Consulta
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
