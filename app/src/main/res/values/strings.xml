@@ -77,6 +77,13 @@
     <string name="navbar_opcion5">OST</string>
     <string name="navbar_opcion6">Bitácora</string>
 
+
+    <string name="tabbar_opcion1">INSPECCIONES</string>
+    <string name="tabbar_opcion2">INGRESO/SALIDA</string>
+    <string name="tabbar_opcion3">EN PROGRESO</string>
+    <string name="no_inspecciones_pendientes">No hay inspecciones pendiente</string>
+
+
     <string name="topbar_opcion1">PÁGINA PRINCIPAL</string>
     <string name="topbar_opcion2">BÚSQUEDA DE CLIENTE</string>
     <string name="topbar_opcion3">ACTUALIZACIÓN CLIENTE</string>
@@ -89,6 +96,9 @@
     <string name="topbar_presupuesto">PRESUPUESTO</string>
     <string name="topbar_registro_ost">REGISTRO DE OST</string>
     <string name="topbar_perfil_usuario">PERFIL DE USUARIO</string>
+    <string name="topbar_opcion10">INSPECCIÓN INICIAL</string>
+    <string name="topbar_opcion11">REGISTRO SOLUCION</string>
+
 
     <string name="desplegable_tipo_doc_principal">Tipo de documento de identidad</string>
     <string name="desplegable_tipo_doc_opcion1">DNI</string>
@@ -112,6 +122,12 @@
 
     <string name="busqueda_indicacion_repuesto">Ingrese el nombre del repuesto</string>
 
+    <string name="ispeccion_identificar_problema">1. Ingrese los problemas identificados en el vehículo (apóyese en la bitácora)</string>
+    <string name="ispeccion_problema_solocion">2. Analice las soluciones presentadas y proponga las faltantes</string>
+    <string name="inspeccion_registro_solucion"> REGISTRO DE SOLUCIÓN</string>
+    <string name="inspeccion_registro">Ingrese la solución propuesta para resolver el problema: %1$s </string>
+    <string name="campo_detalle_problema">Detalle de problema </string>
+    <string name="campo_solucion_propuesta">Solución propuesta </string>
     <string name="ejemplo">Ejemplo</string>
 
     <string name="contenido_texto_precio">00.00</string>
