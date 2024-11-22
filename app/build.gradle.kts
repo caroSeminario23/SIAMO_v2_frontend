@@ -49,6 +49,10 @@ android {
     }
 }
 
+//repositories {
+//    maven { url = uri("https://jitpack.io") }
+//}
+
 dependencies {
 
     implementation(libs.androidx.core.ktx)
@@ -72,6 +76,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
     implementation("io.coil-kt:coil-compose:2.4.0")
     implementation("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:1.0.0")
+    implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
 
     testImplementation(libs.junit)
 
