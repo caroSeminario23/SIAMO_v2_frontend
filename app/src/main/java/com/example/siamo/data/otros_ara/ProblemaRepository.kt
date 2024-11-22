@@ -1,7 +1,9 @@
 package com.example.siamo.data.otros_ara
 
 import com.example.siamo.model.Problema
-import com.example.siamo.network_problema.ProblemaApiService
+import com.example.siamo.network.ProblemaApiService
+
+//import com.example.siamo.network_problema.ProblemaApiService
 
 interface ProblemaRepository {
     suspend fun getProblemas(): List<Problema>
@@ -9,7 +11,8 @@ interface ProblemaRepository {
     suspend fun insertarProblema(problema: Problema): Problema
 }
 
-class DefaultProblemaRepository(private val problemaApiService: ProblemaApiService) :
+class DefaultProblemaRepository(
+    private val problemaApiService: ProblemaApiService) :
     ProblemaRepository {
 
     override suspend fun getProblemas(): List<Problema> {

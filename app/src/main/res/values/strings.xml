@@ -98,6 +98,7 @@
     <string name="topbar_perfil_usuario">PERFIL DE USUARIO</string>
     <string name="topbar_opcion10">INSPECCIÓN INICIAL</string>
     <string name="topbar_opcion11">REGISTRO SOLUCION</string>
+    <string name="topbar_opcion12">INSPECCIÓN</string>
 
 
     <string name="desplegable_tipo_doc_principal">Tipo de documento de identidad</string>

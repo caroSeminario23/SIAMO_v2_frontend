@@ -26,16 +26,18 @@ import androidx.compose.runtime.getValue
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.navigation.compose.rememberNavController
 import com.example.siamo.ui.utils.ListItemProblem
 
 @Composable
 fun InspeccionInicial(
     navController: NavHostController,
     modifier: Modifier = Modifier,
-    inspeccionInicialViewModel: InspeccionInicialViewModel = viewModel()
+    //inspeccionInicialViewModel: InspeccionInicialViewModel = viewModel()
+    viewModel: InspeccionInicialViewModel
 ) {
     // Observamos el estado del ViewModel
-    val uiState by inspeccionInicialViewModel.uiState.collectAsState()
+    val uiState by viewModel.uiState.collectAsState()
 
     Scaffold(
         topBar = {
@@ -100,15 +102,19 @@ fun InspeccionInicial(
 }
 
 
-    @Preview(showBackground = true, showSystemUi = false)
-    @Composable
-    fun InspeccionInicialLightPreview() {
-        SIAMOTheme(darkTheme = false) { InspeccionInicial() }
-    }
-
-    @Preview(showBackground = true, showSystemUi = false)
-    @Composable
-    fun InspeccionInicialPreview() {
-        SIAMOTheme(darkTheme = true) { InspeccionInicial() }
-    }
+//    @Preview(showBackground = true, showSystemUi = false)
+//    @Composable
+//    fun InspeccionInicialLightPreview() {
+//        val navController = rememberNavController()
+//        val inspeccionViewModel = InspeccionInicialViewModel()
+//        SIAMOTheme(darkTheme = false) { InspeccionInicial(navController=navController, viewModel = inspeccionViewModel) }
+//    }
+//
+//    @Preview(showBackground = true, showSystemUi = false)
+//    @Composable
+//    fun InspeccionInicialPreview() {
+//        val navController = rememberNavController()
+//        val inspeccionViewModel = InspeccionInicialViewModel()
+//        SIAMOTheme(darkTheme = true) { InspeccionInicial(navController=navController, viewModel = inspeccionViewModel) }
+//    }
 

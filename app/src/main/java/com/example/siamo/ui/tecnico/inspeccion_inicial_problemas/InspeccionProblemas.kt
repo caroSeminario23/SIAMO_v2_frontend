@@ -48,7 +48,9 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
+import com.example.siamo.ui.theme.SIAMOTheme
 import kotlinx.coroutines.launch
 
 
@@ -241,14 +243,14 @@ fun SearchBar(
 }
 
 
-/*@Preview(showBackground = true, showSystemUi = false)
-@Composable
-fun IdentificacionProblemasLightPreview() {
-    SIAMOTheme (darkTheme = false) { IdentificacionProblemas() }
-}
-
-@Preview(showBackground = true, showSystemUi = false)
-@Composable
-fun IdentificacionProblemasPreview() {
-    SIAMOTheme (darkTheme = true) { IdentificacionProblemas() }
-}*/
+//@Preview(showBackground = true, showSystemUi = false)
+//@Composable
+//fun IdentificacionProblemasLightPreview() {
+//    SIAMOTheme (darkTheme = false) { IdentificacionProblemas() }
+//}
+//
+//@Preview(showBackground = true, showSystemUi = false)
+//@Composable
+//fun IdentificacionProblemasPreview() {
+//    SIAMOTheme (darkTheme = true) { IdentificacionProblemas() }
+//}

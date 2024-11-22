@@ -40,7 +40,7 @@ fun NavGraph(navController: NavHostController, modifier: Modifier = Modifier) {
             IdentificacionProblemas(idConsulta = idConsulta, navController = navController) }
 
         composable(NavRoutes.InspecccionInicial.route) {
-            InspeccionInicial(navController = navController)
+            //InspeccionInicial(navController = navController)
         }
         composable(NavRoutes.RegistroSolucion.route){ backStackEntry ->
             val id = backStackEntry.arguments?.getString("id")?.toInt() ?: 0

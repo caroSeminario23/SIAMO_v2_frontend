@@ -67,6 +67,9 @@ fun HomeTecnico(
                     home_notification("Notificación 1", "Contenido de la notificación 1"),
                     home_notification("Notificación 2", "Contenido de la notificación 2"),
                     home_notification("Notificación 3", "Contenido de la notificación 3")
+                    //home_notification("Notificación 4", "Contenido de la notificación 4"),
+                    //home_notification("Notificación 5", "Contenido de la notificación 5"),
+                    //home_notification("Notificación 6", "Contenido de la notificación 6")
                 )
                 items(notificaciones.size) {index ->
                     val notificacion = notificaciones[index]
