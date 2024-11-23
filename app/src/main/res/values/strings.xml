@@ -146,6 +146,9 @@
     <string name="grafico_tecnico_ost_asignadas_vs_apoyo">N° OSTS ASIGNADAS VS DE APOYO</string>
     <string name="grafico_tecnico_estado_ost_asignadas">ESTADO DE OSTS ASIGNADAS</string>
     <string name="grafico_tecnico_estado_ost_apoyo">ESTADO DE OSTS DE APOYO</string>
+    <string name="grafico_recepcionista_estado_ost">ESTADO DE OSTS</string>
+    <string name="grafico_recepcionista_n_ost_tecnico">N° OSTS POR TÉCNICO</string>
+    <string name="grafico_recepcionista_consultas_vs_osts">CONSULTAS VS OSTS</string>
 
     <string name="grafico_mes">Mes</string>
     <string name="grafico_anio">2024</string>
