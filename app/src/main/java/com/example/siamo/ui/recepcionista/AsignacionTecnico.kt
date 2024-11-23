@@ -126,8 +126,9 @@ fun AsignacionTenico(
                         DropdownMenuItem(
                             text = {
                                 Text(
-                                    text = (tecnico.empleado?.persona?.nombres
-                                        ?: "NA")
+                                    text = ((tecnico.empleado?.persona?.nombres
+                                          + " " + tecnico.empleado?.persona?.apellidos)
+                                            + " - OST pendientes: " + tecnico.ost_count),
                                 )
                             },
                             onClick = {
