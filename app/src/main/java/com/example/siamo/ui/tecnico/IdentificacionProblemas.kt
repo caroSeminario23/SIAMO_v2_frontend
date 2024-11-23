@@ -46,7 +46,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.text.input.ImeAction
@@ -59,10 +58,10 @@ import kotlinx.coroutines.launch
 fun IdentificacionProblemas(
     idConsulta: Int,
     navController: NavHostController,
-    viewModel: ProblemasViewModel = viewModel()
+    problemasViewModel: ProblemasViewModel
 ) {
     // Obtenemos el estado actual del ViewModel
-    val uiState = viewModel.uiState
+    val uiState = problemasViewModel.uiState
 
     Scaffold(
         topBar = {
@@ -93,10 +92,10 @@ fun IdentificacionProblemas(
                 SearchBar(
                     placeholderText = "Ingrese el problema aquí",
                     onSearch = { query ->
-                        viewModel.updateSearchQuery(query)
+                        problemasViewModel.updateSearchQuery(query)
                     },
                     onEnterPressed = {
-                        viewModel.onEnterPressed()
+                        problemasViewModel.onEnterPressed()
                     }
                 )
 
@@ -111,7 +110,7 @@ fun IdentificacionProblemas(
                         uiState.problemasFiltrados.forEach { problemaUI ->
                             DropdownMenuItem(
                                 onClick = {
-                                    viewModel.seleccionarProblemaExistente(problemaUI.problema)
+                                    problemasViewModel.seleccionarProblemaExistente(problemaUI.problema)
                                 },
                                 text = { Text(problemaUI.problema.descripcion) }
                             )
@@ -133,7 +132,7 @@ fun IdentificacionProblemas(
                         text = problemaUI.problema.descripcion,
                         isChecked = problemaUI.isChecked,
                         onCheckedChange = { checked ->
-                            viewModel.toggleCheckbox(problemaUI)
+                            problemasViewModel.toggleCheckbox(problemaUI)
                         }
                     )
                 }
@@ -150,7 +149,7 @@ fun IdentificacionProblemas(
                 Button(
                     onClick = {
                         coroutineScope.launch {
-                            viewModel.guardarProblemasSeleccionados(idConsulta) }
+                            problemasViewModel.guardarProblemasSeleccionados(idConsulta) }
                         navController.navigate("inspeccion_inical/${idConsulta}")
                     },
                     modifier = Modifier.wrapContentWidth(Alignment.End),
@@ -243,15 +242,22 @@ fun SearchBar(
     )
 }
 
-
-/*@Preview(showBackground = true, showSystemUi = false)
+/*
+@Preview(showBackground = true, showSystemUi = false)
 @Composable
 fun IdentificacionProblemasLightPreview() {
-    SIAMOTheme (darkTheme = false) { IdentificacionProblemas() }
+    val navController = rememberNavController()
+    val viewModel = ProblemasViewModel( )
+    SIAMOTheme (darkTheme = false) { IdentificacionProblemas(navController = navController,idConsulta=3,
+        viewModel = viewModel) }
 }
 
 @Preview(showBackground = true, showSystemUi = false)
 @Composable
 fun IdentificacionProblemasPreview() {
-    SIAMOTheme (darkTheme = true) { IdentificacionProblemas() }
-}*/
+    val navController = rememberNavController()
+    val viewModel = ProblemasViewModel()
+    SIAMOTheme (darkTheme = true) { IdentificacionProblemas(navController = navController,idConsulta=3,
+        viewModel = viewModel) }
+}
+*/

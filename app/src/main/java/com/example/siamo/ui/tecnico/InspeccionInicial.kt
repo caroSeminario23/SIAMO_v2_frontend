@@ -23,21 +23,31 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.runtime.LaunchedEffect
 import com.example.siamo.ui.inspeccion.InspeccionInicialViewModel
 import com.example.siamo.ui.utils.ListItemProblem
-import androidx.compose.ui.text.style.LineHeightStyle.Alignment
+import androidx.compose.material3.Button
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Send
+import androidx.compose.material3.Icon
+import androidx.compose.ui.Alignment
 
 @Composable
 fun InspeccionInicial(
     navController: NavHostController,
     modifier: Modifier = Modifier,
-    inspeccionInicialViewModel: InspeccionInicialViewModel = viewModel()
+    idConsulta: Int,
+    inspeccionInicialViewModel: InspeccionInicialViewModel
 ) {
     // Observamos el estado del ViewModel
     val uiState by inspeccionInicialViewModel.uiState.collectAsState()
+
+    LaunchedEffect(Unit) {
+        inspeccionInicialViewModel.obtenerProblemasPorConsulta(idConsulta)
+    }
+
 
     Scaffold(
         topBar = {
@@ -84,7 +94,7 @@ fun InspeccionInicial(
                         .fillMaxSize()
                         .padding(horizontal = 16.dp)
                 ) {
-                    items(uiState.problemasConSoluciones ?: emptyList()) { problemaConSolucion ->
+                    items(uiState.problemasConSoluciones ) { problemaConSolucion ->
                         ListItemProblem(
                             textoPrincipal = problemaConSolucion.descripcionProblema,
                             solucion = problemaConSolucion.descripcionSolucion,
@@ -96,12 +106,38 @@ fun InspeccionInicial(
                         )
                     }
                 }
+                // Botón Siguiente
+                Spacer(modifier = Modifier.height(16.dp))
+                val contadorSinSolucion = inspeccionInicialViewModel.problemasSinSolucion()
+
+                Button(
+                    onClick = {
+                        if (contadorSinSolucion == 0) {
+                            navController.navigate("pantalla_presupuesto")
+                        }
+                    },
+                    enabled = contadorSinSolucion == 0,
+                    modifier = Modifier
+                        .align(Alignment.End)
+                        .padding(end = 20.dp)
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Send,
+                        contentDescription = null
+                    )
+                    Spacer(modifier = Modifier.padding(5.dp))
+                    Text(
+                        text = stringResource(id = R.string.boton_siguiente),
+                        color = if (contadorSinSolucion == 0) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
+                    )
+                }
             }
         }
     }
 }
 
 
+/*
     @Preview(showBackground = true, showSystemUi = false)
     @Composable
     fun InspeccionInicialLightPreview() {
@@ -114,3 +150,4 @@ fun InspeccionInicial(
         SIAMOTheme(darkTheme = true) { InspeccionInicial() }
     }
 
+*/

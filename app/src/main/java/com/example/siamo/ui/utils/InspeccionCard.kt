@@ -148,7 +148,7 @@ fun InspectionCard(
                 horizontalArrangement = Arrangement.End
             ) {
                 Button(
-                    onClick = { navController.navigate("elistar_problemas/$consulta") },
+                    onClick = { navController.navigate("IdentificacionProblemas/$consulta") },
                     modifier = Modifier.padding(end = 16.dp)
                 ) {
                     Text(text = "Resolver")

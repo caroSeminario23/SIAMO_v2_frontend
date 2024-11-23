@@ -1,4 +1,5 @@
 package com.example.siamo.ui.inspeccion
+
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.siamo.data.ListaProblemasRepository
@@ -8,10 +9,9 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 data class InspeccionInicialUiState(
-    val problemasConSoluciones: List<ProblemaConSolucion>? = null,
+    val problemasConSoluciones: List<ProblemaConSolucion> = emptyList(),
     val isLoading: Boolean = false,
     val errorMessage: String? = null
 )
@@ -19,7 +19,7 @@ data class InspeccionInicialUiState(
 data class ProblemaConSolucion(
     val idProblema: Int,
     val descripcionProblema: String,
-    val descripcionSolucion: String
+    val descripcionSolucion: String?
 )
 
 class InspeccionInicialViewModel(
@@ -31,7 +31,6 @@ class InspeccionInicialViewModel(
     private val _uiState = MutableStateFlow(InspeccionInicialUiState())
     val uiState: StateFlow<InspeccionInicialUiState> = _uiState.asStateFlow()
 
-
     fun obtenerProblemasPorConsulta(idConsulta: Int) {
 
         _uiState.value = _uiState.value.copy(isLoading = true)
@@ -41,25 +40,42 @@ class InspeccionInicialViewModel(
                 // Obtener lista de problemas por consulta
                 val listaProblemas = listaProblemasRepository.getListaDeProblemasPorConsulta(idConsulta)
 
-                // Mapeamos los problemas a una lista de ProblemaConSolucion
+                // Mapear los problemas a la lista de ProblemaConSolucion
                 val problemasConSoluciones = listaProblemas.map { listaProblema ->
                     val problema = problemaRepository.getProblemaPorId(listaProblema.id_Problema)
-                    val solucion = solucionRepository.getSolucionPorId(problema.id_Solucion)
+                    val descripcionSolucion = if (problema.id_Solucion == null || problema.id_Solucion == 0) {
+                        null
+                    } else {
+                        val solucion = solucionRepository.getSolucionPorId(problema.id_Solucion)
+                        solucion?.descripcion
+                    }
 
-                    // Crear un objeto con la descripción del problema y la descripción de la solución
+
+                    // Crear el objeto con la descripción del problema y solución
                     ProblemaConSolucion(
                         idProblema = problema.id,
-                        descripcionProblema = problema.descripcion.ifEmpty { "Problema no disponible" },
-                        descripcionSolucion = solucion?.descripcion ?: "Solución no disponible"
+                        descripcionProblema = problema.descripcion,
+                        descripcionSolucion = descripcionSolucion ,
                     )
                 }
 
-
-                _uiState.value = InspeccionInicialUiState(problemasConSoluciones = problemasConSoluciones, isLoading = false)
+                // Actualizar el estado con los problemas cargados
+                _uiState.value = InspeccionInicialUiState(
+                    problemasConSoluciones = problemasConSoluciones,
+                    isLoading = false
+                )
             } catch (e: Exception) {
 
-                _uiState.value = InspeccionInicialUiState(isLoading = false, errorMessage = "Error al obtener los datos")
+                _uiState.value = InspeccionInicialUiState(
+                    isLoading = false,
+                    errorMessage = "Error al obtener los datos: ${e.localizedMessage}"
+                )
             }
         }
     }
+
+    fun problemasSinSolucion(): Int {
+        return _uiState.value.problemasConSoluciones.count { it.descripcionSolucion == null }
+    }
 }
+

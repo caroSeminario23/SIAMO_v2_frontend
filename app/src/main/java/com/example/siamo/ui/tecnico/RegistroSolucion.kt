@@ -26,8 +26,10 @@ import com.example.siamo.ui.utils.TopBar
 import androidx.compose.material3.Text
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.text.style.TextAlign
 import androidx.navigation.NavHostController
+import com.example.siamo.ui.inspeccion.RegistroSolucionViewModel
 
 
 @Composable
@@ -35,7 +37,11 @@ fun registroSolucion(
     navController: NavHostController,
     problemaID: Int,
     modifier: Modifier = Modifier,
-    ) {
+    registroSolucionviewModel: RegistroSolucionViewModel
+) {
+
+    // Estado del UI desde el ViewModel
+    val uiState = registroSolucionviewModel.uiState.collectAsState().value
 
     Scaffold(
         topBar = { TopBar(tituloPagina = stringResource(R.string.topbar_opcion11), modo = "Retroceder") },
@@ -49,6 +55,7 @@ fun registroSolucion(
             verticalArrangement = Arrangement.Center
         ) {
 
+            // Título
             Text(
                 text = stringResource(id = R.string.inspeccion_registro_solucion),
                 style = MaterialTheme.typography.headlineLarge,
@@ -57,8 +64,9 @@ fun registroSolucion(
                 modifier = modifier.padding(start = 20.dp, end = 20.dp, bottom = 20.dp)
             )
 
+            // Detalle del problema
             Text(
-                text = stringResource(id = R.string.inspeccion_registro,problemaID),
+                text = stringResource(id = R.string.inspeccion_registro, problemaID),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSecondaryContainer,
                 textAlign = TextAlign.Center,
@@ -66,9 +74,10 @@ fun registroSolucion(
                     .padding(start = 40.dp, end = 40.dp, bottom = 40.dp)
             )
 
+            // Campo para el detalle del problema
             OutlinedTextField(
-                value =  stringResource(id = R.string.ejemplo),
-                onValueChange = {},
+                value = uiState.detalleProblema,
+                onValueChange = { registroSolucionviewModel.actualizarDetalleProblema(it) },
                 label = {
                     Text(text = stringResource(id = R.string.campo_detalle_problema))
                 },
@@ -78,9 +87,10 @@ fun registroSolucion(
                     .heightIn(min = 120.dp)
             )
 
+            // Campo para la solución propuesta
             OutlinedTextField(
-                value =  stringResource(id = R.string.ejemplo),
-                onValueChange = {},
+                value = uiState.descripcionSolucion,
+                onValueChange = { registroSolucionviewModel.actualizarDescripcionSolucion(it) },
                 label = {
                     Text(text = stringResource(id = R.string.campo_solucion_propuesta))
                 },
@@ -89,10 +99,13 @@ fun registroSolucion(
                     .padding(start = 20.dp, end = 20.dp, bottom = 20.dp)
                     .heightIn(min = 120.dp)
             )
+
             Spacer(modifier = Modifier.padding(12.dp))
 
+            // Botón para registrar
             Button(
-                onClick = { },
+                onClick = { registroSolucionviewModel.registrarSolucionYActualizarProblema(problemaID)
+                             navController.popBackStack() },
                 modifier = Modifier
                     .align(Alignment.End)
                     .padding(end = 20.dp)
@@ -106,10 +119,10 @@ fun registroSolucion(
             }
 
             Spacer(modifier = Modifier.padding(15.dp))
-
-                }
-            }
+        }
     }
+}
+
 /*
 @Preview(showBackground = true, showSystemUi = false)
 @Composable

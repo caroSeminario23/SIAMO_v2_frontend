@@ -2,11 +2,13 @@ package com.example.siamo.ui.inspeccion
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.siamo.data.ListaProblemasRepository
 import com.example.siamo.data.ProblemaRepository
 import com.example.siamo.model.ListaProblemas
 import com.example.siamo.model.Problema
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 data class ProblemasUIState(
@@ -35,14 +37,15 @@ class ProblemasViewModel(
     private val _problemasSeleccionados = mutableStateListOf<ProblemaUI>()
 
 
-    suspend fun inicializarProblemas() {
+
+   /* suspend fun inicializarProblemas() {
         val problemasExistentes = problemaRepository.getProblemas()
         _problemasBase.clear()
         _problemasBase.addAll(problemasExistentes)
 
-        actualizarProblemasFiltrados("") // Al inicio, no hay filtro
+        actualizarProblemasFiltrados("")
     }
-
+*/
 
     fun updateSearchQuery(query: String) {
         actualizarProblemasFiltrados(query)
@@ -51,12 +54,18 @@ class ProblemasViewModel(
 
     // Actualizar la lista de problemas filtrados según la búsqueda
     private fun actualizarProblemasFiltrados(query: String) {
-        val filtrados = _problemasBase.filter {
-            it.descripcion.contains(query, ignoreCase = true)
-        }.map { problema ->
-            ProblemaUI(problema)
+        viewModelScope.launch {
+            val problemasExistentes = problemaRepository.getProblemas() // Obtener los problemas del repositorio
+            _problemasBase.clear()
+            _problemasBase.addAll(problemasExistentes)
+            val filtrados = _problemasBase.filter {
+                it.descripcion.contains(query, ignoreCase = true)
+            }.map { problema ->
+                ProblemaUI(problema)
+            }
+
+            _uiState.value = _uiState.value.copy(problemasFiltrados = filtrados)
         }
-        _uiState.value = _uiState.value.copy(problemasFiltrados = filtrados)
     }
 
     // Agregar un problema existente a la lista de seleccionados
