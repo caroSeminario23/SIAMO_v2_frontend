@@ -23,6 +23,7 @@
     <string name="registro_consulta">3. Indique el problema que el cliente declara sobre su vehículo</string>
     <string name="asignacion_tecnico">4. Seleccione uno de los técnicos de la lista para que realice la inspección inicial del vehículo</string>
     <string name="indicacion_presupuesto">3. Indique los siguientes datos para estimar el presupuesto</string>
+    <string name="no_inspecciones_pendientes">No hay inspecciones pendiente</string>
 
     <string name="label_cliente">Cliente:</string>
     <string name="label_vehiculo">Vehículo:</string>
@@ -81,7 +82,6 @@
     <string name="tabbar_opcion1">INSPECCIONES</string>
     <string name="tabbar_opcion2">INGRESO/SALIDA</string>
     <string name="tabbar_opcion3">EN PROGRESO</string>
-    <string name="no_inspecciones_pendientes">No hay inspecciones pendiente</string>
 
 
     <string name="topbar_opcion1">PÁGINA PRINCIPAL</string>
@@ -99,6 +99,7 @@
     <string name="topbar_opcion10">INSPECCIÓN INICIAL</string>
     <string name="topbar_opcion11">REGISTRO SOLUCION</string>
     <string name="topbar_opcion12">INSPECCIÓN</string>
+    <string name="topbar_panel_control">PANEL DE CONTROL</string>
 
 
     <string name="desplegable_tipo_doc_principal">Tipo de documento de identidad</string>
@@ -141,4 +142,24 @@
     <string name="dialog_registro_ost">Registro de OST</string>
     <string name="dialog_registro_ost_exitoso">La orden de servicio técnico ha sido registrada exitosamente.</string>
     <string name="dialog_registro_ost_error">La orden de servicio técnico no ha podido ser registrada.</string>
+
+    <string name="grafico_tecnico_ost_asignadas_vs_apoyo">N° OSTS ASIGNADAS VS DE APOYO</string>
+    <string name="grafico_tecnico_estado_ost_asignadas">ESTADO DE OSTS ASIGNADAS</string>
+    <string name="grafico_tecnico_estado_ost_apoyo">ESTADO DE OSTS DE APOYO</string>
+
+    <string name="grafico_mes">Mes</string>
+    <string name="grafico_anio">2024</string>
+
+    <string name="mes_enero">Enero</string>
+    <string name="mes_febrero">Febrero</string>
+    <string name="mes_marzo">Marzo</string>
+    <string name="mes_abril">Abril</string>
+    <string name="mes_mayo">Mayo</string>
+    <string name="mes_junio">Junio</string>
+    <string name="mes_julio">Julio</string>
+    <string name="mes_agosto">Agosto</string>
+    <string name="mes_septiembre">Septiembre</string>
+    <string name="mes_octubre">Octubre</string>
+    <string name="mes_noviembre">Noviembre</string>
+    <string name="mes_diciembre">Diciembre</string>
 </resources>
