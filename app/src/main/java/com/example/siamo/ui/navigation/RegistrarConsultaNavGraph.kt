@@ -8,7 +8,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import com.example.siamo.model.Automovil
 import com.example.siamo.model.Cliente
@@ -23,7 +22,6 @@ import com.example.siamo.ui.recepcionista.BusquedaCliente
 import com.example.siamo.ui.recepcionista.BusquedaClienteDestination
 import com.example.siamo.ui.recepcionista.BusquedaVehiculo
 import com.example.siamo.ui.recepcionista.BusquedaVehiculoDestination
-import com.example.siamo.ui.recepcionista.HomeRecepcionistaDestination
 import com.example.siamo.ui.recepcionista.RegistroCliente
 import com.example.siamo.ui.recepcionista.RegistroClienteDestination
 import com.example.siamo.ui.recepcionista.RegistroConsulta
@@ -34,8 +32,12 @@ import com.example.siamo.ui.recepcionista.ResumenConsulta
 import com.example.siamo.ui.recepcionista.ResumenConsultaDestination
 
 @Composable
-fun SiamoNavHost(
-    navController: NavHostController = rememberNavController(),
+fun RegisterNavHost(
+    navController: NavHostController,
+    onHome: () -> Unit = {},
+    onSearch: () -> Unit = {},
+    onSettings: () -> Unit = {},
+    onClose: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     val consultaViewModel : ConsultaViewModel = viewModel(factory = ConsultaViewModel.Factory)
@@ -51,7 +53,19 @@ fun SiamoNavHost(
                 getCliente = {dni -> consultaViewModel.buscarClientePorDni(dni)},
                 onAccept = {navController.navigate(ActulizacionClienteDestination.route)},
                 onCancel = consultaViewModel::resetFlags,
-                onRegistrar = {navController.navigate(RegistroClienteDestination.route)}
+                onClose = {onClose()
+                    consultaViewModel.resetUiState()
+                          },
+                onRegistrar = {navController.navigate(RegistroClienteDestination.route)},
+                onHomeNav = {onHome()
+                            consultaViewModel.resetUiState()
+                            },
+                onSearchNav = {onSearch()
+                    consultaViewModel.resetUiState()
+                              },
+                onSettingsNav = {onSettings()
+                    consultaViewModel.resetUiState()
+                }
             )
         }
 
@@ -75,6 +89,17 @@ fun SiamoNavHost(
                     consultaViewModel.aceptarCliente()
                     consultaViewModel.resetFlags()
                     navController.navigate(BusquedaVehiculoDestination.route)
+                },
+                buttomUp = {consultaViewModel.resetFlags()
+                    navController.popBackStack() },
+                onHomeNav = {onHome()
+                    consultaViewModel.resetUiState()
+                            },
+                onSearchNav = {onSearch()
+                    consultaViewModel.resetUiState()
+                              },
+                onSettingsNav = {onSettings()
+                    consultaViewModel.resetUiState()
                 }
             )
         }
@@ -95,6 +120,17 @@ fun SiamoNavHost(
                     persona: Persona -> consultaViewModel.registrarCliente(persona)
                     consultaViewModel.resetFlags()
                              },
+                buttonUp = {consultaViewModel.resetFlags()
+                    navController.popBackStack()},
+                onHomeNav = {onHome()
+                    consultaViewModel.resetUiState()
+                            },
+                onSearchNav = {onSearch()
+                    consultaViewModel.resetUiState()
+                              },
+                onSettingsNav = {onSettings()
+                    consultaViewModel.resetUiState()
+                }
             )
         }
 
@@ -115,6 +151,17 @@ fun SiamoNavHost(
                 onSearch = {
                         placa: String -> consultaViewModel.buscarAutomovilPorPlaca(placa)
                         consultaViewModel.resetFlags()
+                },
+                buttonUp = {consultaViewModel.resetFlags()
+                    navController.popBackStack()},
+                onHomeNav = {onHome()
+                    consultaViewModel.resetUiState()
+                            },
+                onSearchNav = {onSearch()
+                    consultaViewModel.resetUiState()
+                              },
+                onSettingsNav = {onSettings()
+                    consultaViewModel.resetUiState()
                 }
             )
         }
@@ -135,6 +182,17 @@ fun SiamoNavHost(
                     automovil: Automovil -> consultaViewModel.registrarAutomovil(automovil)
                     consultaViewModel.resetFlags()
                              },
+                buttonUp = {consultaViewModel.resetFlags()
+                    navController.popBackStack()},
+                onHomeNav = {onHome()
+                    consultaViewModel.resetUiState()
+                            },
+                onSearchNav = {onSearch()
+                    consultaViewModel.resetUiState()
+                              },
+                onSettingsNav = {onSettings()
+                    consultaViewModel.resetUiState()
+                }
             )
         }
 
@@ -151,6 +209,17 @@ fun SiamoNavHost(
                     consultaViewModel.resetFlags()
                     navController.popBackStack()
                             },
+                buttonUp = {consultaViewModel.resetFlags()
+                    navController.popBackStack()},
+                onHomeNav = {onHome()
+                    consultaViewModel.resetUiState()
+                            },
+                onSearchNav = {onSearch()
+                    consultaViewModel.resetUiState()
+                              },
+                onSettingsNav = {onSettings()
+                    consultaViewModel.resetUiState()
+                }
             )
         }
 
@@ -166,6 +235,17 @@ fun SiamoNavHost(
                     consultaViewModel.resetFlags()
                     navController.popBackStack()
                 },
+                buttonUp = {consultaViewModel.resetFlags()
+                    navController.popBackStack()},
+                onHomeNav = {onHome()
+                    consultaViewModel.resetUiState()
+                            },
+                onSearchNav = {onSearch()
+                    consultaViewModel.resetUiState()
+                              },
+                onSettingsNav = {onSettings()
+                    consultaViewModel.resetUiState()
+                }
             )
         }
 
@@ -185,6 +265,17 @@ fun SiamoNavHost(
                     consultaViewModel.resetFlags()
                     navController.popBackStack()
                 },
+                buttonUp = {consultaViewModel.resetFlags()
+                    navController.popBackStack()},
+                onHomeNav = {onHome()
+                    consultaViewModel.resetUiState()
+                            },
+                onSearchNav = {onSearch()
+                    consultaViewModel.resetUiState()
+                              },
+                onSettingsNav = {onSettings()
+                    consultaViewModel.resetUiState()
+                }
             )
         }
 

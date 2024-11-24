@@ -3,6 +3,7 @@ package com.example.siamo.data
 import com.example.siamo.network_consulta.AutomovilApiService
 import com.example.siamo.network_consulta.ClienteApiService
 import com.example.siamo.network_consulta.ConsultaApiService
+import com.example.siamo.network_consulta.OstApiService
 import com.example.siamo.network_consulta.PersonaApiService
 import com.example.siamo.network_consulta.TecnicoApiService
 import okhttp3.MediaType.Companion.toMediaType
@@ -17,6 +18,7 @@ interface AppContainer {
     val consultaRepository: ConsultaRepository
     val personaRepository: PersonaRepository
     val tecnicoRepository: TecnicoRepository
+    val ostRepository: OstRepository
 }
 
 class DefaultAppContainer: AppContainer {
@@ -48,6 +50,10 @@ class DefaultAppContainer: AppContainer {
         retrofit.create(TecnicoApiService::class.java)
     }
 
+    private val ostApiService: OstApiService by lazy {
+        retrofit.create(OstApiService::class.java)
+    }
+
     override val automovilRepository: AutomovilRepository by lazy {
         DefaultAutomovilRepository(automovilApiService)
     }
@@ -66,5 +72,9 @@ class DefaultAppContainer: AppContainer {
 
     override val tecnicoRepository: TecnicoRepository by lazy {
         DefaultTecnicoRepository(tecnicoApiService)
+    }
+
+    override val ostRepository: OstRepository by lazy {
+        DefaultOstRepository(ostApiService)
     }
 }

@@ -6,5 +6,6 @@ import kotlinx.serialization.Serializable
 data class Empleado(
     val id_empleado: Int? = null,
     val id_persona: Int? = null,
+    val cod_empleado: Int? = null,
     val persona: Persona? = null,
 )

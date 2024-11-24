@@ -48,6 +48,10 @@ fun AsignacionTenico(
     consultaUiState: ConsultaUiState,
     onNext: (Tecnico) -> Unit,
     onPrevius: () -> Unit = {},
+    buttonUp: () -> Unit = {},
+    onHomeNav: () -> Unit = {},
+    onSearchNav: () -> Unit = {},
+    onSettingsNav: () -> Unit = {},
     modifier: Modifier = Modifier,
 ) {
 
@@ -59,10 +63,16 @@ fun AsignacionTenico(
         topBar = {
             TopBar(
                 tituloPagina = stringResource(R.string.topbar_opcion8),
-                modo = "Retroceder"
+                modo = "Retroceder",
+                onLeftIcon = buttonUp
             )
         },
-        bottomBar = { NavigationBarRecepcionista(opcionSeleccionada = 2) }
+        bottomBar = { NavigationBarRecepcionista(
+            opcionSeleccionada = 2,
+            onHome = onHomeNav,
+            onSearch = onSearchNav,
+            onSettings = onSettingsNav
+        ) }
     ) { paddingValues ->
         Column(
             modifier = Modifier

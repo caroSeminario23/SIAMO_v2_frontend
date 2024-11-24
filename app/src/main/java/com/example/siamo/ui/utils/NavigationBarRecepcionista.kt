@@ -21,6 +21,10 @@ import com.example.siamo.ui.theme.SIAMOTheme
 @Composable
 fun NavigationBarRecepcionista(
     opcionSeleccionada: Int = 1,
+    onHome: () -> Unit = {},
+    onRegister : () -> Unit = {},
+    onSearch : () -> Unit = {},
+    onSettings : () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     var opcion1 = false
@@ -44,7 +48,7 @@ fun NavigationBarRecepcionista(
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 ) },
             selected = opcion1,
-            onClick = { /* TODO */ }
+            onClick = { onHome() }
         )
 
         NavigationBarItem(
@@ -54,7 +58,7 @@ fun NavigationBarRecepcionista(
                     style = MaterialTheme.typography.labelMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant) },
             selected = opcion2,
-            onClick = { /* TODO */ }
+            onClick = { onRegister() }
         )
 
         NavigationBarItem(
@@ -64,7 +68,7 @@ fun NavigationBarRecepcionista(
                     style = MaterialTheme.typography.labelMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant) },
             selected = opcion3,
-            onClick = { /* TODO */ }
+            onClick = { onSearch() }
         )
 
         NavigationBarItem(
@@ -74,7 +78,7 @@ fun NavigationBarRecepcionista(
                 style = MaterialTheme.typography.labelMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant) },
             selected = opcion4,
-            onClick = { /* TODO */ }
+            onClick = { onSettings() }
         )
     }
 }

@@ -42,12 +42,21 @@ fun RegistroConsulta(
     consultaUiState: ConsultaUiState,
     onNext: (String) -> Unit,
     onPrevius: () -> Unit = {},
+    buttonUp: () -> Unit = {},
+    onHomeNav: () -> Unit = {},
+    onSearchNav: () -> Unit = {},
+    onSettingsNav: () -> Unit = {},
     modifier: Modifier = Modifier,
 ) {
     var problemaDeclarado by rememberSaveable { mutableStateOf("") }
     Scaffold (
-        topBar = { TopBar(tituloPagina = stringResource(R.string.topbar_opcion7), modo = "Retroceder") },
-        bottomBar = { NavigationBarRecepcionista(opcionSeleccionada = 2) }
+        topBar = { TopBar(tituloPagina = stringResource(R.string.topbar_opcion7), modo = "Retroceder", onLeftIcon = buttonUp) },
+        bottomBar = { NavigationBarRecepcionista(
+            opcionSeleccionada = 2,
+            onHome = onHomeNav,
+            onSearch = onSearchNav,
+            onSettings = onSettingsNav
+        ) }
     ) { paddingValues ->
         Column (
             modifier = Modifier

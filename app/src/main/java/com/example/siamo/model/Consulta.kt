@@ -12,6 +12,8 @@ data class Consulta(
     val prob_declarado: String,
     val persona: Persona? = null,
     val automovil: Automovil? = null,
+    val cliente: Cliente? = null,
+    val tecnico: Tecnico? = null
 )
 
 @Serializable

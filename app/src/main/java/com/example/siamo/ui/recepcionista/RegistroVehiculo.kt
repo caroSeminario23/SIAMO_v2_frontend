@@ -47,16 +47,32 @@ fun RegistroVehiculo(
     onCancel: () -> Unit = {},
     onRegister: (Automovil) -> Unit = {},
     onRetry: () -> Unit = {},
+    buttonUp: () -> Unit = {},
+    onHomeNav: () -> Unit = {},
+    onSearchNav: () -> Unit = {},
+    onSettingsNav: () -> Unit = {},
     modifier: Modifier = Modifier,
 ) {
     var nro_placa by rememberSaveable { mutableStateOf("") }
     var marca by rememberSaveable { mutableStateOf("") }
     var modelo by rememberSaveable { mutableStateOf("") }
-    Scaffold (
-        topBar = { TopBar(tituloPagina = stringResource(R.string.topbar_opcion6), modo = "Retroceder", modifier = Modifier.padding(bottom = 40.dp)) },
-        bottomBar = { NavigationBarRecepcionista(opcionSeleccionada = 2) }
+    Scaffold(
+        topBar = {
+            TopBar(
+                tituloPagina = stringResource(R.string.topbar_opcion6),
+                modo = "Retroceder",
+                onLeftIcon = buttonUp,
+                modifier = Modifier.padding(bottom = 40.dp)
+            )
+        },
+        bottomBar = { NavigationBarRecepcionista(
+            opcionSeleccionada = 2,
+            onHome = onHomeNav,
+            onSearch = onSearchNav,
+            onSettings = onSettingsNav
+        ) }
     ) { paddingValues ->
-        Column (
+        Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues),
@@ -81,8 +97,8 @@ fun RegistroVehiculo(
             )
 
             OutlinedTextField(
-                value =  nro_placa,
-                onValueChange = {nro_placa = it},
+                value = nro_placa,
+                onValueChange = { nro_placa = it },
                 label = {
                     Text(text = stringResource(id = R.string.campo_n_placa))
                 },
@@ -92,7 +108,7 @@ fun RegistroVehiculo(
             )
 
             OutlinedTextField(
-                value =  marca,
+                value = marca,
                 onValueChange = { marca = it },
                 label = {
                     Text(text = stringResource(id = R.string.campo_marca))
@@ -103,7 +119,7 @@ fun RegistroVehiculo(
             )
 
             OutlinedTextField(
-                value =  modelo,
+                value = modelo,
                 onValueChange = { modelo = it },
                 label = {
                     Text(text = stringResource(id = R.string.campo_modelo))
@@ -116,7 +132,16 @@ fun RegistroVehiculo(
             Spacer(modifier = Modifier.padding(12.dp))
 
             Button(
-                onClick = {onRegister(Automovil(id_cliente = consultaUiState.cliente?.id_cliente, placa = nro_placa, marca = marca, modelo = modelo))},
+                onClick = {
+                    onRegister(
+                        Automovil(
+                            id_cliente = consultaUiState.cliente?.id_cliente,
+                            placa = nro_placa,
+                            marca = marca,
+                            modelo = modelo
+                        )
+                    )
+                },
                 modifier = Modifier
                     .align(Alignment.End)
                     .padding(end = 20.dp)
@@ -154,17 +179,21 @@ fun RegistroVehiculo(
 @Preview(showBackground = true, showSystemUi = false)
 @Composable
 fun RegistroVehiculoLightPreview() {
-    SIAMOTheme (darkTheme = false) { RegistroVehiculo(
-        consultaUiState = ConsultaUiState(),
-        onAccept = {}
-    ) }
+    SIAMOTheme(darkTheme = false) {
+        RegistroVehiculo(
+            consultaUiState = ConsultaUiState(),
+            onAccept = {}
+        )
+    }
 }
 
 @Preview(showBackground = true, showSystemUi = false)
 @Composable
 fun RegistroVehiculoDarkPreview() {
-    SIAMOTheme (darkTheme = true) { RegistroVehiculo(
-        consultaUiState = ConsultaUiState(),
-        onAccept = {}
-    ) }
+    SIAMOTheme(darkTheme = true) {
+        RegistroVehiculo(
+            consultaUiState = ConsultaUiState(),
+            onAccept = {}
+        )
+    }
 }

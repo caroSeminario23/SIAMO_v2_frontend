@@ -59,6 +59,10 @@ fun ActualizacionCliente(
     onUpdate: (Cliente) -> Unit,
     onCorrect: () -> Unit,
     onRetry: () -> Unit,
+    buttomUp : () -> Unit,
+    onHomeNav: () -> Unit = {},
+    onSearchNav: () -> Unit = {},
+    onSettingsNav: () -> Unit = {},
     modifier: Modifier = Modifier,
 
 ) {
@@ -77,10 +81,18 @@ fun ActualizacionCliente(
             TopBar(
                 tituloPagina = stringResource(R.string.topbar_opcion3),
                 modo = "Retroceder",
-                modifier = Modifier.padding(bottom = 40.dp)
+                modifier = Modifier.padding(bottom = 40.dp),
+                onLeftIcon = buttomUp
             )
         },
-        bottomBar = { NavigationBarRecepcionista(opcionSeleccionada = 2) }
+        bottomBar = {
+            NavigationBarRecepcionista(
+                opcionSeleccionada = 2,
+                onHome = onHomeNav,
+                onSearch = onSearchNav,
+                onSettings = onSettingsNav
+            )
+        }
     ) { paddingValues ->
         LazyColumn(
             modifier = Modifier
@@ -330,7 +342,8 @@ fun ActualizacionClienteLightPreview() {
         onCancel = {},
         onRetry = {},
         onUpdate = {},
-        onCorrect = {}
+        onCorrect = {},
+        buttomUp = {}
     ) }
 }
 
@@ -343,6 +356,7 @@ fun ActualizacionClienteDarkPreview() {
         onCancel = {},
         onRetry = {},
         onUpdate = {},
-        onCorrect = {}
+        onCorrect = {},
+        buttomUp = {}
     ) }
 }

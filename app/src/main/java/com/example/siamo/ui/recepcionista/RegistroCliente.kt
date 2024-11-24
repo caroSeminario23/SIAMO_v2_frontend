@@ -53,6 +53,10 @@ fun RegistroCliente(
     onCancel: () -> Unit = {},
     onRetry: () -> Unit = {},
     onRegister: (Persona) -> Unit = {},
+    onHomeNav: () -> Unit = {},
+    onSearchNav: () -> Unit = {},
+    onSettingsNav: () -> Unit = {},
+    buttonUp : () -> Unit = {}
 ) {
     val expandedDocIdentidad = rememberSaveable { mutableStateOf(false) }
     val expandedSexo = rememberSaveable { mutableStateOf(false) }
@@ -71,10 +75,16 @@ fun RegistroCliente(
             TopBar(
                 tituloPagina = stringResource(R.string.topbar_opcion4),
                 modo = "Retroceder",
-                modifier = Modifier.padding(bottom = 40.dp)
+                modifier = Modifier.padding(bottom = 40.dp),
+                onLeftIcon = buttonUp
             )
         },
-        bottomBar = { NavigationBarRecepcionista(opcionSeleccionada = 2) }
+        bottomBar = { NavigationBarRecepcionista(
+            opcionSeleccionada = 2,
+            onHome = onHomeNav,
+            onSearch = onSearchNav,
+            onSettings = onSettingsNav
+        ) }
     ) { paddingValues ->
         LazyColumn(
             modifier = Modifier

@@ -45,12 +45,21 @@ fun BusquedaVehiculo(
     onCancel: () -> Unit = {},
     onRegister: () -> Unit = {},
     onSearch: (String) -> Unit = {},
+    buttonUp: () -> Unit = {},
+    onHomeNav: () -> Unit = {},
+    onSearchNav: () -> Unit = {},
+    onSettingsNav: () -> Unit = {},
     modifier: Modifier = Modifier,
 ) {
     var documetLabel by rememberSaveable { mutableStateOf("") }
     Scaffold (
-        topBar = { TopBar(tituloPagina = stringResource(R.string.topbar_opcion5), modo = "Retroceder") },
-        bottomBar = { NavigationBarRecepcionista(opcionSeleccionada = 2) }
+        topBar = { TopBar(tituloPagina = stringResource(R.string.topbar_opcion5), modo = "Retroceder", onLeftIcon = buttonUp) },
+        bottomBar = { NavigationBarRecepcionista(
+            opcionSeleccionada = 2,
+            onHome = onHomeNav,
+            onSearch = onSearchNav,
+            onSettings = onSettingsNav
+        ) }
     ) { paddingValues ->
         Column (
             modifier = Modifier

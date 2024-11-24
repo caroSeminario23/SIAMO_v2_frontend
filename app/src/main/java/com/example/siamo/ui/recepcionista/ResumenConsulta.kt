@@ -43,6 +43,10 @@ fun ResumenConsulta(
     onAccept: () -> Unit = {},
     onRetry: () -> Unit = {},
     onCancel: () -> Unit = {},
+    buttonUp: () -> Unit = {},
+    onHomeNav: () -> Unit = {},
+    onSearchNav: () -> Unit = {},
+    onSettingsNav: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
 
@@ -62,10 +66,16 @@ fun ResumenConsulta(
             TopBar(
                 tituloPagina = stringResource(R.string.topbar_opcion9),
                 modo = "Retroceder",
+                onLeftIcon = buttonUp,
                 modifier = Modifier.padding(bottom = 40.dp)
             )
         },
-        bottomBar = { NavigationBarRecepcionista(opcionSeleccionada = 2) }
+        bottomBar = { NavigationBarRecepcionista(
+            opcionSeleccionada = 2,
+            onHome = onHomeNav,
+            onSearch = onSearchNav,
+            onSettings = onSettingsNav
+        ) }
     ) { paddingValues ->
         Column(
             modifier = Modifier
