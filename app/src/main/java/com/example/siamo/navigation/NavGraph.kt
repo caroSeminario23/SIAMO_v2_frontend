@@ -12,10 +12,13 @@ import com.example.siamo.ui.recepcionista.HomeRecepcionista
 import com.example.siamo.ui.tecnico.HomeTecnico
 import com.example.siamo.ui.tecnico.inspeccion_inicial_problemas.InspeccionProblemas
 import com.example.siamo.ui.tecnico.inspeccion_inicial_problemas.InspeccionProblemasViewModel
+import com.example.siamo.ui.tecnico.inspeccion_inicial_soluciones.InspeccionSoluciones
+import com.example.siamo.ui.tecnico.inspeccion_inicial_soluciones.InspeccionSolucionesViewModel
 import com.example.siamo.ui.tecnico.resumen_ost.ResumenOST
 import com.example.siamo.ui.tecnico.presupuesto.Presupuesto
 import com.example.siamo.ui.tecnico.presupuesto.PresupuestoViewModel
 import com.example.siamo.ui.tecnico.registro_ost.InspeccionProblemasViewModelFactory
+import com.example.siamo.ui.tecnico.registro_ost.InspeccionSolucionesViewModelFactory
 import com.example.siamo.ui.tecnico.registro_ost.PresupuestoViewModelFactory
 import com.example.siamo.ui.tecnico.registro_ost.RegistroOstViewModel
 import com.example.siamo.ui.tecnico.registro_ost.ResumenOstViewModelFactory
@@ -28,18 +31,26 @@ enum class NavRoutes(val route: String) {
     ResumenOST("resumenOST"),
     HomeTecnico("homeTecnico"),
     HomeRecepcionista("homeRecepcionista"),
-    InspeccionProblemas("inspeccionProblemas")
+    InspeccionProblemas("inspeccionProblemas"),
+    InspeccionSolucinoes("inspeccionSoluciones")
 }
 
 @Composable
 fun NavGraph(navController: NavHostController, modifier: Modifier = Modifier) {
     val registroOstViewModel: RegistroOstViewModel = viewModel()
 
-    //val presupuestoViewModel: PresupuestoViewModel = viewModel()
-    //val resumenOstViewModel: ResumenOstViewModel = viewModel()
-    val inspeccionProblemasViewModel: InspeccionProblemasViewModel = viewModel(factory = InspeccionProblemasViewModelFactory(registroOstViewModel))
-    val presupuestoViewModel: PresupuestoViewModel = viewModel(factory = PresupuestoViewModelFactory(registroOstViewModel))
-    val resumenOstViewModel: ResumenOstViewModel = viewModel(factory = ResumenOstViewModelFactory(registroOstViewModel))
+    val inspeccionProblemasViewModel: InspeccionProblemasViewModel = viewModel(
+        factory = InspeccionProblemasViewModelFactory(registroOstViewModel)
+    )
+    val inspeccionSolucionesViewModel: InspeccionSolucionesViewModel = viewModel(
+        factory = InspeccionSolucionesViewModelFactory(registroOstViewModel)
+    )
+    val presupuestoViewModel: PresupuestoViewModel = viewModel(
+        factory = PresupuestoViewModelFactory(registroOstViewModel)
+    )
+    val resumenOstViewModel: ResumenOstViewModel = viewModel(
+        factory = ResumenOstViewModelFactory(registroOstViewModel)
+    )
 
     NavHost(navController = navController, startDestination = NavRoutes.Presupuesto.route, modifier = modifier) {
         composable(NavRoutes.Principal.route) {
@@ -67,6 +78,12 @@ fun NavGraph(navController: NavHostController, modifier: Modifier = Modifier) {
         composable(NavRoutes.InspeccionProblemas.route) {
             InspeccionProblemas(
                 viewModel = inspeccionProblemasViewModel,
+                navController = navController
+            )
+        }
+        composable(NavRoutes.InspeccionSolucinoes.route) {
+            InspeccionSoluciones(
+                viewModel = inspeccionSolucionesViewModel,
                 navController = navController
             )
         }

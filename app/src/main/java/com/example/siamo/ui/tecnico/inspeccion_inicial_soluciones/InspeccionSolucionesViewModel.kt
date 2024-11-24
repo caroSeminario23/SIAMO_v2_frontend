@@ -1,64 +1,55 @@
 package com.example.siamo.ui.tecnico.inspeccion_inicial_soluciones
+
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.example.siamo.data.otros_ara.ListaProblemasRepository
-import com.example.siamo.data.otros_ara.ProblemaRepository
-import com.example.siamo.data.otros_ara.SolucionRepository
-import kotlinx.coroutines.flow.MutableStateFlow
+import com.example.siamo.data.problema.ProblemaLectura
+import com.example.siamo.data.problema.ProblemaSeleccionado
+import com.example.siamo.data.solucion.SolucionLectura
+import com.example.siamo.ui.tecnico.registro_ost.RegistroOstUiState
+import com.example.siamo.ui.tecnico.registro_ost.RegistroOstViewModel
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.launch
 
-data class InspeccionInicialUiState(
-    val problemasConSoluciones: List<ProblemaConSolucion>? = null,
-    val isLoading: Boolean = false,
-    val errorMessage: String? = null
-)
-
-data class ProblemaConSolucion(
-    val idProblema: Int,
-    val descripcionProblema: String,
-    val descripcionSolucion: String
-)
-
-class InspeccionInicialViewModel(
-    private val problemaRepository: ProblemaRepository,
-    private val listaProblemasRepository: ListaProblemasRepository,
-    private val solucionRepository: SolucionRepository
+class InspeccionSolucionesViewModel(
+    private val registroOstViewModel: RegistroOstViewModel
 ) : ViewModel() {
+    val uiState: StateFlow<RegistroOstUiState> = registroOstViewModel.uiState
 
-    private val _uiState = MutableStateFlow(InspeccionInicialUiState())
-    val uiState: StateFlow<InspeccionInicialUiState> = _uiState.asStateFlow()
+    init {
+        cargarProblemas()
+        cargarSoluciones()
+    }
 
+    private fun cargarProblemas() {
+        val problema1 = ProblemaLectura(1, "Problema 1", "Detalle del problema 1")
+        val problema2 = ProblemaLectura(2, "Problema 2", "Detalle del problema 2")
+        val problema3 = ProblemaLectura(3, "Problema 3", "Detalle del problema 3")
+        val problema4 = ProblemaLectura(4, "Problema 4", "Detalle del problema 4")
+        val problema5 = ProblemaLectura(5, "Problema 5", "Detalle del problema 5")
+        val problema6 = ProblemaLectura(6, "Problema 6", "Detalle del problema 6")
 
-    fun obtenerProblemasPorConsulta(idConsulta: Int) {
+        val problemas = listOf(
+            ProblemaSeleccionado(problema1, true),
+            ProblemaSeleccionado(problema2, true),
+            ProblemaSeleccionado(problema3, false),
+            ProblemaSeleccionado(problema4, true),
+            ProblemaSeleccionado(problema5, true),
+            ProblemaSeleccionado(problema6, true)
+        )
 
-        _uiState.value = _uiState.value.copy(isLoading = true)
+        registroOstViewModel.actualizarUiState(
+            uiState.value.copy(listaProblemasSeleccionados = problemas)
+        )
+    }
 
-        viewModelScope.launch {
-            try {
-                // Obtener lista de problemas por consulta
-                val listaProblemas = listaProblemasRepository.getListaDeProblemasPorConsulta(idConsulta)
+    private  fun cargarSoluciones() {
+        val soluciones = listOf(
+            SolucionLectura(1, "Solución 1", 1),
+            SolucionLectura(2, "Solución 2", 2),
+            SolucionLectura(4, "Solución 4", 4),
+            SolucionLectura(5, "Solución 5", 5)
+        )
 
-                // Mapeamos los problemas a una lista de ProblemaConSolucion
-                val problemasConSoluciones = listaProblemas.map { listaProblema ->
-                    val problema = problemaRepository.getProblemaPorId(listaProblema.id_Problema)
-                    val solucion = solucionRepository.getSolucionPorId(problema.id_Solucion)
-
-                    // Crear un objeto con la descripción del problema y la descripción de la solución
-                    ProblemaConSolucion(
-                        idProblema = problema.id,
-                        descripcionProblema = problema.descripcion.ifEmpty { "Problema no disponible" },
-                        descripcionSolucion = solucion?.descripcion ?: "Solución no disponible"
-                    )
-                }
-
-
-                _uiState.value = InspeccionInicialUiState(problemasConSoluciones = problemasConSoluciones, isLoading = false)
-            } catch (e: Exception) {
-
-                _uiState.value = InspeccionInicialUiState(isLoading = false, errorMessage = "Error al obtener los datos")
-            }
-        }
+        registroOstViewModel.actualizarUiState(
+            uiState.value.copy(listaSolucionesRegistradas = soluciones)
+        )
     }
 }

@@ -36,6 +36,7 @@
     <string name="label_lista_soluciones">Lista de soluciones propuestas:</string>
     <string name="label_presupuesto_final_resumen">Presupuesto final:</string>
     <string name="label_repuestos_necesarios">Repuestos necesarios: </string>
+    <string name="label_solucion_no_definida">Solución no definida</string>
 
 
     <string name="inicio_boton">Iniciar Sesión</string>

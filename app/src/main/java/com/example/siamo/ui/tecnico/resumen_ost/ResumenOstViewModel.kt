@@ -36,9 +36,9 @@ class ResumenOstViewModel (
 
     private fun cargarSolucionesRegistradas() {
         val soluciones = listOf(
-            SolucionLectura(1, "Solucion 1", "1"),
-            SolucionLectura(2, "Solucion 2", "2"),
-            SolucionLectura(3, "Solucion 3", "3")
+            SolucionLectura(1, "Solucion 1", 1),
+            SolucionLectura(2, "Solucion 2", 2),
+            SolucionLectura(3, "Solucion 3", 3)
         )
 
         registroOstViewModel.actualizarUiState(

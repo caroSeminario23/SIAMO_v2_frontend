@@ -33,6 +33,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.siamo.R
+import com.example.siamo.navigation.NavRoutes
 import com.example.siamo.ui.tecnico.registro_ost.RegistroOstViewModel
 import com.example.siamo.ui.theme.SIAMOTheme
 import com.example.siamo.ui.utils.ListItemCustome
@@ -162,7 +163,9 @@ fun InspeccionProblemas(
                     horizontalArrangement = Arrangement.End
                 ) {
                     Button(
-                        onClick = { },
+                        onClick = {
+                            navController.navigate(NavRoutes.InspeccionSolucinoes.route)
+                        },
                         enabled = uiState.listaProblemasSeleccionados.isNotEmpty(),
                         modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 8.dp)
                     ) {
