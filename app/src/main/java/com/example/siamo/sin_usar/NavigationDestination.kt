@@ -1,4 +1,4 @@
-package com.example.siamo.ui.navigation
+package com.example.siamo.sin_usar
 
 interface NavigationDestination {
     val route: String

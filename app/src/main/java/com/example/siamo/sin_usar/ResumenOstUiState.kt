@@ -1,6 +1,4 @@
-package com.example.siamo.ui.tecnico.resumen_ost
-
-import com.example.siamo.ui.tecnico.presupuesto.PresupuestoUiState
+package com.example.siamo.sin_usar
 
 data class ResumenOstUiState(
     val fechaAproxIngreso: String = "",

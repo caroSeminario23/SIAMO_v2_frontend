@@ -1,4 +1,4 @@
-package com.example.siamo.ui.navigation
+package com.example.siamo.sin_usar
 import androidx.compose.runtime.Composable
 
 import androidx.compose.ui.Modifier
@@ -6,8 +6,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
-import com.example.siamo.ui.tecnico.inspeccion_pendiente.InspeccionPendienteViewModel
-import com.example.siamo.ui.tecnico.inspeccion_pendiente.InspeccionPendiente
+import com.example.siamo.ui.tecnico.inspecciones_pendientes.InspeccionPendienteViewModel
+import com.example.siamo.ui.tecnico.inspecciones_pendientes.InspeccionPendiente
 //import com.example.siamo.ui.tecnico.inspeccion_inicial_problemas.IdentificacionProblemas
 
 //import com.example.siamo.ui.tecnico.registro_solucion.RegistroSolucion

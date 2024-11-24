@@ -1,4 +1,4 @@
-package com.example.siamo.ui.tecnico.inspeccion_pendiente
+package com.example.siamo.ui.tecnico.inspecciones_pendientes
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.siamo.data.otros_ara.ConsultaRepository

@@ -111,6 +111,10 @@
     <string name="desplegable_sexo_opcion1">Femenino</string>
     <string name="desplegable_sexo_opcion2">Masculino</string>
 
+    <string name="desplegable_dia_principal">Dia</string>
+    <string name="desplegable_mes_principal">Mes</string>
+    <string name="desplegable_anio_principal">Año</string>
+
     <string name="desplegable_lista_tecnico_principal">Lista de técnicos</string>
     <string name="desplegable_lista_tecnico_opcion1">Técnico 1</string>
     <string name="desplegable_lista_tecnico_opcion2">Técnico 2</string>

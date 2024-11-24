@@ -14,7 +14,7 @@ class InspeccionSolucionesViewModel(
     val uiState: StateFlow<RegistroOstUiState> = registroOstViewModel.uiState
 
     init {
-        cargarProblemas()
+        //cargarProblemas()
         cargarSoluciones()
     }
 

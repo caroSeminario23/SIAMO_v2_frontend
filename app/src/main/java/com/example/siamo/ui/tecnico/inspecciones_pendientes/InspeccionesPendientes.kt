@@ -1,4 +1,4 @@
-package com.example.siamo.ui.tecnico.inspeccion_pendiente
+package com.example.siamo.ui.tecnico.inspecciones_pendientes
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column

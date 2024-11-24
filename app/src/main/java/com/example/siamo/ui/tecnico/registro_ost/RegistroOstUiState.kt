@@ -65,19 +65,28 @@ data class RegistroOstUiState(
     val presupuestoRepuesto: PresupuestoRepuesto? = null,
 
     // Registro de fecha de ingreso
+    val expandedDia: Boolean = false,
+    val expandedMes: Boolean = false,
+    val expandedAnio: Boolean = false,
+    val diaSeleccionado: Int = 0,
+    val mesSeleccionado: Int = 0,
+    val anioSeleccionado: Int = 0,
+    val desplegablesHabilitados: Boolean = false,
     val fechaAproxIngreso: String = "",
-    val ingresoFechaActivo: Boolean = false,
 
     // Registro de Ost
     val ost: OstRegistro? = null, // definir fechaRegistro y estado: 1
 
     // Registro de ficha de ingreso cuando el vehículo ingresa a taller en ese momento
+    val fechaIngresoFicha: String = "",
     val fechaRecogidaAprox: String = "",
     val idOst: OstLectura? = null,
     val fichaIngreso: FichaIngresoRegistro? = null, // definir fechaIngreso como fechaAproxIngreso
 
     // Activación de botones de registro y cancelación
-    val registroCancelacionActivo: Boolean = false,
+    val registroCancelacionActivo1: Boolean = false,
+    val registroCancelacionActivo2: Boolean = false,
+    val registroCancelacionActivo3: Boolean = false,
 
     // Manejo de diálogos de éxito y error
     val errorRegistroPresupuesto: Int = 0, // 0 es el código de no haber intentado registrar
