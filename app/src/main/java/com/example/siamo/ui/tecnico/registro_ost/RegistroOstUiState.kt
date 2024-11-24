@@ -34,6 +34,8 @@ data class RegistroOstUiState(
     val solucionPropuesta: String = "",
     val problemaNuevo: ProblemaRegistro? = null,
     val solucionNueva: SolucionRegistro? = null,
+    val problemaAGuardar: ProblemaSeleccionado? = null,
+    val activoRegistroParaProblemaNoRegistrado: Boolean = false,
 
     // Captura del número de técnicos
     val numeroTecnicos: String = "",

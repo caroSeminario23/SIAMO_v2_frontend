@@ -67,6 +67,7 @@
     <string name="campo_n_repuestos">N° de repuestos de ese tipo</string>
     <string name="campo_descuento">Descuento (%)</string>
     <string name="campo_fecha_aprox_ingreso">Fecha aproximada de ingreso del vehículo</string>
+    <string name="campo_nuevo_problema">Descripción del nuevo problema</string>
 
     <string name="home_saludo1">BUENOS DÍAS</string>
     <string name="home_saludo2">BUENAS TARDES</string>

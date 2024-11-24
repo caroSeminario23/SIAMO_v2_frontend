@@ -21,7 +21,10 @@ import com.example.siamo.ui.tecnico.registro_ost.InspeccionProblemasViewModelFac
 import com.example.siamo.ui.tecnico.registro_ost.InspeccionSolucionesViewModelFactory
 import com.example.siamo.ui.tecnico.registro_ost.PresupuestoViewModelFactory
 import com.example.siamo.ui.tecnico.registro_ost.RegistroOstViewModel
+import com.example.siamo.ui.tecnico.registro_ost.RegistroSolucionViewModelFactory
 import com.example.siamo.ui.tecnico.registro_ost.ResumenOstViewModelFactory
+import com.example.siamo.ui.tecnico.registro_solucion.RegistroSolucion
+import com.example.siamo.ui.tecnico.registro_solucion.RegistroSolucionViewModel
 import com.example.siamo.ui.tecnico.resumen_ost.ResumenOstViewModel
 
 enum class NavRoutes(val route: String) {
@@ -32,7 +35,8 @@ enum class NavRoutes(val route: String) {
     HomeTecnico("homeTecnico"),
     HomeRecepcionista("homeRecepcionista"),
     InspeccionProblemas("inspeccionProblemas"),
-    InspeccionSolucinoes("inspeccionSoluciones")
+    InspeccionSolucinoes("inspeccionSoluciones"),
+    RegistroSolucion("registroSolucion")
 }
 
 @Composable
@@ -44,6 +48,9 @@ fun NavGraph(navController: NavHostController, modifier: Modifier = Modifier) {
     )
     val inspeccionSolucionesViewModel: InspeccionSolucionesViewModel = viewModel(
         factory = InspeccionSolucionesViewModelFactory(registroOstViewModel)
+    )
+    val registroSolucionViewModel: RegistroSolucionViewModel = viewModel(
+        factory = RegistroSolucionViewModelFactory(registroOstViewModel)
     )
     val presupuestoViewModel: PresupuestoViewModel = viewModel(
         factory = PresupuestoViewModelFactory(registroOstViewModel)
@@ -84,6 +91,12 @@ fun NavGraph(navController: NavHostController, modifier: Modifier = Modifier) {
         composable(NavRoutes.InspeccionSolucinoes.route) {
             InspeccionSoluciones(
                 viewModel = inspeccionSolucionesViewModel,
+                navController = navController
+            )
+        }
+        composable(NavRoutes.RegistroSolucion.route) {
+            RegistroSolucion(
+                viewModel = registroSolucionViewModel,
                 navController = navController
             )
         }

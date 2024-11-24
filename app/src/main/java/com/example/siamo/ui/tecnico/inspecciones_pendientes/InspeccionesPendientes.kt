@@ -26,7 +26,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.navigation.NavHostController
 import androidx.compose.runtime.getValue
 
-
 @Composable
 fun InspeccionPendiente(
     idTecnico: Int,

@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material.icons.filled.Search
@@ -19,6 +20,7 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SearchBarDefaults
 import androidx.compose.material3.Text
@@ -28,6 +30,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
@@ -123,6 +127,24 @@ fun InspeccionProblemas(
             }
 
             item {
+                OutlinedTextField(
+                    value = uiState.descripcionProblema,
+                    onValueChange = {
+                        viewModel.actualizarDescripcionProblema(it)
+                    },
+                    label = {
+                        Text(stringResource(id = R.string.campo_nuevo_problema))
+                    },
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.Text,
+                        imeAction = ImeAction.Done),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = 16.dp, end = 16.dp, bottom = 16.dp, top = 4.dp)
+                )
+            }
+
+            item {
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -130,8 +152,14 @@ fun InspeccionProblemas(
                     horizontalArrangement = Arrangement.End
                 ) {
                     Button(
-                        onClick = { viewModel.registrarProblema() },
-                        enabled = uiState.problemaSeleccionadoTemp != null,
+                        onClick = {
+                            if (uiState.activoRegistroParaProblemaNoRegistrado) {
+                                viewModel.registrarNuevoProblema()
+                            } else {
+                                viewModel.registrarProblema()
+                            }
+                                  },
+                        enabled = uiState.problemaSeleccionadoTemp != null || uiState.activoRegistroParaProblemaNoRegistrado,
                         modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 8.dp)
                     ) {
                         Icon(

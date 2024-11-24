@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Send
 import androidx.compose.material3.Button
@@ -23,16 +24,26 @@ import com.example.siamo.ui.utils.TopBar
 import androidx.compose.material3.Text
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
+import com.example.siamo.navigation.NavRoutes
+import com.example.siamo.ui.tecnico.registro_ost.RegistroOstViewModel
 import com.example.siamo.ui.theme.SIAMOTheme
 
 @Composable
 fun RegistroSolucion(
-    //navController: NavHostController,
-    nombreProblema: String = "Problema 1",
-    modifier: Modifier = Modifier,
+    navController: NavHostController,
+    viewModel: RegistroSolucionViewModel,
+    nombreProblema: String = "Problema no se ha guardado",
+    modifier: Modifier = Modifier
     ) {
+    val uiState by viewModel.uiState.collectAsState()
     Scaffold(
         topBar = { TopBar(tituloPagina = stringResource(R.string.topbar_opcion11), modo = "Retroceder") },
         bottomBar = { NavigationBarTecnico(opcionSeleccionada = 2) }
@@ -54,7 +65,12 @@ fun RegistroSolucion(
             )
 
             Text(
-                text = stringResource(id = R.string.inspeccion_registro,nombreProblema),
+                text = stringResource(
+                    id = R.string.inspeccion_registro,
+                    uiState.problemaAGuardar?.problema?.descripcion ?: nombreProblema
+                ),
+                //stringResource(id = R.string.inspeccion_registro) + " " + (uiState.problemaAGuardar?.problema?.descripcion
+                //    ?: nombreProblema ),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSecondaryContainer,
                 textAlign = TextAlign.Start,
@@ -63,11 +79,16 @@ fun RegistroSolucion(
             )
 
             OutlinedTextField(
-                value =  stringResource(id = R.string.ejemplo),
-                onValueChange = {},
+                value =  uiState.detalleProblema,
+                onValueChange = {
+                    viewModel.actualizarDetalleProblema(it)
+                },
                 label = {
                     Text(text = stringResource(id = R.string.campo_detalle_problema))
                 },
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Text,
+                    imeAction = ImeAction.Next),
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(start = 20.dp, end = 20.dp, bottom = 20.dp)
@@ -75,11 +96,16 @@ fun RegistroSolucion(
             )
 
             OutlinedTextField(
-                value =  stringResource(id = R.string.ejemplo),
-                onValueChange = {},
+                value = uiState.solucionPropuesta,
+                onValueChange = {
+                    viewModel.actualizarSolucionPropuesta(it)
+                },
                 label = {
                     Text(text = stringResource(id = R.string.campo_solucion_propuesta))
                 },
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Text,
+                    imeAction = ImeAction.Done),
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(start = 20.dp, end = 20.dp, bottom = 20.dp)
@@ -88,7 +114,11 @@ fun RegistroSolucion(
             Spacer(modifier = Modifier.padding(12.dp))
 
             Button(
-                onClick = { },
+                onClick = {
+                    viewModel.registrarSolucion()
+                    navController.navigate(NavRoutes.InspeccionSolucinoes.route)
+                },
+                enabled = uiState.detalleProblema.isNotEmpty() && uiState.solucionPropuesta.isNotEmpty(),
                 modifier = Modifier
                     .align(Alignment.End)
                     .padding(end = 20.dp)
@@ -110,11 +140,27 @@ fun RegistroSolucion(
 @Preview(showBackground = true, showSystemUi = false)
 @Composable
 fun RegistroSolucionLightPreview() {
-    SIAMOTheme (darkTheme = false) { RegistroSolucion() }
+    val navController = rememberNavController()
+    val registroOstViewModel = RegistroOstViewModel()
+    val viewModel = RegistroSolucionViewModel(registroOstViewModel)
+    SIAMOTheme (darkTheme = false) {
+        RegistroSolucion(
+            viewModel = viewModel,
+            navController = navController
+        )
+    }
 }
 
 @Preview(showBackground = true, showSystemUi = false)
 @Composable
 fun RegistroSolucionDarkPreview() {
-    SIAMOTheme (darkTheme = true) { RegistroSolucion() }
+    val navController = rememberNavController()
+    val registroOstViewModel = RegistroOstViewModel()
+    val viewModel = RegistroSolucionViewModel(registroOstViewModel)
+    SIAMOTheme (darkTheme = true) {
+        RegistroSolucion(
+            viewModel = viewModel,
+            navController = navController
+        )
+    }
 }

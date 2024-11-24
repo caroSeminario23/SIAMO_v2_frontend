@@ -68,7 +68,8 @@ class InspeccionProblemasViewModel(
             uiState.value.copy(
                 problemaSeleccionadoTemp = problema,
                 mostrarResultadosBusquedaProblemas = false,
-                problemaBuscado = problema.descripcion
+                problemaBuscado = problema.descripcion,
+                activoRegistroParaProblemaNoRegistrado = false
             )
         )
     }
@@ -98,6 +99,40 @@ class InspeccionProblemasViewModel(
                     listaProblemasSeleccionados = state.listaProblemasSeleccionados + problemaSeleccionado,
                     problemaBuscado = "",
                     problemaSeleccionadoTemp = null
+                )
+            )
+        }
+    }
+
+    fun registrarNuevoProblema() {
+        if (uiState.value.descripcionProblema.isNotEmpty()) {
+            var nuevoProblema = ProblemaLectura(
+                idProblema = 0, // ID temporal
+                descripcion = uiState.value.descripcionProblema,
+                detalle = ""
+            )
+
+            var problemaSeleccionado = ProblemaSeleccionado(
+                problema = nuevoProblema
+            )
+
+            registroOstViewModel.actualizarUiState(
+                uiState.value.copy(
+                    problemaAGuardar = problemaSeleccionado,
+                    listaProblemasSeleccionados = uiState.value.listaProblemasSeleccionados + problemaSeleccionado,
+                    activoRegistroParaProblemaNoRegistrado = false,
+                )
+            )
+        }
+
+    }
+
+    fun actualizarDescripcionProblema(descripcion: String) {
+        if (descripcion.isEmpty() || descripcion != null) {
+            registroOstViewModel.actualizarUiState(
+                uiState.value.copy(
+                    descripcionProblema = descripcion,
+                    activoRegistroParaProblemaNoRegistrado = true
                 )
             )
         }

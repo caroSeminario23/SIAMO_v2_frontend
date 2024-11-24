@@ -89,7 +89,9 @@ fun InspeccionSoluciones(
                         ListItemProblema(
                             problema = problemaSeleccionado.problema.descripcion,
                             solucion = stringResource(R.string.label_solucion_no_definida),
-                            onAddClick = {}
+                            onAddClick = {
+                                viewModel.guardarProblema(problemaSeleccionado)
+                                navController.navigate(NavRoutes.RegistroSolucion.route)}
                         )
                     }
                 }

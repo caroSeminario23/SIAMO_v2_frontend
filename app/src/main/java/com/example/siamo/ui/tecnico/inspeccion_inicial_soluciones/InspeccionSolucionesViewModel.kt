@@ -2,6 +2,7 @@ package com.example.siamo.ui.tecnico.inspeccion_inicial_soluciones
 
 import androidx.lifecycle.ViewModel
 import com.example.siamo.data.problema.ProblemaLectura
+import com.example.siamo.data.problema.ProblemaRegistro
 import com.example.siamo.data.problema.ProblemaSeleccionado
 import com.example.siamo.data.solucion.SolucionLectura
 import com.example.siamo.ui.tecnico.registro_ost.RegistroOstUiState
@@ -15,7 +16,7 @@ class InspeccionSolucionesViewModel(
 
     init {
         //cargarProblemas()
-        cargarSoluciones()
+        //cargarSoluciones()
     }
 
     private fun cargarProblemas() {
@@ -50,6 +51,14 @@ class InspeccionSolucionesViewModel(
 
         registroOstViewModel.actualizarUiState(
             uiState.value.copy(listaSolucionesRegistradas = soluciones)
+        )
+    }
+
+    fun guardarProblema(problemaSeleccionado: ProblemaSeleccionado) {
+        registroOstViewModel.actualizarUiState(
+            uiState.value.copy(
+                problemaAGuardar = problemaSeleccionado
+            )
         )
     }
 }
