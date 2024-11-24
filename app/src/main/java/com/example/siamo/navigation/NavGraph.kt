@@ -52,7 +52,7 @@ fun NavGraph(navController: NavHostController, modifier: Modifier = Modifier) {
         factory = ResumenOstViewModelFactory(registroOstViewModel)
     )
 
-    NavHost(navController = navController, startDestination = NavRoutes.Presupuesto.route, modifier = modifier) {
+    NavHost(navController = navController, startDestination = NavRoutes.InspeccionProblemas.route, modifier = modifier) {
         composable(NavRoutes.Principal.route) {
             SiamoApp(navController)
         }

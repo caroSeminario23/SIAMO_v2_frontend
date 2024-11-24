@@ -17,10 +17,10 @@ class ResumenOstViewModel (
 ) : ViewModel() {
     val uiState: StateFlow<RegistroOstUiState> = registroOstViewModel.uiState
 
-    init {
-        cargarProblemasSeleccionados()
-        cargarSolucionesRegistradas()
-    }
+//    init {
+//        cargarProblemasSeleccionados()
+//        cargarSolucionesRegistradas()
+//    }
 
     private fun cargarProblemasSeleccionados() {
         val problema1 = ProblemaLectura(1, "Problema 1", "Detalle del problema 1")
