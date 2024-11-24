@@ -21,10 +21,16 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.siamo.R
 import com.example.siamo.data.home_notification
+import com.example.siamo.ui.navigation.NavigationDestination
 import com.example.siamo.ui.theme.SIAMOTheme
 import com.example.siamo.ui.utils.HomeNotification
 import com.example.siamo.ui.utils.NavigationBarRecepcionista
 import com.example.siamo.ui.utils.TopBar
+
+object HomeRecepcionistaDestination: NavigationDestination {
+    override val route = "home_recepcionista"
+    override val titleRes = R.string.topbar_opcion1
+}
 
 @Composable
 fun HomeRecepcionista(

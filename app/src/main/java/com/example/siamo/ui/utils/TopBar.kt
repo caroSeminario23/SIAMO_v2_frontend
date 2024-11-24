@@ -1,6 +1,7 @@
 package com.example.siamo.ui.utils
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -23,6 +24,8 @@ import com.example.siamo.ui.theme.SIAMOTheme
 fun TopBar(
     modifier: Modifier = Modifier,
     tituloPagina: String = "<NOMBRE DE PÁGINA>",
+    onLeftIcon: () -> Unit = {},
+    onRightIcon: () -> Unit = {},
     modo: String = "Normal"
 ) {
     val close = Icons.Default.Close
@@ -40,11 +43,12 @@ fun TopBar(
             .background(MaterialTheme.colorScheme.surfaceContainer)
             .padding(16.dp)
     ) {
-        // Imagen izquierda
+//         Imagen izquierda
         Icon(
             imageVector = iconoAdecuado,
             contentDescription = null,
-            tint = MaterialTheme.colorScheme.onSurfaceVariant
+            tint = MaterialTheme.colorScheme.onSurfaceVariant,
+            modifier = Modifier.clickable { onLeftIcon() }
         )
         Text(
             text = tituloPagina,
@@ -57,7 +61,8 @@ fun TopBar(
         Icon(
             imageVector = Icons.Default.AccountCircle,
             contentDescription = null,
-            tint = MaterialTheme.colorScheme.onSurfaceVariant
+            tint = MaterialTheme.colorScheme.onSurfaceVariant,
+            modifier = Modifier.clickable { onRightIcon() }
         )
     }
 }

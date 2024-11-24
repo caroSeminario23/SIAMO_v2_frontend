@@ -8,6 +8,7 @@
     <string name="actualizacion_cliente_titulo">ACTUALIZACIÓN DE CLIENTE</string>
     <string name="titulo_resumen_consulta1">RESUMEN</string>
     <string name="titulo_resumen_consulta2">DE CONSULTA</string>
+    <string name="titulo_detalle_ost">OST N°</string>
 
 
     <string name="inicio_indicacion">Ingrese sus datos para acceder a su perfil</string>
@@ -55,6 +56,7 @@
     <string name="navbar_opcion4">Ajustes</string>
     <string name="navbar_opcion5">OST</string>
     <string name="navbar_opcion6">Bitácora</string>
+    <string name="navbar_opcion7">Registrar Consulta</string>
 
     <string name="topbar_opcion1">PÁGINA PRINCIPAL</string>
     <string name="topbar_opcion2">BÚSQUEDA DE CLIENTE</string>
@@ -65,6 +67,7 @@
     <string name="topbar_opcion7">REGISTRO DE CONSULTA</string>
     <string name="topbar_opcion8">ASIGNACIÓN DE TÉCNICO</string>
     <string name="topbar_opcion9">RESUMEN DE CONSULTA</string>
+    <string name="topbar_opcion10">BÚSQUEDA DE OST</string>
 
     <string name="desplegable_tipo_doc_principal">Tipo de documento de identidad</string>
     <string name="desplegable_tipo_doc_opcion1">DNI</string>
@@ -82,4 +85,57 @@
     <string name="desplegable_lista_tecnico_opcion5">Técnico 5</string>
 
     <string name="ejemplo">Ejemplo</string>
+
+    <string name="alerta_aceptar">Aceptar</string>
+    <string name="alerta_cancelar">Cancelar</string>
+    <string name="alerta_volver_a_intentar">Volver a intentar</string>
+
+    <string name="alerta_busqueda_cliente_title">Búsqueda de cliente</string>
+    <string name="alerta_busqueda_clienteok_text">El cliente se encuentra registrado</string>
+    <string name="alerta_busqueda_clienteerror_text">El cliente no se encuentra registrado</string>
+    <string name="alerta_actualizacion_clienteok_title">Actualización de cliente</string>
+    <string name="alerta_actualizacion_clienteok_text">Los datos del cliente han sido actualizados exitosamente</string>
+    <string name="alerta_actualizacion_clienteerror_text">Los datos del cliente no ha podido ser actualizados</string>
+    <string name="alerta_registro_cliente_title">Registro de cliente</string>
+    <string name="alerta_registro_clienteerror_text">El cliente no ha podido ser registrado exitosamente</string>
+    <string name="alerta_registro_clienteok_text">El cliente ha sido registrado exitosamente</string>
+    <string name="alerta_busqueda_vehiculo_titulo">Búsqueda de vehículo</string>
+    <string name="alerta_busqueda_vehiculoerror_mensaje">El vehículo no se encuentra registrado</string>
+    <string name="alerta_busqueda_vehiculook_mensaje">El vehículo se encuentra registrado</string>
+    <string name="alerta_registro_vehiculo_titulo">Registro de vehículo</string>
+    <string name="alerta_registro_vehiculoerror_mensaje">El vehículo no ha podido ser registrado exitosamente</string>
+    <string name="alerta_registro_vehiculook_mensaje">El vehículo ha sido registrado exitosamente</string>
+    <string name="registro_consulta_title">Registro de consulta</string>
+    <string name="registro_consultaok_content">La consulta ha sido registrada con éxito y el técnico ha sido notificado.</string>
+    <string name="registro_consultaerror_content">La consulta no ha podido ser registrada.\n</string>
+    <string name="ingrese_nro_ost_label">Ingrese el Nro de la Orden Servicio Técnico (OST)</string>
+    <string name="codigo_ost_field">Código de OST</string>
+    <string name="fecha_de_registro_label">Fecha de registro</string>
+    <string name="estado_label">Estado</string>
+    <string name="fecha_de_ingreso_aproximada_label">Fecha de ingreso aproximada</string>
+    <string name="sobre_el_cliente_header_divider">SOBRE EL CLIENTE</string>
+    <string name="sobre_el_vehiculo_divider">SOBRE EL VEHÍCULO</string>
+    <string name="marca_y_modelo_label">Marca y modelo</string>
+    <string name="nombres_y_apellidos_label">Nombres y Apellidos</string>
+    <string name="sobre_el_tecnico_asignado_divider">SOBRE EL TÉCNICO ASIGNADO</string>
+    <string name="codigo_label">Código</string>
+    <string name="sobre_el_informe_tecnico_divider">SOBRE EL INFORME TÉCNICO</string>
+    <string name="fecha_inicio_de_reparacion_label">Fecha inicio de reparación</string>
+    <string name="fecha_de_fin_de_reparacion_label">Fecha de fin de reparación</string>
+    <string name="detalle_de_reparacion_label">Detalle de reparación</string>
+    <string name="monto_final_label">Monto final</string>
+    <string name="observaciones_label">Observaciones</string>
+    <string name="sobre_la_ficha_de_ingreso_divider">SOBRE LA FICHA DE INGRESO</string>
+    <string name="fecha_de_ingreso_label">Fecha de ingreso</string>
+    <string name="fecha_de_recojo_aproximada_label">Fecha de recojo aproximada</string>
+    <string name="mas_detalle_button">Más detalle</string>
+    <string name="sobre_el_estado_del_vehiculo_divider">SOBRE EL ESTADO DEL VEHÍCULO</string>
+    <string name="estado_de_carroceria_label">Estado de carrocería</string>
+    <string name="estado_de_neumaticos_label">Estado de neumáticos</string>
+    <string name="estado_de_motor_label">Estado de motor</string>
+    <string name="estado_de_frenos_label">Estado de frenos</string>
+    <string name="sobre_ficha_salida_divider">SOBRE LA FICHA DE SALIDA</string>
+    <string name="fecha_de_recojo_label">Fecha de recojo</string>
+
+
 </resources>

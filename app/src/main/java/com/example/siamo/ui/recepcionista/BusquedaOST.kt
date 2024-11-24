@@ -24,44 +24,45 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.ViewModel
 import com.example.siamo.R
-import com.example.siamo.model.Cliente
-import com.example.siamo.model.Persona
-import com.example.siamo.model.Response
 import com.example.siamo.ui.consulta.ConsultaUiState
-import com.example.siamo.ui.consulta.ConsultaViewModel
 import com.example.siamo.ui.navigation.NavigationDestination
+import com.example.siamo.ui.ost.BuscarOstUiState
 import com.example.siamo.ui.theme.SIAMOTheme
 import com.example.siamo.ui.utils.AlertDialogError
 import com.example.siamo.ui.utils.AlertDialogOK
 import com.example.siamo.ui.utils.NavigationBarRecepcionista
 import com.example.siamo.ui.utils.TopBar
 
-object BusquedaClienteDestination : NavigationDestination {
+object BusquedaOSTNavigation : NavigationDestination {
     override val route = "busqueda_cliente"
     override val titleRes = R.string.topbar_opcion2
 }
 
 @Composable
-fun BusquedaCliente(
-    consultaUiState: ConsultaUiState,
-    getCliente: (String) -> Unit,
+fun BusquedaOST(
+    buscarOstUiState: BuscarOstUiState,
+    getOst: (Int) -> Unit,
     onAccept: () -> Unit,
     onDismiss: () -> Unit = {},
-    onCancel: () -> Unit = {},
-    onRegistrar: () -> Unit = {},
     onClose: () -> Unit = {},
+    onCancel: () -> Unit = {},
+    onConfirm: () -> Unit = {},
     onHomeNav: () -> Unit = {},
-    onSearchNav: () -> Unit = {},
+    onRegisterNav: () -> Unit = {},
     onSettingsNav: () -> Unit = {},
     modifier: Modifier = Modifier,
 ) {
-    var documentLabel by rememberSaveable { mutableStateOf("") }
+    var ostLabel by rememberSaveable { mutableStateOf("") }
 
     Scaffold (
         topBar = { TopBar(tituloPagina = stringResource(R.string.topbar_opcion2), modo = "Normal", onLeftIcon = onClose) },
-        bottomBar = { NavigationBarRecepcionista(opcionSeleccionada = 2, onHome = onHomeNav, onSearch = onSearchNav, onSettings = onSettingsNav) }
+        bottomBar = { NavigationBarRecepcionista(
+            opcionSeleccionada = 3,
+            onHome = onHomeNav,
+            onRegister = onRegisterNav,
+            onSettings = onSettingsNav
+        ) }
     ) { paddingValues ->
         Column (
             modifier = Modifier
@@ -71,7 +72,7 @@ fun BusquedaCliente(
             verticalArrangement = Arrangement.Center
         ) {
             Text(
-                text = stringResource(id = R.string.busqueda_cliente),
+                text = stringResource(R.string.ingrese_nro_ost_label),
                 style = MaterialTheme.typography.bodyLarge,
                 color = MaterialTheme.colorScheme.onSecondaryContainer,
                 modifier = modifier.padding(15.dp)
@@ -80,18 +81,20 @@ fun BusquedaCliente(
             Spacer(modifier = Modifier.padding(6.dp))
 
             OutlinedTextField(
-                value =  documentLabel,
-                onValueChange = { documentLabel = it },
+                value =  ostLabel,
+                onValueChange = { ostLabel = it },
                 label = {
-                    Text(text = stringResource(id = R.string.campo_doc_identidad))
+                    Text(text = stringResource(R.string.codigo_ost_field))
                 },
-                modifier = Modifier.fillMaxWidth().padding(15.dp)
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(15.dp)
             )
 
             Spacer(modifier = Modifier.padding(20.dp))
 
             Button(
-                onClick = { getCliente(documentLabel) },
+                onClick = { getOst(ostLabel.toInt()) },
                 modifier = Modifier
                     .align(Alignment.End)
                     .padding(end = 15.dp)
@@ -106,7 +109,7 @@ fun BusquedaCliente(
 
         }
 
-        if(consultaUiState.flag_ok_buscar_cliente) {
+        if(buscarOstUiState.flag_ok_buscar_ost) {
             AlertDialogOK(
                 titulo = stringResource(id = R.string.alerta_busqueda_cliente_title),
                 contenido = stringResource(id = R.string.alerta_busqueda_clienteok_text),
@@ -114,12 +117,12 @@ fun BusquedaCliente(
             )
         }
 
-        if(consultaUiState.flag_error_buscar_cliente) {
+        if(buscarOstUiState.flag_error_buscar_ost) {
             AlertDialogError(
                 titulo = stringResource(id = R.string.alerta_busqueda_cliente_title),
                 contenido = stringResource(id = R.string.alerta_busqueda_clienteerror_text),
-                buttomMessage = stringResource(id = R.string.registrar_boton),
-                onConfirm = onRegistrar,
+                buttomMessage = stringResource(id = R.string.alerta_aceptar),
+                onConfirm = onConfirm,
                 onCancel = onCancel
             )
         }
@@ -128,20 +131,20 @@ fun BusquedaCliente(
 
 @Preview(showBackground = true, showSystemUi = false)
 @Composable
-fun BusquedaClienteLightPreview() {
-    SIAMOTheme (darkTheme = false) { BusquedaCliente(
-        consultaUiState = ConsultaUiState(),
-        getCliente = {},
+fun BusquedaOSTLightPreview() {
+    SIAMOTheme (darkTheme = false) { BusquedaOST(
+        buscarOstUiState = BuscarOstUiState(),
+        getOst = {},
         onAccept = {}
     ) }
 }
 
 @Preview(showBackground = true, showSystemUi = false)
 @Composable
-fun BusquedaClienteDarkPreview() {
-    SIAMOTheme (darkTheme = true) { BusquedaCliente(
-        consultaUiState = ConsultaUiState(),
-        getCliente = {},
+fun BusquedaOSTDarkPreview() {
+    SIAMOTheme (darkTheme = true) { BusquedaOST(
+        buscarOstUiState = BuscarOstUiState(),
+        getOst = {},
         onAccept = {}
     ) }
 }
