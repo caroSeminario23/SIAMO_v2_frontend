@@ -145,6 +145,10 @@ class PresupuestoViewModel (
     }
 
     fun onSearch() {
-        registroOstViewModel.actualizarUiState(uiState.value.copy(mostrarResultadosBusquedaRepuestos = false))
+        registroOstViewModel.actualizarUiState(
+            uiState.value.copy(
+                mostrarResultadosBusquedaRepuestos = false
+            )
+        )
     }
 }

@@ -17,13 +17,13 @@ import com.example.siamo.data.solucion.SolucionRegistro
 
 data class RegistroOstUiState(
     // Busqueda y seleccion de problemas
-    val listaProblemasBitacora: List<ProblemaLectura> = emptyList(),
+    val listaProblemasBitacora: List<ProblemaLectura> = emptyList(), //todos los registrados
     val problemaBuscado: String = "",
     val mostrarResultadosBusquedaProblemas: Boolean = false,
     val resultadosBusquedaProblemas: List<ProblemaLectura> = emptyList(),
     val listaProblemasSeleccionados: List<ProblemaSeleccionado> = emptyList(),
     val searchBarActivaProblema: Boolean = false,
-    val repuestoRepuestoTemp: Repuesto? = null,
+    val problemaSeleccionadoTemp: ProblemaLectura? = null,
 
     // Mostrar lista de soluciones de los problemas registrados
     val listaSolucionesRegistradas: List<SolucionLectura> = emptyList(),

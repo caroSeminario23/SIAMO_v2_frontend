@@ -8,15 +8,15 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import com.example.siamo.ui.tecnico.inspeccion_pendiente.InspeccionPendienteViewModel
 import com.example.siamo.ui.tecnico.inspeccion_pendiente.InspeccionPendiente
-import com.example.siamo.ui.tecnico.inspeccion_inicial_problemas.IdentificacionProblemas
+//import com.example.siamo.ui.tecnico.inspeccion_inicial_problemas.IdentificacionProblemas
 import com.example.siamo.ui.tecnico.inspeccion_inicial_soluciones.InspeccionInicial
-import com.example.siamo.ui.tecnico.registro_solucion.registroSolucion
+//import com.example.siamo.ui.tecnico.registro_solucion.RegistroSolucion
 
 enum class NavRoutes(val route: String) {
     InspeccionPendiente("Inspeccion"),
-    IdentificacionProblemas("elistar_problemas/{idConsulta}"),
+    //IdentificacionProblemas("elistar_problemas/{idConsulta}"),
     InspecccionInicial("inspeccion_inicial/{idConsulta}"),
-    RegistroSolucion("registroSolucion/{id}")
+    //RegistroSolucion("registroSolucion/{id}")
 
 
 }
@@ -35,16 +35,16 @@ fun NavGraph(navController: NavHostController, modifier: Modifier = Modifier) {
             )
 
         }
-        composable(NavRoutes.IdentificacionProblemas.route) { backStackEntry ->
-            val idConsulta = backStackEntry.arguments?.getString("idConsulta")?.toInt() ?: 0
-            IdentificacionProblemas(idConsulta = idConsulta, navController = navController) }
+//        composable(NavRoutes.IdentificacionProblemas.route) { backStackEntry ->
+//            val idConsulta = backStackEntry.arguments?.getString("idConsulta")?.toInt() ?: 0
+//            IdentificacionProblemas(idConsulta = idConsulta, navController = navController) }
 
         composable(NavRoutes.InspecccionInicial.route) {
             //InspeccionInicial(navController = navController)
         }
-        composable(NavRoutes.RegistroSolucion.route){ backStackEntry ->
-            val id = backStackEntry.arguments?.getString("id")?.toInt() ?: 0
-            registroSolucion(problemaID= id, navController = navController) }
-
-        }
+//        composable(NavRoutes.RegistroSolucion.route){ backStackEntry ->
+//            val id = backStackEntry.arguments?.getString("id")?.toInt() ?: 0
+//            registroSolucion(problemaID= id, navController = navController) }
+//
     }
+}

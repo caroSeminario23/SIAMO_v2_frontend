@@ -10,9 +10,12 @@ import com.example.siamo.ui.inicio.SiamoApp
 import com.example.siamo.ui.inicio.Login
 import com.example.siamo.ui.recepcionista.HomeRecepcionista
 import com.example.siamo.ui.tecnico.HomeTecnico
+import com.example.siamo.ui.tecnico.inspeccion_inicial_problemas.InspeccionProblemas
+import com.example.siamo.ui.tecnico.inspeccion_inicial_problemas.InspeccionProblemasViewModel
 import com.example.siamo.ui.tecnico.resumen_ost.ResumenOST
 import com.example.siamo.ui.tecnico.presupuesto.Presupuesto
 import com.example.siamo.ui.tecnico.presupuesto.PresupuestoViewModel
+import com.example.siamo.ui.tecnico.registro_ost.InspeccionProblemasViewModelFactory
 import com.example.siamo.ui.tecnico.registro_ost.PresupuestoViewModelFactory
 import com.example.siamo.ui.tecnico.registro_ost.RegistroOstViewModel
 import com.example.siamo.ui.tecnico.registro_ost.ResumenOstViewModelFactory
@@ -25,6 +28,7 @@ enum class NavRoutes(val route: String) {
     ResumenOST("resumenOST"),
     HomeTecnico("homeTecnico"),
     HomeRecepcionista("homeRecepcionista"),
+    InspeccionProblemas("inspeccionProblemas")
 }
 
 @Composable
@@ -33,6 +37,7 @@ fun NavGraph(navController: NavHostController, modifier: Modifier = Modifier) {
 
     //val presupuestoViewModel: PresupuestoViewModel = viewModel()
     //val resumenOstViewModel: ResumenOstViewModel = viewModel()
+    val inspeccionProblemasViewModel: InspeccionProblemasViewModel = viewModel(factory = InspeccionProblemasViewModelFactory(registroOstViewModel))
     val presupuestoViewModel: PresupuestoViewModel = viewModel(factory = PresupuestoViewModelFactory(registroOstViewModel))
     val resumenOstViewModel: ResumenOstViewModel = viewModel(factory = ResumenOstViewModelFactory(registroOstViewModel))
 
@@ -58,6 +63,12 @@ fun NavGraph(navController: NavHostController, modifier: Modifier = Modifier) {
         }
         composable(NavRoutes.HomeRecepcionista.route) {
             HomeRecepcionista(navController)
+        }
+        composable(NavRoutes.InspeccionProblemas.route) {
+            InspeccionProblemas(
+                viewModel = inspeccionProblemasViewModel,
+                navController = navController
+            )
         }
     }
 }

@@ -3,13 +3,8 @@ package com.example.siamo.ui.utils
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountCircle
-import androidx.compose.material.icons.filled.CheckBox
-import androidx.compose.material.icons.filled.CheckBoxOutlineBlank
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -46,15 +41,6 @@ fun ListItemCustome(
             style = MaterialTheme.typography.labelSmall,
             modifier = Modifier.weight(2f)
         )
-
-        /*
-        Icon(
-            imageVector = if (seleccionado) Icons.Default.CheckBox else Icons.Default.CheckBoxOutlineBlank,
-            contentDescription = null,
-            tint = MaterialTheme.colorScheme.primary,
-            modifier = Modifier.weight(1f)
-        )
-         */
 
         Checkbox(
             checked = seleccionado,

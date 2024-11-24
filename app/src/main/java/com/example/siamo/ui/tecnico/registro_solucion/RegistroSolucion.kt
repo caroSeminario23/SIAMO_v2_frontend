@@ -1,6 +1,5 @@
 package com.example.siamo.ui.tecnico.registro_solucion
 
-
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -25,16 +24,15 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.ui.text.style.TextAlign
-import androidx.navigation.NavHostController
-
+import androidx.compose.ui.tooling.preview.Preview
+import com.example.siamo.ui.theme.SIAMOTheme
 
 @Composable
-fun registroSolucion(
-    navController: NavHostController,
-    problemaID: Int,
+fun RegistroSolucion(
+    //navController: NavHostController,
+    nombreProblema: String = "Problema 1",
     modifier: Modifier = Modifier,
     ) {
-
     Scaffold(
         topBar = { TopBar(tituloPagina = stringResource(R.string.topbar_opcion11), modo = "Retroceder") },
         bottomBar = { NavigationBarTecnico(opcionSeleccionada = 2) }
@@ -56,12 +54,12 @@ fun registroSolucion(
             )
 
             Text(
-                text = stringResource(id = R.string.inspeccion_registro,problemaID),
+                text = stringResource(id = R.string.inspeccion_registro,nombreProblema),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSecondaryContainer,
-                textAlign = TextAlign.Center,
+                textAlign = TextAlign.Start,
                 modifier = modifier
-                    .padding(start = 40.dp, end = 40.dp, bottom = 40.dp)
+                    .padding(start = 20.dp, end = 20.dp, bottom = 40.dp, top = 20.dp)
             )
 
             OutlinedTextField(
@@ -108,16 +106,15 @@ fun registroSolucion(
                 }
             }
     }
-/*
+
 @Preview(showBackground = true, showSystemUi = false)
 @Composable
 fun RegistroSolucionLightPreview() {
-    SIAMOTheme (darkTheme = false) { registroSolucion() }
+    SIAMOTheme (darkTheme = false) { RegistroSolucion() }
 }
 
 @Preview(showBackground = true, showSystemUi = false)
 @Composable
 fun RegistroSolucionDarkPreview() {
-    SIAMOTheme (darkTheme = true) { registroSolucion("problema 1") }
+    SIAMOTheme (darkTheme = true) { RegistroSolucion() }
 }
-*/
