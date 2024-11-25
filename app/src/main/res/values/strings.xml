@@ -10,6 +10,8 @@
     <string name="titulo_resumen_consulta2">DE CONSULTA</string>
     <string name="titulo_detalle_ost">OST N°</string>
 
+    <string name="subtitulo_puesto_recepcionista">RECEPCIONISTA</string>
+    <string name="subtitulo_puesto_tecnico">TÉCNICO</string>
 
     <string name="inicio_indicacion">Ingrese sus datos para acceder a su perfil</string>
     <string name="inicio_cod_empleado">Código de empleado</string>
@@ -20,11 +22,21 @@
     <string name="registro_vehiculo">Ingrese los siguientes datos del vehículo</string>
     <string name="registro_consulta">3. Indique el problema que el cliente declara sobre su vehículo</string>
     <string name="asignacion_tecnico">4. Seleccione uno de los técnicos de la lista para que realice la inspección inicial del vehículo</string>
+    <string name="indicacion_presupuesto">3. Indique los siguientes datos para estimar el presupuesto</string>
+    <string name="no_inspecciones_pendientes">No hay inspecciones pendiente</string>
 
     <string name="label_cliente">Cliente:</string>
     <string name="label_vehiculo">Vehículo:</string>
     <string name="label_tecnico_asignado">Técnico asignado:</string>
     <string name="label_prob_declarado">Problema declarado:</string>
+    <string name="label_presupuesto_estimado">Presupuesto estimado (S/): </string>
+    <string name="label_descuento">Descuento (S/): </string>
+    <string name="label_presupuesto_final">Presupuesto final (S/): </string>
+    <string name="label_lista_problemas">Lista de problemas identificados:</string>
+    <string name="label_lista_soluciones">Lista de soluciones propuestas:</string>
+    <string name="label_presupuesto_final_resumen">Presupuesto final:</string>
+    <string name="label_repuestos_necesarios">Repuestos necesarios: </string>
+    <string name="label_solucion_no_definida">Solución no definida</string>
 
 
     <string name="inicio_boton">Iniciar Sesión</string>
@@ -34,6 +46,13 @@
     <string name="actualizar_boton">Actualizar</string>
     <string name="correcto_boton">Correcto</string>
     <string name="boton_siguiente">Siguiente</string>
+    <string name="boton_denegar">Denegar</string>
+    <string name="boton_aprobar">Aprobar</string>
+    <string name="boton_cancelar">Cancelar</string>
+    <string name="boton_ingreso_ahora">Vehículo ingresa en este momento</string>
+    <string name="boton_ingreso_luego">Vehículo ingresará posteriormente</string>
+    <string name="boton_guardar_cambios">Guardar cambios</string>
+
 
     <string name="campo_doc_identidad">N° documento de identificación</string>
     <string name="campo_nombres">Nombres</string>
@@ -45,6 +64,12 @@
     <string name="campo_marca">Marca</string>
     <string name="campo_modelo">Modelo</string>
     <string name="campo_problema_declarado">Problema declarado</string>
+    <string name="campo_n_tecnicos_necesarios">N° de técnicos necesarios</string>
+    <string name="campo_n_repuestos">N° de repuestos de ese tipo</string>
+    <string name="campo_descuento">Descuento (%)</string>
+    <string name="campo_fecha_aprox_ingreso">Fecha aproximada de ingreso del vehículo</string>
+    <string name="campo_nuevo_problema">Descripción del nuevo problema</string>
+
 
     <string name="home_saludo1">BUENOS DÍAS</string>
     <string name="home_saludo2">BUENAS TARDES</string>
@@ -58,6 +83,10 @@
     <string name="navbar_opcion6">Bitácora</string>
     <string name="navbar_opcion7">Registrar Consulta</string>
 
+    <string name="tabbar_opcion1">INSPECCIONES</string>
+    <string name="tabbar_opcion2">INGRESO/SALIDA</string>
+    <string name="tabbar_opcion3">EN PROGRESO</string>
+
     <string name="topbar_opcion1">PÁGINA PRINCIPAL</string>
     <string name="topbar_opcion2">BÚSQUEDA DE CLIENTE</string>
     <string name="topbar_opcion3">ACTUALIZACIÓN CLIENTE</string>
@@ -68,6 +97,14 @@
     <string name="topbar_opcion8">ASIGNACIÓN DE TÉCNICO</string>
     <string name="topbar_opcion9">RESUMEN DE CONSULTA</string>
     <string name="topbar_opcion10">BÚSQUEDA DE OST</string>
+    <string name="topbar_presupuesto">PRESUPUESTO</string>
+    <string name="topbar_registro_ost">REGISTRO DE OST</string>
+    <string name="topbar_perfil_usuario">PERFIL DE USUARIO</string>
+    <string name="topbar_inspeccion_inicial">INSPECCIÓN INICIAL</string>
+    <string name="topbar_opcion11">REGISTRO SOLUCION</string>
+    <string name="topbar_opcion12">INSPECCIÓN</string>
+    <string name="topbar_panel_control">PANEL DE CONTROL</string>
+
 
     <string name="desplegable_tipo_doc_principal">Tipo de documento de identidad</string>
     <string name="desplegable_tipo_doc_opcion1">DNI</string>
@@ -77,6 +114,10 @@
     <string name="desplegable_sexo_opcion1">Femenino</string>
     <string name="desplegable_sexo_opcion2">Masculino</string>
 
+    <string name="desplegable_dia_principal">Dia</string>
+    <string name="desplegable_mes_principal">Mes</string>
+    <string name="desplegable_anio_principal">Año</string>
+
     <string name="desplegable_lista_tecnico_principal">Lista de técnicos</string>
     <string name="desplegable_lista_tecnico_opcion1">Técnico 1</string>
     <string name="desplegable_lista_tecnico_opcion2">Técnico 2</string>
@@ -85,6 +126,23 @@
     <string name="desplegable_lista_tecnico_opcion5">Técnico 5</string>
 
     <string name="ejemplo">Ejemplo</string>
+
+    <string name="seccion_mano_obra">MANO DE OBRA</string>
+    <string name="seccion_repuestos">REPUESTOS</string>
+    <string name="seccion_monto_total">MONTO TOTAL</string>
+    <string name="seccion_ingreso_vehiculo">SOBRE EL INGRESO DE VEHÍCULO</string>
+
+    <string name="busqueda_indicacion_repuesto">Ingrese el nombre del repuesto</string>
+
+    <string name="ispeccion_identificar_problema">1. Ingrese los problemas identificados en el vehículo (apóyese en la bitácora)</string>
+    <string name="ispeccion_problema_solocion">2. Analice las soluciones presentadas y proponga las faltantes</string>
+    <string name="inspeccion_registro_solucion"> REGISTRO DE SOLUCIÓN</string>
+    <string name="inspeccion_registro">Ingrese la solución propuesta para resolver el problema: %1$s </string>
+    <string name="campo_detalle_problema">Detalle de problema </string>
+    <string name="campo_solucion_propuesta">Solución propuesta </string>
+
+    <string name="contenido_texto_precio">00.00</string>
+    <string name="estilo_moneda">S/ </string>
 
     <string name="alerta_aceptar">Aceptar</string>
     <string name="alerta_cancelar">Cancelar</string>
@@ -139,5 +197,39 @@
     <string name="inicio_de_sesion_emerge_title">Inicio de sesión</string>
     <string name="ha_iniciado_exitosamente_su_sesion_emerge_message">Ha iniciado exitosamente su sesión</string>
 
+    <string name="dialog_registro_ost">Registro de OST</string>
+    <string name="dialog_registro_ost_exitoso">La orden de servicio técnico ha sido registrada exitosamente.</string>
+    <string name="dialog_registro_ost_error">La orden de servicio técnico no ha podido ser registrada.</string>
+
+    <string name="grafico_tecnico_ost_asignadas_vs_apoyo">N° OSTS ASIGNADAS VS DE APOYO</string>
+    <string name="grafico_tecnico_estado_ost_asignadas">ESTADO DE OSTS ASIGNADAS</string>
+    <string name="grafico_tecnico_estado_ost_apoyo">ESTADO DE OSTS DE APOYO</string>
+    <string name="grafico_recepcionista_estado_ost">ESTADO DE OSTS</string>
+    <string name="grafico_recepcionista_n_ost_tecnico">N° OSTS POR TÉCNICO</string>
+    <string name="grafico_recepcionista_consultas_vs_osts">CONSULTAS VS OSTS</string>
+
+    <string name="grafico_mes">Mes</string>
+    <string name="grafico_anio">2024</string>
+    <string name="grafico_en_proceso">En proceso</string>
+    <string name="grafico_resueltas">Resuletas</string>
+    <string name="grafico_canceladas">Canceladas</string>
+    <string name="grafico_abandonadas">Abandonadas</string>
+    <string name="grafico_n_ost_asignadas">N° OSTs asignadas</string>
+    <string name="grafico_n_ost_apoyo">N° OSTs de apoyo</string>
+    <string name="grafico_consultas">Consultas</string>
+    <string name="grafico_osts">OSTs</string>
+
+    <string name="mes_enero">Enero</string>
+    <string name="mes_febrero">Febrero</string>
+    <string name="mes_marzo">Marzo</string>
+    <string name="mes_abril">Abril</string>
+    <string name="mes_mayo">Mayo</string>
+    <string name="mes_junio">Junio</string>
+    <string name="mes_julio">Julio</string>
+    <string name="mes_agosto">Agosto</string>
+    <string name="mes_septiembre">Septiembre</string>
+    <string name="mes_octubre">Octubre</string>
+    <string name="mes_noviembre">Noviembre</string>
+    <string name="mes_diciembre">Diciembre</string>
 
 </resources>
