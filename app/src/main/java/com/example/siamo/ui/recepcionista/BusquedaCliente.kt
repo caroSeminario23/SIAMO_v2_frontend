@@ -59,11 +59,24 @@ fun BusquedaCliente(
 ) {
     var documentLabel by rememberSaveable { mutableStateOf("") }
 
-    Scaffold (
-        topBar = { TopBar(tituloPagina = stringResource(R.string.topbar_opcion2), modo = "Normal", onLeftIcon = onClose) },
-        bottomBar = { NavigationBarRecepcionista(opcionSeleccionada = 2, onHome = onHomeNav, onSearch = onSearchNav, onSettings = onSettingsNav) }
+    Scaffold(
+        topBar = {
+            TopBar(
+                tituloPagina = stringResource(R.string.topbar_opcion2),
+                modo = "Normal",
+                onLeftIcon = onClose
+            )
+        },
+        bottomBar = {
+            NavigationBarRecepcionista(
+                opcionSeleccionada = 2,
+                onHome = onHomeNav,
+                onSearch = onSearchNav,
+                onSettings = onSettingsNav
+            )
+        }
     ) { paddingValues ->
-        Column (
+        Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues),
@@ -80,12 +93,14 @@ fun BusquedaCliente(
             Spacer(modifier = Modifier.padding(6.dp))
 
             OutlinedTextField(
-                value =  documentLabel,
+                value = documentLabel,
                 onValueChange = { documentLabel = it },
                 label = {
                     Text(text = stringResource(id = R.string.campo_doc_identidad))
                 },
-                modifier = Modifier.fillMaxWidth().padding(15.dp)
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(15.dp)
             )
 
             Spacer(modifier = Modifier.padding(20.dp))
@@ -106,7 +121,7 @@ fun BusquedaCliente(
 
         }
 
-        if(consultaUiState.flag_ok_buscar_cliente) {
+        if (consultaUiState.flag_ok_buscar_cliente) {
             AlertDialogOK(
                 titulo = stringResource(id = R.string.alerta_busqueda_cliente_title),
                 contenido = stringResource(id = R.string.alerta_busqueda_clienteok_text),
@@ -114,7 +129,7 @@ fun BusquedaCliente(
             )
         }
 
-        if(consultaUiState.flag_error_buscar_cliente) {
+        if (consultaUiState.flag_error_buscar_cliente) {
             AlertDialogError(
                 titulo = stringResource(id = R.string.alerta_busqueda_cliente_title),
                 contenido = stringResource(id = R.string.alerta_busqueda_clienteerror_text),
@@ -129,19 +144,23 @@ fun BusquedaCliente(
 @Preview(showBackground = true, showSystemUi = false)
 @Composable
 fun BusquedaClienteLightPreview() {
-    SIAMOTheme (darkTheme = false) { BusquedaCliente(
-        consultaUiState = ConsultaUiState(),
-        getCliente = {},
-        onAccept = {}
-    ) }
+    SIAMOTheme(darkTheme = false) {
+        BusquedaCliente(
+            consultaUiState = ConsultaUiState(),
+            getCliente = {},
+            onAccept = {}
+        )
+    }
 }
 
 @Preview(showBackground = true, showSystemUi = false)
 @Composable
 fun BusquedaClienteDarkPreview() {
-    SIAMOTheme (darkTheme = true) { BusquedaCliente(
-        consultaUiState = ConsultaUiState(),
-        getCliente = {},
-        onAccept = {}
-    ) }
+    SIAMOTheme(darkTheme = true) {
+        BusquedaCliente(
+            consultaUiState = ConsultaUiState(),
+            getCliente = {},
+            onAccept = {}
+        )
+    }
 }

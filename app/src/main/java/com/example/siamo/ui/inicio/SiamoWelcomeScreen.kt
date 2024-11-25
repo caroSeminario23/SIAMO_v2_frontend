@@ -18,11 +18,18 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.siamo.R
+import com.example.siamo.ui.navigation.NavigationDestination
 import com.example.siamo.ui.theme.SIAMOTheme
 
+object SiamoWelcomeDestination: NavigationDestination {
+    override val route = "welcome"
+    override val titleRes = R.string.app_name
+}
+
 @Composable
-fun SiamoApp(
-    modifier: Modifier = Modifier
+fun SiamoWelcomeScreen(
+    modifier: Modifier = Modifier,
+    onStart: () -> Unit = {},
 ) {
     Scaffold { paddingValues ->
         Box(
@@ -81,7 +88,7 @@ fun SiamoApp(
 
                 // Botón en la parte inferior
                 Button(
-                    onClick = { },
+                    onClick = { onStart() },
                     colors = ButtonDefaults.buttonColors(
                         containerColor = MaterialTheme.colorScheme.tertiary
                     ),
@@ -105,11 +112,11 @@ fun SiamoApp(
 @Preview(showBackground = true, showSystemUi = false)
 @Composable
 fun SiamoAppLightPreview() {
-    SIAMOTheme (darkTheme = false) { SiamoApp() }
+    SIAMOTheme (darkTheme = false) { SiamoWelcomeScreen() }
 }
 
 @Preview(showBackground = true, showSystemUi = false)
 @Composable
 fun SiamoAppDarkPreview() {
-    SIAMOTheme (darkTheme = true) { SiamoApp() }
+    SIAMOTheme (darkTheme = true) { SiamoWelcomeScreen() }
 }

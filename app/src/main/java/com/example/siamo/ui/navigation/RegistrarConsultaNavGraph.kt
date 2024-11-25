@@ -83,11 +83,9 @@ fun RegisterNavHost(
                 onRetry = {consultaViewModel.resetFlags()},
                 onUpdate = {
                     cliente: Cliente -> consultaViewModel.actualizarCliente(cliente)
-                    consultaViewModel.resetFlags()
                            },
                 onCorrect = {
                     consultaViewModel.aceptarCliente()
-                    consultaViewModel.resetFlags()
                     navController.navigate(BusquedaVehiculoDestination.route)
                 },
                 buttomUp = {consultaViewModel.resetFlags()
@@ -118,7 +116,6 @@ fun RegisterNavHost(
                 onRetry = {consultaViewModel.resetFlags()},
                 onRegister = {
                     persona: Persona -> consultaViewModel.registrarCliente(persona)
-                    consultaViewModel.resetFlags()
                              },
                 buttonUp = {consultaViewModel.resetFlags()
                     navController.popBackStack()},
@@ -150,7 +147,6 @@ fun RegisterNavHost(
                              },
                 onSearch = {
                         placa: String -> consultaViewModel.buscarAutomovilPorPlaca(placa)
-                        consultaViewModel.resetFlags()
                 },
                 buttonUp = {consultaViewModel.resetFlags()
                     navController.popBackStack()},
@@ -180,7 +176,6 @@ fun RegisterNavHost(
                 onRetry = {consultaViewModel.resetFlags()},
                 onRegister = {
                     automovil: Automovil -> consultaViewModel.registrarAutomovil(automovil)
-                    consultaViewModel.resetFlags()
                              },
                 buttonUp = {consultaViewModel.resetFlags()
                     navController.popBackStack()},

@@ -10,7 +10,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.siamo.ui.inicio.SiamoApp
+import com.example.siamo.ui.inicio.SiamoWelcomeScreen
 import com.example.siamo.ui.theme.SIAMOTheme
 
 class MainActivity : ComponentActivity() {
@@ -20,7 +20,9 @@ class MainActivity : ComponentActivity() {
         setContent {
             SIAMOTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    SiamoApp(modifier = Modifier.padding(innerPadding))
+                    SiamoNavHostProvider(modifier = Modifier.padding(innerPadding))
+//                    SiamoApp(modifier = Modifier.padding(innerPadding))
+
                 }
             }
         }
@@ -31,6 +33,6 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun GreetingPreview() {
     SIAMOTheme {
-        SiamoApp()
+        SiamoWelcomeScreen()
     }
 }

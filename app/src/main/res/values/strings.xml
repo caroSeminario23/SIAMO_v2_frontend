@@ -136,6 +136,8 @@
     <string name="estado_de_frenos_label">Estado de frenos</string>
     <string name="sobre_ficha_salida_divider">SOBRE LA FICHA DE SALIDA</string>
     <string name="fecha_de_recojo_label">Fecha de recojo</string>
+    <string name="inicio_de_sesion_emerge_title">Inicio de sesión</string>
+    <string name="ha_iniciado_exitosamente_su_sesion_emerge_message">Ha iniciado exitosamente su sesión</string>
 
 
 </resources>
