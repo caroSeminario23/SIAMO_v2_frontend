@@ -17,6 +17,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.siamo.R
+import com.example.siamo.data.graficos.Datos
 import com.example.siamo.ui.theme.SIAMOTheme
 import com.example.siamo.ui.utils.NavigationBarTecnico
 import com.example.siamo.ui.utils.ScrollBarSecundario
@@ -59,7 +60,6 @@ fun PanelControlTecnico(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             item {
-
                 ScrollBarSecundario(
                     listaElementos = listaMeses,
                     indiceInicial = mesSeleccionado,
@@ -88,7 +88,12 @@ fun PanelControlTecnico(
                     // Grafico N° OSTS ASIGNADAS VS DE APOYO
                     TarjetaConGrafico(
                         titulo = stringResource(R.string.grafico_tecnico_ost_asignadas_vs_apoyo),
-                        nombre_mes = nombreMes
+                        nombre_mes = nombreMes,
+                        tipoGrafico = 2,
+                        datos = listOf(
+                            Datos(stringResource(id = R.string.grafico_n_ost_asignadas), 10f),
+                            Datos(stringResource(id = R.string.grafico_n_ost_apoyo), 20f)
+                        )
                     )
 
                     Spacer(modifier = Modifier.padding(4.dp))
@@ -96,7 +101,14 @@ fun PanelControlTecnico(
                     // Grafico ESTADO DE OSTS ASIGNADAS
                     TarjetaConGrafico(
                         titulo = stringResource(R.string.grafico_tecnico_estado_ost_asignadas),
-                        nombre_mes = nombreMes
+                        nombre_mes = nombreMes,
+                        tipoGrafico = 1,
+                        datos = listOf(
+                            Datos(stringResource(id = R.string.grafico_en_proceso), 10f),
+                            Datos(stringResource(id = R.string.grafico_resueltas), 20f),
+                            Datos(stringResource(id = R.string.grafico_canceladas), 30f),
+                            Datos(stringResource(id = R.string.grafico_abandonadas), 40f)
+                        )
                     )
 
                     Spacer(modifier = Modifier.padding(4.dp))
@@ -104,7 +116,14 @@ fun PanelControlTecnico(
                     // Grafico ESTADO DE OSTS DE APOYO
                     TarjetaConGrafico(
                         titulo = stringResource(R.string.grafico_tecnico_estado_ost_apoyo),
-                        nombre_mes = nombreMes
+                        nombre_mes = nombreMes,
+                        tipoGrafico = 1,
+                        datos = listOf(
+                            Datos(stringResource(id = R.string.grafico_en_proceso), 10f),
+                            Datos(stringResource(id = R.string.grafico_resueltas), 20f),
+                            Datos(stringResource(id = R.string.grafico_canceladas), 30f),
+                            Datos(stringResource(id = R.string.grafico_abandonadas), 40f)
+                        )
                     )
                 }
 

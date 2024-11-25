@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -30,27 +31,39 @@ fun GraficoBarras(
     datos: List<Datos> = listOf(
         Datos("label1", 10f),
         Datos("label2", 20f),
+        Datos("label3", 30f),
         Datos("label3", 30f)
     )
 ) {
     var colores = mutableListOf(
-        MaterialTheme.colorScheme.primary,
-        MaterialTheme.colorScheme.secondary,
+        MaterialTheme.colorScheme.onErrorContainer,
+        MaterialTheme.colorScheme.error,
         MaterialTheme.colorScheme.tertiary,
-        MaterialTheme.colorScheme.primaryContainer,
+        MaterialTheme.colorScheme.onSurfaceVariant,
         MaterialTheme.colorScheme.secondaryContainer,
         MaterialTheme.colorScheme.tertiaryContainer
     )
 
     var barras = ArrayList<BarChartData.Bar>()
     datos.mapIndexed { index, datos ->
-        barras.add(
-            BarChartData.Bar(
-                label = datos.etiqueta,
-                value = datos.valor,
-                color = randomColor(colores)
-            )
-        )
+//        barras.add(
+//            BarChartData.Bar(
+//                label = datos.etiqueta,
+//                value = datos.valor,
+//                color = randomColor(colores)
+//            )
+//        )
+        datos.etiqueta?.let { etiqueta ->
+            datos.valor?.let { valor ->
+                barras.add(
+                    BarChartData.Bar(
+                        label = etiqueta,
+                        value = valor,
+                        color = randomColor(colores)
+                    )
+                )
+            }
+        }
     }
 
     Column {
@@ -59,7 +72,7 @@ fun GraficoBarras(
                 bars = barras
             ),
             modifier = Modifier
-                .padding(horizontal = 30.dp, vertical = 80.dp)
+                .padding(horizontal = 30.dp, vertical = 40.dp)
                 .height(300.dp),
             labelDrawer = SimpleValueDrawer(
                 drawLocation = SimpleValueDrawer.DrawLocation.XAxis
@@ -67,19 +80,32 @@ fun GraficoBarras(
         )
         Spacer(modifier = Modifier.height(16.dp))
         Row(
-            modifier = Modifier.padding(horizontal = 30.dp),
+            modifier = Modifier.fillMaxWidth()
+                .padding(horizontal = 10.dp),
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             datos.forEachIndexed { index, datos ->
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Box(
-                        modifier = Modifier
-                            .size(16.dp)
-                            .background(barras[index].color)
-                    )
-                    Spacer(modifier = Modifier.width(4.dp))
-                    BasicText(text = datos.etiqueta)
+                datos.etiqueta?.let { etiqueta ->
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Box(
+                            modifier = Modifier
+                                .size(3.dp)
+                                //.fillMaxWidth()
+                                .background(barras[index].color)
+                        )
+                        Spacer(modifier = Modifier.width(4.dp))
+                        BasicText(text = etiqueta)
+                    }
                 }
+//                Row(verticalAlignment = Alignment.CenterVertically) {
+//                    Box(
+//                        modifier = Modifier
+//                            .size(16.dp)
+//                            .background(barras[index].color)
+//                    )
+//                    Spacer(modifier = Modifier.width(4.dp))
+//                    BasicText(text = datos.etiqueta)
+//                }
             }
         }
     }

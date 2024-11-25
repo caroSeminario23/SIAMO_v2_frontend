@@ -158,6 +158,14 @@
 
     <string name="grafico_mes">Mes</string>
     <string name="grafico_anio">2024</string>
+    <string name="grafico_en_proceso">En proceso</string>
+    <string name="grafico_resueltas">Resuletas</string>
+    <string name="grafico_canceladas">Canceladas</string>
+    <string name="grafico_abandonadas">Abandonadas</string>
+    <string name="grafico_n_ost_asignadas">N° OSTs asignadas</string>
+    <string name="grafico_n_ost_apoyo">N° OSTs de apoyo</string>
+    <string name="grafico_consultas">Consultas</string>
+    <string name="grafico_osts">OSTs</string>
 
     <string name="mes_enero">Enero</string>
     <string name="mes_febrero">Febrero</string>

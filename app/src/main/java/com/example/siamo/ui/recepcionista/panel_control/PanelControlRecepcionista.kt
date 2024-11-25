@@ -17,6 +17,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.siamo.R
+import com.example.siamo.data.graficos.Datos
 import com.example.siamo.ui.theme.SIAMOTheme
 import com.example.siamo.ui.utils.NavigationBarRecepcionista
 import com.example.siamo.ui.utils.ScrollBarSecundario
@@ -51,7 +52,7 @@ fun PanelControlRecepcionista(
         },
         bottomBar = { NavigationBarRecepcionista(opcionSeleccionada = 1) }
     ) {
-            paddingValues ->
+        paddingValues ->
         LazyColumn (
             modifier = Modifier
                 .fillMaxSize()
@@ -59,7 +60,6 @@ fun PanelControlRecepcionista(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             item {
-
                 ScrollBarSecundario(
                     listaElementos = listaMeses,
                     indiceInicial = mesSeleccionado,
@@ -85,26 +85,45 @@ fun PanelControlRecepcionista(
                 Column (
                     modifier = Modifier.padding(16.dp)
                 ) {
-                    // Grafico N° OSTS ASIGNADAS VS DE APOYO
+                    // Grafico Estado OSTs
                     TarjetaConGrafico(
                         titulo = stringResource(R.string.grafico_recepcionista_estado_ost),
-                        nombre_mes = nombreMes
+                        nombre_mes = nombreMes,
+                        tipoGrafico = 1,
+                        datos = listOf(
+                            Datos(stringResource(id = R.string.grafico_en_proceso), 10f),
+                            Datos(stringResource(id = R.string.grafico_resueltas), 20f),
+                            Datos(stringResource(id = R.string.grafico_canceladas), 30f),
+                            Datos(stringResource(id = R.string.grafico_abandonadas), 40f)
+                        )
                     )
 
                     Spacer(modifier = Modifier.padding(4.dp))
 
-                    // Grafico ESTADO DE OSTS ASIGNADAS
+                    // Grafico N° OSTs por técnico
                     TarjetaConGrafico(
                         titulo = stringResource(R.string.grafico_recepcionista_n_ost_tecnico),
-                        nombre_mes = nombreMes
+                        nombre_mes = nombreMes,
+                        tipoGrafico = 1,
+                        datos = listOf(
+                            Datos("Jamil", 10f),
+                            Datos("Aracely", 20f),
+                            Datos("Paul", 30f),
+                            Datos("Carolina", 40f)
+                        )
                     )
 
                     Spacer(modifier = Modifier.padding(4.dp))
 
-                    // Grafico ESTADO DE OSTS DE APOYO
+                    // Grafico Consultas vs OSTs
                     TarjetaConGrafico(
                         titulo = stringResource(R.string.grafico_recepcionista_consultas_vs_osts),
-                        nombre_mes = nombreMes
+                        nombre_mes = nombreMes,
+                        tipoGrafico = 2,
+                        datos = listOf(
+                            Datos(stringResource(id = R.string.grafico_consultas), 10f),
+                            Datos(stringResource(id = R.string.grafico_osts), 20f)
+                        )
                     )
                 }
 

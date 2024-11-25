@@ -33,22 +33,30 @@ fun GraficoCircular(
     )
 ) {
     var colores = mutableListOf(
-        MaterialTheme.colorScheme.primary,
-        MaterialTheme.colorScheme.secondary,
+        MaterialTheme.colorScheme.onErrorContainer,
+        MaterialTheme.colorScheme.error,
         MaterialTheme.colorScheme.tertiary,
-        MaterialTheme.colorScheme.primaryContainer,
+        MaterialTheme.colorScheme.onSurfaceVariant,
         MaterialTheme.colorScheme.secondaryContainer,
         MaterialTheme.colorScheme.tertiaryContainer
     )
 
     var slices = ArrayList<PieChartData.Slice>()
     datos.mapIndexed { index, datos ->
-        slices.add(
-            PieChartData.Slice(
-            value = datos.valor,
-            color = randomColor(colores)
+        datos.valor?.let { valor ->
+            slices.add(
+                PieChartData.Slice(
+                    value = valor,
+                    color = randomColor(colores)
+                )
             )
-        )
+        }
+//        slices.add(
+//            PieChartData.Slice(
+//            value = datos.valor,
+//            color = randomColor(colores)
+//            )
+//        )
     }
 
     Column {
@@ -57,8 +65,8 @@ fun GraficoCircular(
                 slices = slices
             ),
             modifier = Modifier
-                .padding(horizontal = 30.dp, vertical = 80.dp)
-                .height(300.dp),
+                .padding(horizontal = 30.dp, vertical = 40.dp)
+                .height(200.dp),
             sliceDrawer = SimpleSliceDrawer(
                 sliceThickness = 50f
             )
@@ -69,15 +77,26 @@ fun GraficoCircular(
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             datos.forEachIndexed { index, datos ->
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Box(
-                        modifier = Modifier
-                            .size(16.dp)
-                            .background(slices[index].color)
-                    )
-                    Spacer(modifier = Modifier.width(4.dp))
-                    BasicText(text = datos.etiqueta)
+                datos.etiqueta?.let { etiqueta ->
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Box(
+                            modifier = Modifier
+                                .size(16.dp)
+                                .background(slices[index].color)
+                        )
+                        Spacer(modifier = Modifier.width(4.dp))
+                        BasicText(text = etiqueta)
+                    }
                 }
+//                Row(verticalAlignment = Alignment.CenterVertically) {
+//                    Box(
+//                        modifier = Modifier
+//                            .size(16.dp)
+//                            .background(slices[index].color)
+//                    )
+//                    Spacer(modifier = Modifier.width(4.dp))
+//                    BasicText(text = datos.etiqueta)
+//                }
             }
         }
     }
