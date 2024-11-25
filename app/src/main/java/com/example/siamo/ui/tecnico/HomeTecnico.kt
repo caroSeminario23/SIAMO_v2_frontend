@@ -30,7 +30,9 @@ import com.example.siamo.ui.utils.TopBar
 @Composable
 fun HomeTecnico(
     modifier: Modifier = Modifier,
-    empleado: String = "<Nombres y apellidos del empleado>"
+    empleado: String = "<Nombres y apellidos del empleado>",
+    onDetalles: () -> Unit = {},
+    homeTecnicoUiState: HomeTecnicoUiState
 ) {
     Scaffold (
         topBar = { TopBar(tituloPagina = stringResource(R.string.topbar_opcion1), modo = "Normal") },
@@ -82,7 +84,9 @@ fun HomeTecnico(
             Spacer(modifier = Modifier.padding(30.dp))
 
             Button(
-                onClick = { },
+                onClick = {
+                    onDetalles()
+                },
                 modifier = Modifier
             ) {
                 Icon(
@@ -98,11 +102,18 @@ fun HomeTecnico(
 @Preview(showBackground = true, showSystemUi = false)
 @Composable
 fun HomeTecnicoLightPreview() {
-    SIAMOTheme (darkTheme = false) { HomeTecnico() }
+    SIAMOTheme (darkTheme = false) {
+        HomeTecnico(
+            homeTecnicoUiState = HomeTecnicoUiState(),
+            onDetalles = {}
+        ) }
 }
 
 @Preview(showBackground = true, showSystemUi = false)
 @Composable
 fun HomeTecnicoDarkPreview() {
-    SIAMOTheme (darkTheme = true) { HomeTecnico() }
+    SIAMOTheme (darkTheme = true) { HomeTecnico(
+        homeTecnicoUiState = HomeTecnicoUiState(),
+        onDetalles = {}
+    ) }
 }

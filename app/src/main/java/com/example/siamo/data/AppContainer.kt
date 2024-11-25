@@ -8,16 +8,14 @@ import com.example.siamo.network_consulta.OstApiService
 import com.example.siamo.network_consulta.PersonaApiService
 import com.example.siamo.network_consulta.TecnicoApiService
 import com.example.siamo.ui.recepcionista.panel_control.DefaultPanelControlRecepcionistaRepository
-import com.example.siamo.ui.recepcionista.panel_control.PanelControlRecepcionistaApiService
 import com.example.siamo.ui.recepcionista.panel_control.PanelControlRecepcionistaRepository
-import com.example.siamo.ui.tecnico.panel_control.DefaultPanelControlTecnicoRepository
-import com.example.siamo.ui.tecnico.panel_control.PanelControlTecnicoApiService
-import com.example.siamo.ui.tecnico.panel_control.PanelControlTecnicoRepository
+import com.example.siamo.ui.tecnico.panel_control.DefaultGraficosRepository
+import com.example.siamo.ui.tecnico.panel_control.GraficosApiService
+import com.example.siamo.ui.tecnico.panel_control.GraficosRepository
 import okhttp3.MediaType.Companion.toMediaType
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.serialization.json.Json
 import retrofit2.Retrofit
-import kotlinx.serialization.json.JsonConfiguration
 
 interface AppContainer {
     val automovilRepository: AutomovilRepository
@@ -27,8 +25,8 @@ interface AppContainer {
     val tecnicoRepository: TecnicoRepository
     val ostRepository: OstRepository
     val empleadoRepository: EmpleadoRepository
-    val panelControlTecnicoRepository: PanelControlTecnicoRepository
-    val panelControlRecepcionistaRepository: PanelControlRecepcionistaRepository
+    val graficosRepository: GraficosRepository
+    //val panelControlRecepcionistaRepository: PanelControlRecepcionistaRepository
 }
 
 class DefaultAppContainer: AppContainer {
@@ -68,13 +66,13 @@ class DefaultAppContainer: AppContainer {
         retrofit.create(EmpleadoApiService::class.java)
     }
 
-    private val panelControlTecnicoApiService: PanelControlTecnicoApiService by lazy {
-        retrofit.create(PanelControlTecnicoApiService::class.java)
+    private val graficosApiService: GraficosApiService by lazy {
+        retrofit.create(GraficosApiService::class.java)
     }
 
-    private val panelControlRecepcionistaApiService: PanelControlRecepcionistaApiService by lazy {
-        retrofit.create(PanelControlRecepcionistaApiService::class.java)
-    }
+//    private val panelControlRecepcionistaApiService: PanelControlRecepcionistaApiService by lazy {
+//        retrofit.create(PanelControlRecepcionistaApiService::class.java)
+//    }
 
 
 
@@ -106,11 +104,11 @@ class DefaultAppContainer: AppContainer {
         DefaultEmpleadoRepository(empleadoApiService)
     }
 
-    override val panelControlTecnicoRepository: PanelControlTecnicoRepository by lazy {
-        DefaultPanelControlTecnicoRepository(panelControlTecnicoApiService)
+    override val graficosRepository: GraficosRepository by lazy {
+        DefaultGraficosRepository(graficosApiService)
     }
 
-    override val panelControlRecepcionistaRepository: PanelControlRecepcionistaRepository by lazy {
-        DefaultPanelControlRecepcionistaRepository(panelControlRecepcionistaApiService)
-    }
+//    override val panelControlRecepcionistaRepository: PanelControlRecepcionistaRepository by lazy {
+//        DefaultPanelControlRecepcionistaRepository(panelControlRecepcionistaApiService)
+//    }
 }
