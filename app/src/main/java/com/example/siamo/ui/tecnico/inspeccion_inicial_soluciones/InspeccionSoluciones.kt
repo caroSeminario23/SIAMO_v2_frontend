@@ -1,5 +1,6 @@
 package com.example.siamo.ui.tecnico.inspeccion_inicial_soluciones
 
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -29,18 +30,19 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.example.siamo.data.problema.ProblemaSeleccionado
 import com.example.siamo.navigation.NavRoutes
+import com.example.siamo.ui.tecnico.registrar_presupuesto.RegistrarPresupuestoUiState
+import com.example.siamo.ui.tecnico.registro_ost.RegistroOstUiState
 import com.example.siamo.ui.tecnico.registro_ost.RegistroOstViewModel
 import com.example.siamo.ui.utils.ListItemProblema
 
 @Composable
 fun InspeccionSoluciones(
-    navController: NavHostController,
-    modifier: Modifier = Modifier,
-    viewModel: InspeccionSolucionesViewModel
+    newUiState: RegistrarPresupuestoUiState,
+    onAddClick: (ProblemaSeleccionado) -> Unit,
+    onClick: () -> Unit
 ) {
-    val uiState by viewModel.uiState.collectAsState()
-
     Scaffold(
         topBar = {
             TopBar(
@@ -69,29 +71,27 @@ fun InspeccionSoluciones(
             Spacer(modifier = Modifier.height(8.dp))
 
             LazyColumn {
-                val problemasSeleccionados = uiState.listaProblemasSeleccionados
+                val problemasSeleccionados = newUiState.listaProblemasSeleccionados
                     .filter { it.seleccionado }
                 items(problemasSeleccionados.size) { index ->
                     val problemaSeleccionado = problemasSeleccionados[index]
                     val solucionCorrespondiente =
-                        uiState.listaSolucionesRegistradas
+                        newUiState.listaSolucionesRegistradas
                             .find {
-                                it.idProblema == problemaSeleccionado.problema.idProblema
+                                it.id_problema == problemaSeleccionado.problema.id_problema
                             }
 
                     if (solucionCorrespondiente != null) {
                         ListItemProblema(
-                            problema = problemaSeleccionado.problema.descripcion,
-                            solucion = solucionCorrespondiente.descripcion,
+                            problema = problemaSeleccionado.problema.descripcion?:"",
+                            solucion = solucionCorrespondiente.solucion.descripcion ?:"",
                             onAddClick = {}
                         )
                     } else {
                         ListItemProblema(
-                            problema = problemaSeleccionado.problema.descripcion,
+                            problema = problemaSeleccionado.problema.descripcion?:"",
                             solucion = stringResource(R.string.label_solucion_no_definida),
-                            onAddClick = {
-                                viewModel.guardarProblema(problemaSeleccionado)
-                                navController.navigate(NavRoutes.RegistroSolucion.route)}
+                            onAddClick = { onAddClick(problemaSeleccionado) }
                         )
                     }
                 }
@@ -104,13 +104,13 @@ fun InspeccionSoluciones(
                     .padding(top = 10.dp),
                 horizontalArrangement = Arrangement.End
             ) {
-                val problemasSeleccionados = uiState.listaProblemasSeleccionados
+                val problemasSeleccionados = newUiState.listaProblemasSeleccionados
                     .filter { it.seleccionado }
-                val solucionesRegistradas = uiState.listaSolucionesRegistradas
+                Log.d("ProblemSelected", problemasSeleccionados.size.toString())
+                val solucionesRegistradas = newUiState.listaSolucionesRegistradas
+                Log.d("SolucionRegistradas", solucionesRegistradas.size.toString())
                 Button(
-                    onClick = {
-                        navController.navigate(NavRoutes.Presupuesto.route)
-                    },
+                    onClick = { onClick() },
                     enabled = problemasSeleccionados.size == solucionesRegistradas.size,
                     modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 8.dp)
                 ) {
@@ -135,8 +135,9 @@ fun InspeccionInicialLightPreview() {
     val viewModel = InspeccionSolucionesViewModel(registroOstViewModel)
     SIAMOTheme(darkTheme = false) {
         InspeccionSoluciones(
-            navController=navController,
-            viewModel = viewModel
+            RegistrarPresupuestoUiState(),
+            onAddClick = {},
+            onClick = {}
         ) }
 }
 
@@ -148,8 +149,9 @@ fun InspeccionInicialDarkPreview() {
     val viewModel = InspeccionSolucionesViewModel(registroOstViewModel)
     SIAMOTheme(darkTheme = true) {
         InspeccionSoluciones(
-            navController=navController,
-            viewModel = viewModel
+            RegistrarPresupuestoUiState(),
+            onAddClick = {},
+            onClick = {}
         )
     }
 }

@@ -1,7 +1,10 @@
 package com.example.siamo.data.solucion
 
+import com.example.siamo.model.Solucion
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class SolucionLectura(
-    val idSolucion: Int,
-    val descripcion: String,
-    val idProblema: Int
+    val id_problema: Int,
+    val solucion: Solucion
 )

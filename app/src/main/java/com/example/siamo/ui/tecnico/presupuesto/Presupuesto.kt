@@ -41,8 +41,12 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.siamo.navigation.NavRoutes
 import com.example.siamo.R
+import com.example.siamo.data.repuesto.Repuesto
+import com.example.siamo.ui.tecnico.registrar_presupuesto.RegistrarPresupuestoUiState
 import com.example.siamo.ui.tecnico.registro_ost.RegistroOstViewModel
 import com.example.siamo.ui.theme.SIAMOTheme
+import com.example.siamo.ui.utils.AlertDialogError
+import com.example.siamo.ui.utils.AlertDialogOK
 import com.example.siamo.ui.utils.DividerSection
 import com.example.siamo.ui.utils.ListItemCustome
 import com.example.siamo.ui.utils.NavigationBarTecnico
@@ -51,11 +55,19 @@ import com.example.siamo.ui.utils.TopBar
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Presupuesto(
-    navController: NavHostController,
+    newUiState: RegistrarPresupuestoUiState,
+    onNumTecnicosChange: (String) -> Unit = {},
+    onQueryChangeRepuesto: (String) -> Unit = {},
+    onSearchRepuesto: () -> Unit = {},
+    onSelectRepuesto: (Repuesto) -> Unit = {},
+    onActualizarCantidad: (String) -> Unit = {},
+    onRegistrarRepuesto: () -> Unit = {},
+    onMarcarRepuesto: (Int) -> Unit = {},
+    onActualizarPorcentajeDescuento: (String) -> Unit = {},
+    onDenegar: () -> Unit = {},
+    onAceptar: () -> Unit = {},
     modifier: Modifier = Modifier,
-    viewModel: PresupuestoViewModel
 ) {
-    val uiState by viewModel.uiState.collectAsState()
 
     Scaffold (
         topBar = { TopBar(tituloPagina = stringResource(id = R.string.topbar_presupuesto), modo = "Retroceder" ) },
@@ -84,9 +96,9 @@ fun Presupuesto(
 
             item {
                 OutlinedTextField(
-                    value = uiState.numeroTecnicos,
+                    value = newUiState.numeroTecnicos,
                     onValueChange = {
-                        viewModel.actualizarNumeroTecnicos(it)
+                        onNumTecnicosChange(it)
                     },
                     label = {
                         Text(stringResource(id = R.string.campo_n_tecnicos_necesarios))
@@ -109,10 +121,10 @@ fun Presupuesto(
             item {
                 Box {
                     SearchBar(
-                        query = uiState.repuestoBuscado,
-                        onQueryChange = { viewModel.actualizarQuery(it) },
-                        onSearch = { viewModel.onSearch() },
-                        active = uiState.searchBarActivaRepuesto,
+                        query = newUiState.repuestoBuscado,
+                        onQueryChange = { onQueryChangeRepuesto(it) },
+                        onSearch = { onSearchRepuesto() },
+                        active = newUiState.searchBarActivaRepuesto,
                         onActiveChange = {  },
                         placeholder = {
                             Text(
@@ -133,16 +145,16 @@ fun Presupuesto(
                     )
 
                     DropdownMenu(
-                        expanded = uiState.mostrarResultadosBusquedaRepuestos,
+                        expanded = newUiState.mostrarResultadosBusquedaRepuestos,
                         onDismissRequest = {
-                            viewModel.onSearch() },
+                            onSearchRepuesto() },
                         modifier = Modifier.fillMaxWidth()
                     ) {
-                        uiState.resultadosBusquedaRepuesto.forEach { repuesto ->
+                        newUiState.resultadosBusquedaRepuesto.forEach { repuesto ->
                             DropdownMenuItem(
-                                text = { Text(text = repuesto.descripcion) },
+                                text = { Text(text = repuesto.descripcion.toString()) },
                                 onClick = {
-                                    viewModel.seleccionarRepuesto(repuesto)
+                                    onSelectRepuesto(repuesto)
                                 }
                             )
                         }
@@ -153,8 +165,8 @@ fun Presupuesto(
 
             item {
                 OutlinedTextField(
-                    value = uiState.cantidadRepuesto,
-                    onValueChange = { viewModel.actualizarCantidadRepuesto(it)},
+                    value = newUiState.cantidadRepuesto,
+                    onValueChange = { onActualizarCantidad(it) },
                     label = {
                         Text(stringResource(id = R.string.campo_n_repuestos))
                     },
@@ -173,9 +185,9 @@ fun Presupuesto(
                     horizontalArrangement = Arrangement.End
                 ) {
                     Button(
-                        onClick = { viewModel.registrarRepuesto() },
-                        enabled = uiState.repuestoSeleccionadoTemp != null &&
-                                uiState.cantidadRepuesto.isNotEmpty(),
+                        onClick = { onRegistrarRepuesto() },
+                        enabled = newUiState.repuestoSeleccionadoTemp != null &&
+                                newUiState.cantidadRepuesto.isNotEmpty(),
                         modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 8.dp)
                     ) {
                         Icon(
@@ -188,13 +200,13 @@ fun Presupuesto(
                 }
             }
 
-            items(uiState.listaRepuestosSeleccionados.size) { index ->
-                val repuestoSeleccionado = uiState.listaRepuestosSeleccionados[index]
+            items(newUiState.listaRepuestosSeleccionados.size) { index ->
+                val repuestoSeleccionado = newUiState.listaRepuestosSeleccionados[index]
                 ListItemCustome(
                     textoPrincipal = "${repuestoSeleccionado.repuesto.descripcion} (${repuestoSeleccionado.cantidad})",
                     textoSecundario = stringResource(id = R.string.estilo_moneda) + String.format("%.2f", repuestoSeleccionado.subtotal),
                     seleccionado = repuestoSeleccionado.marcado,
-                    onCheckedChange = { viewModel.toggleMarcadoRepuesto(index) }
+                    onCheckedChange = { onMarcarRepuesto(index) }
                 )
             }
 
@@ -219,7 +231,7 @@ fun Presupuesto(
                             Text(
                                 text = stringResource(
                                     id = R.string.label_presupuesto_estimado)
-                                        + String.format("%.2f", uiState.presupuestoEstimado),
+                                        + String.format("%.2f", newUiState.presupuestoEstimado),
                                 textAlign = TextAlign.Center,
                                 color = MaterialTheme.colorScheme.onSurface
                             )
@@ -233,8 +245,8 @@ fun Presupuesto(
 
 
                 OutlinedTextField(
-                    value = uiState.porcentajeDescuento,
-                    onValueChange = { viewModel.actualizarPorcentajeDescuento(it) },
+                    value = newUiState.porcentajeDescuento,
+                    onValueChange = { onActualizarPorcentajeDescuento(it) },
                     label = {
                         Text(stringResource(id = R.string.campo_descuento))
                     },
@@ -257,7 +269,7 @@ fun Presupuesto(
                             Text(
                                 text = stringResource(
                                     id = R.string.label_descuento)
-                                        + String.format("%.2f", uiState.descuentoEnSoles),
+                                        + String.format("%.2f", newUiState.descuentoEnSoles),
                                 textAlign = TextAlign.Center,
                                 color = MaterialTheme.colorScheme.onSurface
                             ) } },
@@ -277,7 +289,7 @@ fun Presupuesto(
                             Text(
                                 text = stringResource(
                                     id = R.string.label_presupuesto_final)
-                                        + String.format("%.2f", uiState.presupuestoFinal),
+                                        + String.format("%.2f", newUiState.presupuestoFinal),
                                 textAlign = TextAlign.Center,
                                 color = MaterialTheme.colorScheme.onSurface
                             )
@@ -299,7 +311,7 @@ fun Presupuesto(
                 ) {
                     Button(
                         onClick = {
-                            navController.navigate(NavRoutes.HomeTecnico.route)
+                            onDenegar()
                         },
                         modifier = Modifier.weight(1f)
                     ) {
@@ -315,7 +327,7 @@ fun Presupuesto(
 
                     Button(
                         onClick = {
-                            navController.navigate(NavRoutes.ResumenOST.route)
+                            onAceptar()
                         },
                         modifier = Modifier.weight(1f)
                     ) {
@@ -340,8 +352,8 @@ fun PresupuestoLightPreview() {
     val viewModel = PresupuestoViewModel(registroOstViewModel)
     SIAMOTheme (darkTheme = false) {
         Presupuesto(
-            viewModel = viewModel,
-            navController = navController)
+            newUiState = RegistrarPresupuestoUiState(),
+        )
     }
 }
 
@@ -353,7 +365,7 @@ fun PresupuestoDarkPreview() {
     val viewModel = PresupuestoViewModel(registroOstViewModel)
     SIAMOTheme (darkTheme = true) {
         Presupuesto(
-            viewModel = viewModel,
-            navController = navController)
+            newUiState = RegistrarPresupuestoUiState(),
+        )
     }
 }

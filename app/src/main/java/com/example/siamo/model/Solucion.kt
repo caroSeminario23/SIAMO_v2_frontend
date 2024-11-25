@@ -4,7 +4,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Solucion(
-    val id: Int? = null,
     val descripcion: String? = null,
-
+    val id_solucion: Int? = null
 )

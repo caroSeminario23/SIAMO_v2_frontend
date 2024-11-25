@@ -33,17 +33,23 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.siamo.navigation.NavRoutes
+import com.example.siamo.ui.tecnico.registrar_presupuesto.RegistrarPresupuestoUiState
 import com.example.siamo.ui.tecnico.registro_ost.RegistroOstViewModel
 import com.example.siamo.ui.theme.SIAMOTheme
+import com.example.siamo.ui.utils.AlertDialogError
+import com.example.siamo.ui.utils.AlertDialogOK
 
 @Composable
 fun RegistroSolucion(
-    navController: NavHostController,
-    viewModel: RegistroSolucionViewModel,
-    nombreProblema: String = "Problema no se ha guardado",
-    modifier: Modifier = Modifier
+    newUiState: RegistrarPresupuestoUiState,
+    onValueChangeDetalle: (String) -> Unit,
+    onValueChangeSolucion: (String) -> Unit,
+    onRegistrarSolucion: () -> Unit,
+    onAccept: () -> Unit = {},
+    onConfirm: () -> Unit = {},
+    onDismiss: () -> Unit = {},
+    modifier: Modifier = Modifier,
     ) {
-    val uiState by viewModel.uiState.collectAsState()
     Scaffold(
         topBar = { TopBar(tituloPagina = stringResource(R.string.topbar_opcion11), modo = "Retroceder") },
         bottomBar = { NavigationBarTecnico(opcionSeleccionada = 2) }
@@ -67,7 +73,7 @@ fun RegistroSolucion(
             Text(
                 text = stringResource(
                     id = R.string.inspeccion_registro,
-                    uiState.problemaAGuardar?.problema?.descripcion ?: nombreProblema
+                    newUiState.problemaAGuardar?.problema?.descripcion ?: "NA"
                 ),
                 //stringResource(id = R.string.inspeccion_registro) + " " + (uiState.problemaAGuardar?.problema?.descripcion
                 //    ?: nombreProblema ),
@@ -79,9 +85,9 @@ fun RegistroSolucion(
             )
 
             OutlinedTextField(
-                value =  uiState.detalleProblema,
+                value =  newUiState.detalleProblema,
                 onValueChange = {
-                    viewModel.actualizarDetalleProblema(it)
+                    onValueChangeDetalle(it)
                 },
                 label = {
                     Text(text = stringResource(id = R.string.campo_detalle_problema))
@@ -96,9 +102,9 @@ fun RegistroSolucion(
             )
 
             OutlinedTextField(
-                value = uiState.solucionPropuesta,
+                value = newUiState.solucionPropuesta,
                 onValueChange = {
-                    viewModel.actualizarSolucionPropuesta(it)
+                    onValueChangeSolucion(it)
                 },
                 label = {
                     Text(text = stringResource(id = R.string.campo_solucion_propuesta))
@@ -115,10 +121,9 @@ fun RegistroSolucion(
 
             Button(
                 onClick = {
-                    viewModel.registrarSolucion()
-                    navController.navigate(NavRoutes.InspeccionSolucinoes.route)
+                    onRegistrarSolucion()
                 },
-                enabled = uiState.detalleProblema.isNotEmpty() && uiState.solucionPropuesta.isNotEmpty(),
+                enabled = newUiState.detalleProblema.isNotEmpty() && newUiState.solucionPropuesta.isNotEmpty(),
                 modifier = Modifier
                     .align(Alignment.End)
                     .padding(end = 20.dp)
@@ -135,6 +140,29 @@ fun RegistroSolucion(
 
                 }
             }
+
+        if (newUiState.flag_ok_registro_problema) {
+            AlertDialogOK(
+                titulo = stringResource(R.string.registro_de_solucion_emerge_title),
+                contenido = stringResource(R.string.la_solucion_ha_sido_registrada_exitosamente_emerge_message),
+                onConfirmClick = {
+                    onAccept()
+                }
+            )
+        }
+
+        if (newUiState.flag_error_registro_problema) {
+            AlertDialogError(
+                titulo = stringResource(R.string.registro_de_solucion_emerge_title),
+                contenido = stringResource(R.string.la_solucion_no_ha_podido_ser_registrada_emerge_message),
+                onConfirmClick = {
+                    onConfirm()
+                },
+                onDismiss = {
+                    onDismiss()
+                }
+            )
+        }
     }
 
 @Preview(showBackground = true, showSystemUi = false)
@@ -145,8 +173,10 @@ fun RegistroSolucionLightPreview() {
     val viewModel = RegistroSolucionViewModel(registroOstViewModel)
     SIAMOTheme (darkTheme = false) {
         RegistroSolucion(
-            viewModel = viewModel,
-            navController = navController
+            RegistrarPresupuestoUiState(),
+            onValueChangeDetalle = {},
+            onValueChangeSolucion = {},
+            onRegistrarSolucion = {}
         )
     }
 }
@@ -159,8 +189,10 @@ fun RegistroSolucionDarkPreview() {
     val viewModel = RegistroSolucionViewModel(registroOstViewModel)
     SIAMOTheme (darkTheme = true) {
         RegistroSolucion(
-            viewModel = viewModel,
-            navController = navController
+            RegistrarPresupuestoUiState(),
+            onValueChangeDetalle = {},
+            onValueChangeSolucion = {},
+            onRegistrarSolucion = {}
         )
     }
 }

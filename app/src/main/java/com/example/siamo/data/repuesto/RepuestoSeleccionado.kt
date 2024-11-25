@@ -6,5 +6,5 @@ data class RepuestoSeleccionado(
     val marcado: Boolean = true
 ) {
     val subtotal: Double
-        get() = repuesto.precio * cantidad
+        get() = repuesto.precio!! * cantidad
 }

@@ -23,18 +23,19 @@ class PresupuestoViewModel (
     }
 
     private fun cargarRepuestos() {
-        val repuestos = listOf(
-            Repuesto(1, "Repuesto 1", 100.00),
-            Repuesto(2, "Repuesto 2", 200.00),
-            Repuesto(3, "Repuesto 3", 300.00),
-            Repuesto(4, "Repuesto 4", 400.00),
-            Repuesto(5, "Repuesto 5", 500.00),
-            Repuesto(6, "Repuesto 6", 600.00),
-            Repuesto(7, "Repuesto 7", 700.00),
-            Repuesto(8, "Repuesto 8", 800.00),
-            Repuesto(9, "Repuesto 9", 900.00),
-            Repuesto(10 ,"Repuesto 10", 1000.00)
-        )
+        val repuestos = emptyList<Repuesto>()
+//        = listOf(
+//            Repuesto(1, "Repuesto 1", 100.00),
+//            Repuesto(2, "Repuesto 2", 200.00),
+//            Repuesto(3, "Repuesto 3", 300.00),
+//            Repuesto(4, "Repuesto 4", 400.00),
+//            Repuesto(5, "Repuesto 5", 500.00),
+//            Repuesto(6, "Repuesto 6", 600.00),
+//            Repuesto(7, "Repuesto 7", 700.00),
+//            Repuesto(8, "Repuesto 8", 800.00),
+//            Repuesto(9, "Repuesto 9", 900.00),
+//            Repuesto(10 ,"Repuesto 10", 1000.00)
+//        )
         registroOstViewModel.actualizarUiState(
             uiState.value.copy(listaRepuestos = repuestos)
         )
@@ -44,7 +45,7 @@ class PresupuestoViewModel (
         registroOstViewModel.actualizarUiState(
             uiState.value.copy(
                 resultadosBusquedaRepuesto = uiState.value.listaRepuestos.filter {
-                        repuesto -> repuesto.descripcion.contains(query, ignoreCase = true)
+                        repuesto -> repuesto.descripcion?.contains(query, ignoreCase = true) ?: false
                 },
             )
         )
@@ -110,7 +111,7 @@ class PresupuestoViewModel (
                 repuestoSeleccionadoTemp = repuesto,
                 cantidadRepuesto = cantidad.toString(),
                 mostrarResultadosBusquedaRepuestos = false,
-                repuestoBuscado = repuesto.descripcion
+                repuestoBuscado = repuesto.descripcion?: ""
             )
         )
     }

@@ -1,5 +1,6 @@
 package com.example.siamo.network
 
+import com.example.siamo.model.Response
 import com.example.siamo.model.Solucion
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -14,5 +15,5 @@ interface SolucionApiService {
 
     // Crear una nueva solución
     @POST("api/solucion/insert")
-    suspend fun insertarSolucion(@Body solucion: Solucion): Solucion
+    suspend fun insertarSolucion(@Body solucion: Solucion): Response
 }

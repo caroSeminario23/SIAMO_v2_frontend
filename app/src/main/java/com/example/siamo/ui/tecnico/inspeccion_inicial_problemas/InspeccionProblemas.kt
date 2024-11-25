@@ -37,7 +37,10 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.siamo.R
+import com.example.siamo.data.problema.ProblemaLectura
 import com.example.siamo.navigation.NavRoutes
+import com.example.siamo.ui.tecnico.registrar_presupuesto.RegistrarPresupuestoUiState
+import com.example.siamo.ui.tecnico.registrar_presupuesto.RegistrarPresupuestoViewModel
 import com.example.siamo.ui.tecnico.registro_ost.RegistroOstViewModel
 import com.example.siamo.ui.theme.SIAMOTheme
 import com.example.siamo.ui.utils.ListItemCustome
@@ -47,11 +50,17 @@ import com.example.siamo.ui.utils.TopBar
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun InspeccionProblemas(
-    navController: NavHostController,
     modifier: Modifier = Modifier,
-    viewModel: InspeccionProblemasViewModel
+    newUiState: RegistrarPresupuestoUiState = RegistrarPresupuestoUiState(),
+    onQueryChange: (String) -> Unit = {},
+    onSearch: () -> Unit = {},
+    onProblemaSelected: (ProblemaLectura) -> Unit = {},
+    onValueChange: (String) -> Unit = {},
+    onRegistrarProblema: () -> Unit = {},
+    onRegistrarNuevoProblema: () -> Unit = {},
+    onCheckedChange: (Int) -> Unit = {},
+    onNext: () -> Unit = {},
 ) {
-    val uiState by viewModel.uiState.collectAsState()
 
     Scaffold(
         topBar = {
@@ -82,10 +91,10 @@ fun InspeccionProblemas(
             item {
                 Box {
                     androidx.compose.material3.SearchBar(
-                        query = uiState.problemaBuscado,
-                        onQueryChange = { viewModel.actualizarQuery(it) },
-                        onSearch = { viewModel.onSearch() },
-                        active = uiState.searchBarActivaProblema,
+                        query = newUiState.problemaBuscado,
+                        onQueryChange = { onQueryChange(it) },
+                        onSearch = { onSearch },
+                        active = newUiState.searchBarActivaProblema,
                         onActiveChange = { },
                         placeholder = {
                             Text(
@@ -108,17 +117,17 @@ fun InspeccionProblemas(
                     )
 
                     DropdownMenu(
-                        expanded = uiState.mostrarResultadosBusquedaProblemas,
+                        expanded = newUiState.mostrarResultadosBusquedaProblemas,
                         onDismissRequest = {
-                            viewModel.onSearch()
+                            onSearch()
                         },
                         modifier = Modifier.fillMaxWidth()
                     ) {
-                        uiState.resultadosBusquedaProblemas.forEach { problema ->
+                        newUiState.resultadosBusquedaProblemas.forEach { problema ->
                             DropdownMenuItem(
-                                text = { Text(text = problema.descripcion) },
+                                text = { Text(text = problema.descripcion?: "NA") },
                                 onClick = {
-                                    viewModel.seleccionarProblema(problema)
+                                    onProblemaSelected(problema)
                                 }
                             )
                         }
@@ -128,9 +137,9 @@ fun InspeccionProblemas(
 
             item {
                 OutlinedTextField(
-                    value = uiState.descripcionProblema,
+                    value = newUiState.descripcionProblema,
                     onValueChange = {
-                        viewModel.actualizarDescripcionProblema(it)
+                        onValueChange(it)
                     },
                     label = {
                         Text(stringResource(id = R.string.campo_nuevo_problema))
@@ -153,13 +162,13 @@ fun InspeccionProblemas(
                 ) {
                     Button(
                         onClick = {
-                            if (uiState.activoRegistroParaProblemaNoRegistrado) {
-                                viewModel.registrarNuevoProblema()
+                            if (newUiState.activoRegistroParaProblemaNoRegistrado) {
+                                onRegistrarNuevoProblema()
                             } else {
-                                viewModel.registrarProblema()
+                                onRegistrarProblema()
                             }
                                   },
-                        enabled = uiState.problemaSeleccionadoTemp != null || uiState.activoRegistroParaProblemaNoRegistrado,
+                        enabled = newUiState.problemaSeleccionadoTemp != null || newUiState.activoRegistroParaProblemaNoRegistrado,
                         modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 8.dp)
                     ) {
                         Icon(
@@ -172,13 +181,13 @@ fun InspeccionProblemas(
                 }
             }
 
-            items(uiState.listaProblemasSeleccionados.size) { index ->
-                val problemaSeleccionado = uiState.listaProblemasSeleccionados[index]
+            items(newUiState.listaProblemasSeleccionados.size) { index ->
+                val problemaSeleccionado = newUiState.listaProblemasSeleccionados[index]
                 ListItemCustome(
                     textoPrincipal = "${problemaSeleccionado.problema.descripcion}",
                     textoSecundario = " ",
                     seleccionado = problemaSeleccionado.seleccionado,
-                    onCheckedChange = { viewModel.toogleMarcadoProblema(index) }
+                    onCheckedChange = { onCheckedChange(index) }
                 )
             }
 
@@ -192,9 +201,9 @@ fun InspeccionProblemas(
                 ) {
                     Button(
                         onClick = {
-                            navController.navigate(NavRoutes.InspeccionSolucinoes.route)
+                           onNext()
                         },
-                        enabled = uiState.listaProblemasSeleccionados.isNotEmpty(),
+                        enabled = newUiState.listaProblemasSeleccionados.isNotEmpty(),
                         modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 8.dp)
                     ) {
                         Icon(
@@ -215,12 +224,9 @@ fun InspeccionProblemas(
 fun IdentificacionProblemasLightPreview() {
     val navController = rememberNavController()
     val registroOstViewModel = RegistroOstViewModel()
-    val viewModel = InspeccionProblemasViewModel(registroOstViewModel)
+//    val viewModel = RegistrarPresupuestoViewModel()
     SIAMOTheme (darkTheme = false) {
-        InspeccionProblemas(
-            viewModel = viewModel,
-            navController = navController
-        )
+        InspeccionProblemas()
     }
 }
 
@@ -229,11 +235,8 @@ fun IdentificacionProblemasLightPreview() {
 fun IdentificacionProblemasPreview() {
     val navController = rememberNavController()
     val registroOstViewModel = RegistroOstViewModel()
-    val viewModel = InspeccionProblemasViewModel(registroOstViewModel)
+//    val viewModel = RegistrarPresupuestoViewModel()
     SIAMOTheme (darkTheme = true) {
-        InspeccionProblemas(
-            viewModel = viewModel,
-            navController = navController
-        )
+        InspeccionProblemas()
     }
 }

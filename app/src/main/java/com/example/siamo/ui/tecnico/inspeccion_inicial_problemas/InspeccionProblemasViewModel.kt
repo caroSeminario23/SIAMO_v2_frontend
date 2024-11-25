@@ -18,16 +18,16 @@ class InspeccionProblemasViewModel(
 
     private fun cargarProblemas() {
         val problemas = listOf(
-            ProblemaLectura(1, "Problema 1", "Detalle 1"),
-            ProblemaLectura(2, "Problema 2", "Detalle 2"),
-            ProblemaLectura(3, "Problema 3", "Detalle 3"),
-            ProblemaLectura(4, "Problema 4", "Detalle 4"),
-            ProblemaLectura(5, "Problema 5", "Detalle 5"),
-            ProblemaLectura(6, "Problema 6", "Detalle 6"),
-            ProblemaLectura(7, "Problema 7", "Detalle 7"),
-            ProblemaLectura(8, "Problema 8", "Detalle 8"),
-            ProblemaLectura(9, "Problema 9", "Detalle 9"),
-            ProblemaLectura(10, "Problema 10", "Detalle 10")
+            ProblemaLectura(id_problema = 1, descripcion = "Problema 1", detalle = "Detalle 1"),
+            ProblemaLectura(id_problema = 2, descripcion = "Problema 2", detalle = "Detalle 2"),
+            ProblemaLectura(id_problema = 3, descripcion = "Problema 3", detalle = "Detalle 3"),
+            ProblemaLectura(id_problema = 4, descripcion = "Problema 4", detalle = "Detalle 4"),
+            ProblemaLectura(id_problema = 5, descripcion = "Problema 5", detalle = "Detalle 5"),
+            ProblemaLectura(id_problema = 6, descripcion = "Problema 6", detalle = "Detalle 6"),
+            ProblemaLectura(id_problema = 7, descripcion = "Problema 7", detalle = "Detalle 7"),
+            ProblemaLectura(id_problema = 8, descripcion = "Problema 8", detalle = "Detalle 8"),
+            ProblemaLectura(id_problema = 9, descripcion = "Problema 9", detalle = "Detalle 9"),
+            ProblemaLectura(id_problema = 10, descripcion = "Problema 10", detalle = "Detalle 10")
         )
         registroOstViewModel.actualizarUiState(
             uiState.value.copy(listaProblemasBitacora = problemas)
@@ -38,7 +38,7 @@ class InspeccionProblemasViewModel(
         registroOstViewModel.actualizarUiState(
             uiState.value.copy(
                 resultadosBusquedaProblemas = uiState.value.listaProblemasBitacora.filter { problema ->
-                    problema.descripcion.contains(query, ignoreCase = true)
+                    problema.descripcion?.contains(query, ignoreCase = true) == true
                 },
             )
         )
@@ -68,7 +68,7 @@ class InspeccionProblemasViewModel(
             uiState.value.copy(
                 problemaSeleccionadoTemp = problema,
                 mostrarResultadosBusquedaProblemas = false,
-                problemaBuscado = problema.descripcion,
+                problemaBuscado = problema.descripcion?.toString() ?: "NA",
                 activoRegistroParaProblemaNoRegistrado = false
             )
         )
@@ -107,7 +107,7 @@ class InspeccionProblemasViewModel(
     fun registrarNuevoProblema() {
         if (uiState.value.descripcionProblema.isNotEmpty()) {
             var nuevoProblema = ProblemaLectura(
-                idProblema = 0, // ID temporal
+                id_problema = 0, // ID temporal
                 descripcion = uiState.value.descripcionProblema,
                 detalle = ""
             )

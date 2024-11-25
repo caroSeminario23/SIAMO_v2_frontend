@@ -5,6 +5,7 @@ import com.example.siamo.data.problema.ProblemaLectura
 import com.example.siamo.data.problema.ProblemaRegistro
 import com.example.siamo.data.solucion.SolucionLectura
 import com.example.siamo.data.solucion.SolucionRegistro
+import com.example.siamo.model.Solucion
 import com.example.siamo.ui.tecnico.registro_ost.RegistroOstUiState
 import com.example.siamo.ui.tecnico.registro_ost.RegistroOstViewModel
 import kotlinx.coroutines.flow.StateFlow
@@ -43,12 +44,13 @@ class RegistroSolucionViewModel(
         if (problemaDescripcion.isNotEmpty() && problemaDetalle.isNotEmpty() && solucionPropuesta.isNotEmpty()) {
             val problemaNuevo = ProblemaRegistro(
                 descripcion = problemaDescripcion,
-                detalle = problemaDetalle
+                detalle = problemaDetalle,
+                id_solucion = 4
             )
 
             // Registrar el problema y hacer un get para obtener su id
             val problemaRegistrado = ProblemaLectura(
-                idProblema = 4,
+                id_problema = 4,
                 descripcion = problemaDescripcion,
                 detalle = problemaDetalle
             )
@@ -57,14 +59,16 @@ class RegistroSolucionViewModel(
 
             val solucionNueva = SolucionRegistro(
                 descripcion = solucionPropuesta,
-                idProblema = problemaRegistrado.idProblema
+                idProblema = problemaRegistrado.id_problema?:0
             )
 
             // se registra y luego se llama con get para obtener su id
             val solucionLectura = SolucionLectura(
-                idSolucion = 4,
-                descripcion = solucionPropuesta,
-                idProblema = problemaRegistrado.idProblema
+                id_problema = problemaRegistrado.id_problema?:0,
+                solucion = Solucion(
+                    id_solucion = 4,
+                    descripcion = solucionPropuesta
+                )
             )
 
             registroOstViewModel.actualizarUiState(

@@ -1,7 +1,10 @@
 package com.example.siamo.ui.tecnico.resumen_ost
 
+import com.example.siamo.data.ost.OstRegistro
+import com.example.siamo.model.Response
+
 interface ResumenOstRepository {
-    //suspend fun insertOst(request: Ost): Int
+    suspend fun insertOst(request: OstRegistro): Response
     //suspend fun insertFichaIngreso(request: FichaIngreso): Int
     //suspend fun insertPresupuesto(request: Presupuesto): Int
     //suspend fun insertPresupuestoRepuesto(request: List<PresupuestoRepuesto>): Int
@@ -9,9 +12,9 @@ interface ResumenOstRepository {
 
 class DefaultResumenOstRepository(
     private val apiService: ResumenOstApiService) : ResumenOstRepository {
-    //override suspend fun insertOst(request: Ost): Int {
-    //    return apiService.insertOst(request)
-    //}
+    override suspend fun insertOst(request: OstRegistro): Response {
+        return apiService.insertOst(request)
+    }
     //override suspend fun insertFichaIngreso(request: FichaIngreso): Int {
     //    return apiService.insertFichaIngreso(request)
     //}

@@ -5,6 +5,7 @@ import com.example.siamo.data.problema.ProblemaLectura
 import com.example.siamo.data.problema.ProblemaRegistro
 import com.example.siamo.data.problema.ProblemaSeleccionado
 import com.example.siamo.data.solucion.SolucionLectura
+import com.example.siamo.model.Solucion
 import com.example.siamo.ui.tecnico.registro_ost.RegistroOstUiState
 import com.example.siamo.ui.tecnico.registro_ost.RegistroOstViewModel
 import kotlinx.coroutines.flow.StateFlow
@@ -20,12 +21,12 @@ class InspeccionSolucionesViewModel(
     }
 
     private fun cargarProblemas() {
-        val problema1 = ProblemaLectura(1, "Problema 1", "Detalle del problema 1")
-        val problema2 = ProblemaLectura(2, "Problema 2", "Detalle del problema 2")
-        val problema3 = ProblemaLectura(3, "Problema 3", "Detalle del problema 3")
-        val problema4 = ProblemaLectura(4, "Problema 4", "Detalle del problema 4")
-        val problema5 = ProblemaLectura(5, "Problema 5", "Detalle del problema 5")
-        val problema6 = ProblemaLectura(6, "Problema 6", "Detalle del problema 6")
+        val problema1 = ProblemaLectura(id_problema = 1, descripcion = "Problema 1", detalle = "Detalle 1")
+        val problema2 = ProblemaLectura(id_problema = 2, descripcion = "Problema 2", detalle = "Detalle 2")
+        val problema3 = ProblemaLectura(id_problema = 3, descripcion = "Problema 3", detalle = "Detalle 3")
+        val problema4 = ProblemaLectura(id_problema = 4, descripcion = "Problema 4", detalle = "Detalle 4")
+        val problema5 = ProblemaLectura(id_problema = 5, descripcion = "Problema 5", detalle = "Detalle 5")
+        val problema6 = ProblemaLectura(id_problema = 6, descripcion = "Problema 6", detalle = "Detalle 6")
 
         val problemas = listOf(
             ProblemaSeleccionado(problema1, true),
@@ -43,10 +44,10 @@ class InspeccionSolucionesViewModel(
 
     private  fun cargarSoluciones() {
         val soluciones = listOf(
-            SolucionLectura(1, "Solución 1", 1),
-            SolucionLectura(2, "Solución 2", 2),
-            SolucionLectura(4, "Solución 4", 4),
-            SolucionLectura(5, "Solución 5", 5)
+            SolucionLectura(id_problema = 1, Solucion(id_solucion = 1, descripcion = "Solución 1")),
+            SolucionLectura(id_problema = 2, Solucion(id_solucion = 2, descripcion = "Solución 2")),
+            SolucionLectura(id_problema = 4, Solucion(id_solucion = 4, descripcion = "Solución 4")),
+            SolucionLectura(id_problema = 5, Solucion(id_solucion = 5, descripcion = "Solución 5"))
         )
 
         registroOstViewModel.actualizarUiState(

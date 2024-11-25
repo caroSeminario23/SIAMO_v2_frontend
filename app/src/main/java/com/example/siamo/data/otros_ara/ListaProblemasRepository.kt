@@ -7,7 +7,7 @@ import com.example.siamo.network.ListaProblemasApiService
 //import com.example.siamo.network_lista_problemas.ListaProblemasApiService
 
 interface ListaProblemasRepository {
-    suspend fun getListaDeProblemasPorConsulta(idConsulta: Int): List<ListaProblemas>
+    suspend fun getListaDeProblemasPorConsulta(idConsulta: Int): ListaProblemas
     suspend fun insertarListaDeProblemas(listaProblemas: ListaProblemas)
 }
 
@@ -16,11 +16,11 @@ class DefaultListaProblemasRepository(
 ) :
     ListaProblemasRepository {
 
-    override suspend fun getListaDeProblemasPorConsulta(idConsulta: Int): List<ListaProblemas> {
+    override suspend fun getListaDeProblemasPorConsulta(idConsulta: Int): ListaProblemas {
         return listaProblemasApiService.getListaDeProblemasPorConsulta(idConsulta)
     }
 
     override suspend fun insertarListaDeProblemas(listaProblemas: ListaProblemas) {
-        //listaProblemasApiService.insertarListaDeProblemas(listaProblemas)
+        listaProblemasApiService.insertarListaDeProblemas(listaProblemas)
     }
 }

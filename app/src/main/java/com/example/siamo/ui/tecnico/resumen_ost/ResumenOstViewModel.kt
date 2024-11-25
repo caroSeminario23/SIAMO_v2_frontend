@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.example.siamo.data.problema.ProblemaLectura
 import com.example.siamo.data.problema.ProblemaSeleccionado
 import com.example.siamo.data.solucion.SolucionLectura
+import com.example.siamo.model.Solucion
 import com.example.siamo.ui.tecnico.registro_ost.RegistroOstUiState
 import com.example.siamo.ui.tecnico.registro_ost.RegistroOstViewModel
 import kotlinx.coroutines.flow.StateFlow
@@ -23,9 +24,9 @@ class ResumenOstViewModel (
 //    }
 
     private fun cargarProblemasSeleccionados() {
-        val problema1 = ProblemaLectura(1, "Problema 1", "Detalle del problema 1")
-        val problema2 = ProblemaLectura(2, "Problema 2", "Detalle del problema 2")
-        val problema3 = ProblemaLectura(3, "Problema 3", "Detalle del problema 3")
+        val problema1 = ProblemaLectura(id_problema = 1, descripcion = "Problema 1", detalle = "Detalle 1")
+        val problema2 = ProblemaLectura(id_problema = 2, descripcion = "Problema 2", detalle = "Detalle 2")
+        val problema3 = ProblemaLectura(id_problema = 3, descripcion = "Problema 3", detalle = "Detalle 3")
 
         val problemas = listOf(
             ProblemaSeleccionado(problema1, true),
@@ -40,9 +41,9 @@ class ResumenOstViewModel (
 
     private fun cargarSolucionesRegistradas() {
         val soluciones = listOf(
-            SolucionLectura(1, "Solucion 1", 1),
-            SolucionLectura(2, "Solucion 2", 2),
-            SolucionLectura(3, "Solucion 3", 3)
+            SolucionLectura(id_problema = 1, Solucion(id_solucion = 1, descripcion = "Solucion 1")),
+            SolucionLectura(id_problema = 2, Solucion(id_solucion = 2, descripcion = "Solucion 2")),
+            SolucionLectura(id_problema = 3, Solucion(id_solucion = 3, descripcion = "Solucion 3"))
         )
 
         registroOstViewModel.actualizarUiState(

@@ -171,4 +171,7 @@
     <string name="mes_octubre">Octubre</string>
     <string name="mes_noviembre">Noviembre</string>
     <string name="mes_diciembre">Diciembre</string>
+    <string name="registro_de_solucion_emerge_title">Registro de solución</string>
+    <string name="la_solucion_ha_sido_registrada_exitosamente_emerge_message">La solución ha sido registrada exitosamente.</string>
+    <string name="la_solucion_no_ha_podido_ser_registrada_emerge_message">La solución no ha podido ser registrada.</string>
 </resources>

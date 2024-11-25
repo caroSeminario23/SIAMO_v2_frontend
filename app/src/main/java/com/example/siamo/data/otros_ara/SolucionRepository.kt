@@ -1,11 +1,12 @@
 package com.example.siamo.data.otros_ara
 
+import com.example.siamo.model.Response
 import com.example.siamo.model.Solucion
 import com.example.siamo.network.SolucionApiService
 
 interface SolucionRepository {
     suspend fun getSolucionPorId(id: Int): Solucion
-    suspend fun insertarSolucion(solucion: Solucion): Solucion
+    suspend fun insertarSolucion(solucion: Solucion): Response
 }
 
 class DefaultSolucionRepository(private val solucionApiService: SolucionApiService) :
@@ -15,7 +16,7 @@ class DefaultSolucionRepository(private val solucionApiService: SolucionApiServi
         return solucionApiService.getSolucionPorId(id)
     }
 
-    override suspend fun insertarSolucion(solucion: Solucion): Solucion {
+    override suspend fun insertarSolucion(solucion: Solucion): Response {
         return solucionApiService.insertarSolucion(solucion)
     }
 }
