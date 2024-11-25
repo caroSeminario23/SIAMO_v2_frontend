@@ -17,7 +17,9 @@ import com.example.siamo.ui.theme.SIAMOTheme
 @Composable
 fun TabBarTecnico(
     opcionSeleccionada: Int = 0,
+    onCarga: () -> Unit = {},
     modifier: Modifier = Modifier
+
 ) {
     // El índice de la opción seleccionada
     val selectedIndex = remember { opcionSeleccionada }
@@ -37,7 +39,7 @@ fun TabBarTecnico(
 
         Tab(
             selected = selectedIndex == 1,
-            onClick = { /* TODO: Acción para la opción 2 */ },
+            onClick = { onCarga()},
             text = {
                 Text(text = stringResource(R.string.tabbar_opcion2), style = MaterialTheme.typography.titleSmall.copy(fontSize = 12.sp))
             }

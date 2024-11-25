@@ -14,5 +14,5 @@ interface ListaProblemasApiService {
 
     // Insertar una lista de problemas
     @POST("api/lista_problemas/insert")
-    suspend fun insertarListaDeProblemas(@Body listaProblemas: List<ListaProblemas>)
+    suspend fun insertarListaDeProblemas(@Body listaProblemas: ListaProblemas)
 }

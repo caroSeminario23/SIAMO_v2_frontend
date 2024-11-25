@@ -57,5 +57,6 @@ class DefaultAppContainer : AppContainer {
     override val solucionRepository: SolucionRepository by lazy {
         DefaultSolucionRepository(solucionApiService)
     }
+
 }
 

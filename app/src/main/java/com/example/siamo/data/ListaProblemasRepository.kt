@@ -2,7 +2,7 @@ package com.example.siamo.data
 
 
 import com.example.siamo.model.ListaProblemas
-import com.example.siamo.network_lista_problemas.ListaProblemasApiService
+import com.example.siamo.network_inspeccion.ListaProblemasApiService
 
 interface ListaProblemasRepository {
     suspend fun getListaDeProblemasPorConsulta(idConsulta: Int): List<ListaProblemas>
