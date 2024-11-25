@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.siamo.data.graficos.Datos
@@ -22,11 +23,14 @@ fun GraficoBarras(
         Datos("label3", 30f)
     )
 ) {
-//    val datos: List<Datos> = listOf(
-//        Datos("Enero", 10f),
-//        Datos("Febrero", 20f),
-//        Datos("Marzo", 30f)
-//    )
+    var colores = mutableListOf(
+        MaterialTheme.colorScheme.primary,
+        MaterialTheme.colorScheme.secondary,
+        MaterialTheme.colorScheme.tertiary,
+        MaterialTheme.colorScheme.primaryContainer,
+        MaterialTheme.colorScheme.secondaryContainer,
+        MaterialTheme.colorScheme.tertiaryContainer
+    )
 
     var barras = ArrayList<BarChartData.Bar>()
     datos.mapIndexed { index, datos ->
@@ -34,7 +38,7 @@ fun GraficoBarras(
             BarChartData.Bar(
                 label = datos.etiqueta,
                 value = datos.valor,
-                color = MaterialTheme.colorScheme.primary
+                color = randomColor(colores)
             )
         )
     }
@@ -50,6 +54,13 @@ fun GraficoBarras(
             drawLocation = SimpleValueDrawer.DrawLocation.XAxis
         )
     )
+}
+
+fun randomColor(colores: MutableList<Color>): Color {
+    val randomIndex = (Math.random() * colores.size).toInt()
+    val color = colores[randomIndex]
+    colores.removeAt(randomIndex)
+    return color
 }
 
 @Preview(showBackground = true, showSystemUi = false)
